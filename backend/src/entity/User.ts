@@ -28,7 +28,7 @@ export class User {
     @Column("text")
     password: string;
 
-    @Column({type: "set", enum: UserRole, default: UserRole.CLIENT})
+    @Column({type: "enum", enum: UserRole, default: UserRole.CLIENT})
     role: string;
     
     @OneToMany(type => Order, order => order.user)

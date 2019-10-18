@@ -3,10 +3,24 @@ import {Request, Response} from "express";
 import * as bodyParser from  "body-parser";
 import "reflect-metadata";
 import {createConnection} from "typeorm";
-import {User} from "./src/entity/User";
+import * as salting from "./src/salting";
+import {User, UserRole} from "./src/entity/User";
+import {Order} from "./src/entity/Order";
+import {Equipment} from "./src/entity/Equipment";
 const dotenv = require('dotenv').config({path: __dirname+'/../.env'});
 
 createConnection().then(async connection => {
+
+    let user = new User();
+    user.firstName = "Andrzej"
+    user.lastName = "Bąk"
+    user.email = "andrzej.bak@janusze.pl"
+    user.password = salting.getSaltedPassword("dupa");
+    user.orders = null;
+    user.role = UserRole.CLIENT;
+
+    await connection.manager.save(user);
+
     const userRepository = connection.getRepository(User);
 
     // create and setup express app
