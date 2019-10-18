@@ -7,7 +7,7 @@ export enum EquipmentType {
     HARVESTER = "harvester",
     CULTIVATOR = "cultivator",
     SOWING_MACHINE = "sowing machine",
-    TRAILER = "tipper",
+    TIPPER = "tipper",
 }
 
 export enum TyreType {
@@ -32,6 +32,7 @@ export enum Brand {
     FLIEGL = "FLIEGL",
     VADERSTAD = "VADERSTAD",
     GRIMME = "GRIMME",
+    ZETOR = "ZETOR",
     HORSCH = "HORSCH",
 }
 
@@ -47,7 +48,7 @@ export class Equipment {
     @Column({type: "enum", enum: EquipmentType})
     equipment_type: string;
 
-    @Column({type: "enum", enum: TyreType})
+    @Column({type: "enum", enum: TyreType, nullable: true})
     tyre_type: string;
 
     @Column({type: "varchar", length: 200})
@@ -59,13 +60,16 @@ export class Equipment {
     @Max(9999)
     horsepower: number 
 
-    @Column({nullable: true})
+    @Column({nullable: true, default: null})
+    image: string;
+
+    @Column({nullable: true, default: null})
     @IsInt()
     @Min(0)
     @Max(99)
     max_speed: number
     
-    @Column({nullable: true})
+    @Column({nullable: true, default: null})
     @IsInt()
     @Min(0)
     @Max(99999)
@@ -77,31 +81,30 @@ export class Equipment {
     @Max(9999)
     cost_per_day: number
 
-    @Column({nullable: true})
+    @Column({nullable: true, default: null})
     @IsInt()
     @Min(0)
     @Max(9999)
     fuel_capacity: number
 
-    @Column({nullable: true})
+    @Column({nullable: true, default: null})
     @IsInt()
     @Min(0)
     @Max(99999)
     crop_capacity: number
 
-    @Column({nullable: true})
+    @Column({nullable: true, default: null})
     @IsInt()
     @Min(0)
     @Max(99999)
     capacity: number
 
-    @Column({nullable: true})
-    @IsInt()
+    @Column({nullable: true, default: null})
     @Min(0)
     @Max(99)
     working_width: number
 
-    @Column({nullable: true})
+    @Column({nullable: true, default: null})
     @IsInt()
     @Min(0)
     @Max(9999)

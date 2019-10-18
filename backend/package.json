@@ -19,6 +19,7 @@
       "typeorm": "0.2.19"
    },
    "scripts": {
+      "fill-database": "ts-node fillDatabase.ts",
       "start": "ts-node index.ts"
    }
 }
