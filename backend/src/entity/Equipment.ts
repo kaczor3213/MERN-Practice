@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, TableInheritance} from "typeorm";
 import { Order } from './Order'
 import { IsInt, Min, Max } from "class-validator";
+import { Dictionary } from "express-serve-static-core";
 
 export enum EquipmentType {
     TRACTOR = "tractor",
@@ -36,9 +37,13 @@ export enum Brand {
     HORSCH = "HORSCH",
 }
 
+export enum Status {
+    RENTED = "X",
+    FREE = "O"
+}
+
 @Entity()
 export class Equipment {
-
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -114,3 +119,25 @@ export class Equipment {
     orders: Order[];
 
 }
+
+// export const createEquipment = async (params: Dictionary<string>) => {
+//     try {
+
+//         let equipment = new Equipment();
+//         equipment.brand = params.brand;
+//         equipment.model = params.model;
+//         equipment.image = params.image
+//         equipment.tyre_type = params.tyre_type;
+//         equipment.equipment_type = params.equipment_type
+
+//         equipment.mass = Number(params.mass);
+//         equipment.max_speed = Number(params.max_speed);
+//         equipment.capacity = Number(params.capacity)
+//         equipment.crop_capacity = Number(params.crop_capacity)
+//         equipment.cost_per_day = Number(params.cost_per_day)
+//         equipment.fuel_capacity = Number(params.fuel_capacity)
+//         equipment.horsepower = Number(params.horsepower)
+//         equipment.working_width = Number(params.working_width)
+//         equipment.power_required = Number(params.power_required) 
+//     }
+// };

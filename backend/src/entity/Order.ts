@@ -4,12 +4,22 @@ import { IsDate, IsInt, Min } from "class-validator";
 import { Equipment } from "./Equipment";
 
 export enum OrderStatus {
-    R1 = "r1",
-    R1W = "r1w",
-    R2 = "r2",
-    R3 = "r3",
-    R4 = "r4",
+    WAITING_FOR_PAYMENT = "W",
+    REALIZED = "R",
+    OUTDATED = "_"
 }
+
+export enum PaymentType {
+    CASH = "C",
+    TRANSFER = "T",
+    DEBIT_CARD = "D"
+}
+
+export enum CardType {
+    VISA = "V",
+    MASTERCARD = "M"
+}
+
 
 @Entity()
 export class Order {
@@ -29,6 +39,9 @@ export class Order {
     @IsInt()
     @Min(0)
     totalcost: number;
+
+    @Column({type: "enum", enum: PaymentType})
+    payment: string;
 
     @Column({type: "enum", enum: OrderStatus})
     status: string;

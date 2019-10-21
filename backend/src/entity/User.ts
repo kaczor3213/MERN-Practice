@@ -1,5 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
-import { Length, IsEmail } from "class-validator";
+import {Length, IsEmail, IsPhoneNumber} from "class-validator";
 import {Order} from "./Order";
 
 export enum UserRole {
@@ -25,6 +25,19 @@ export class User {
     @IsEmail()
     email: string;
 
+    @Column({unique: true})
+    @IsPhoneNumber("PL")
+    phone_number: string;
+
+    @Column()
+    address: string;
+
+    @Column()
+    place: string
+
+    @Column()
+    post_code: string
+
     @Column("text")
     password: string;
 
@@ -33,5 +46,4 @@ export class User {
     
     @OneToMany(type => Order, order => order.user)
     orders: Order[];
-
 }
