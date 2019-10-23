@@ -20,42 +20,99 @@ createConnection().then(async connection => {
     const app = express();
     app.use(bodyParser.json());
     
-    // register routes
-    // user routes
-    // restricted view
+    //==================================ADMIN API SECTION==================================
+    // admin login view
     app.get("/admin", async function(req: Request, res: Response) {
-        const users = await userRepository.find();
-        res.json(users);
+        return AdminControl.Login(req, res);
     });
 
+    // admin panel view
+    app.get("/admin/panel", async function(req: Request, res: Response) {
+        return AdminControl.Panel(req, res);
+    });
+
+    // admin users view
     app.get("/admin/users", async function(req: Request, res: Response) {
-        req.cookies
-        const users = await userRepository.find();
-        res.json(users);
+        return AdminControl.Users(req, res);
     });
 
-    // restricted view
+    // admin specific user view
     app.get("admin/users/:id", async function(req: Request, res: Response) {
-        const results = await userRepository.findOne(req.params.id);
-        return res.send(results);
+        return AdminControl.User(req, res);
     });
 
-    // handle login user
+    // admin orders view
+    app.get("admin/orders", async function(req: Request, res: Response) {
+        return AdminControl.Orders(req, res);
+    });
+
+    // admin specific order view
+    app.get("admin/orders/:id", async function(req: Request, res: Response) {
+        return AdminControl.Order(req, res);
+    });
+
+    // admin equipments view
+    app.get("admin/equipments", async function(req: Request, res: Response) {
+        return AdminControl.Equipments(req, res);
+    });
+
+    // admin specific equipment view
+    app.get("admin/equipments/:id", async function(req: Request, res: Response) {
+        return AdminControl.Equipment(req, res);
+    });
+
+    // admin equipment add (provide brands, different parameters) view
+    app.get("admin/equipments/add", async function(req: Request, res: Response) {
+        return AdminControl.EquipmentAddView(req, res);
+    });
+
+    // admin equipment add handle
+    app.post("admin/equipments/add", async function(req: Request, res: Response) {
+        return AdminControl.EquipmentAddHandle(req, res);
+    });
+
+    //==================================USER API SECTION==================================
+    // user login handle
     app.post("/login", async function(req: Request, res: Response) {
         return UserControl.Login(req, res);
     });
 
-    // handle signup page
+    // user signup handle 
     app.post("/register", async function(req: Request, res: Response) {
         return UserControl.SignUp(req, res);
     });
 
-    //myprofile
+    // user profile view
     app.get("/myprofile", async function(req: Request, res: Response) {
-        const user = await userRepository.find(req.body);
-        const results = await userRepository.save(user);
-        return res.send(results);
+        return UserControl.Profile(req, res);
     });
+
+    // user orders view TODO
+    app.get("/myprofile/orders", async function(req: Request, res: Response) {
+        return UserControl.Orders(req, res);
+    });
+    
+    // user specific order view TODO
+    app.get("/myprofile/orders/:id", async function(req: Request, res: Response) {
+        return UserControl.Order(req, res);
+    });
+
+    // user settings view TODO
+    app.get("/myprofile/settings", async function(req: Request, res: Response) {
+        return UserControl.SettingsView(req, res);
+    });
+
+    // user settings handle TODO
+    app.post("/myprofile/settings", async function(req: Request, res: Response) {
+        return UserControl.SettingsHandle(req, res);
+    });
+
+
+
+
+
+
+
 
 
     app.get("/equipments", async function(req: Request, res: Response) {
@@ -72,13 +129,7 @@ createConnection().then(async connection => {
     });
 
 
-    app.post("admin/equipments/add", async function(req: Request, res: Response) {
-        let equipment = new Equipment();
-
-        equipmentRepository.save(equipment)
-        const users = await equipmentRepository.find();
-        res.json(users);
-    });
+    
 
     app.get("/equipments/:id", async function(req: Request, res: Response) {
         const results = await equipmentRepository.findOne(req.params.id);
@@ -86,7 +137,7 @@ createConnection().then(async connection => {
     });
 
     app.post("/equipments", async function(req: Request, res: Response) {
-        const equipment = await equipmentRepository.create(req.body);
+        const equipment = equipmentRepository.create(req.body);
         const results = await equipmentRepository.save(equipment);
         return res.send(results);
     });

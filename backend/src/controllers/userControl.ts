@@ -6,6 +6,7 @@ import {User} from "../entity/User";
 
 export const LOGIN_TIMEOUT = 1800;
 
+// Login controller (takes request, response from route call)
 export const Login = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);
     const results = await validateUserLogin(req.body);
@@ -23,6 +24,7 @@ export const Login = async (req: Request, res: Response) => {
     return res.json(results);
 }
 
+// SingUp controller (takes request, response from route call)
 export const SignUp = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);
     const results = await validateUserCreate(req.body);
