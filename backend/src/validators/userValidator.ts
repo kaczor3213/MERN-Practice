@@ -1,12 +1,10 @@
 import {User, UserRole} from "../entity/User";
-import {getSaltedPassword} from "../salting";
+import {getSaltedPassword, getSaltFromPassword} from "../bin/salting";
 import { Dictionary } from "express-serve-static-core";
-import { RegExp } from "regexp";
 import {getConnection} from "typeorm";
-import { createHash } from "crypto";
 
 
-export const validateUser = async (params: Dictionary<string>) => {
+export const validateUserCreate = async (params: Dictionary<string>) => {
 
     const tmp_connection = getConnection();
     const userRepository = tmp_connection.getRepository(User);
@@ -176,6 +174,51 @@ export const validateUser = async (params: Dictionary<string>) => {
     return USER_ERROR_CODE
 }
 
+export const validateUserLogin = async (params: Dictionary<string>) => {
 
+    const tmp_connection = getConnection();
+    const userRepository = tmp_connection.getRepository(User);
+    
+    var LOGIN_INFO = {
+        "EMAIL": null,
+        "TOTAL_WARNINGS": 0,
+        "LOGIN_ERROR_CODE": {
+            "NO_EMAIL": false,
+            "WRONG_PASSWORD": false,
+        }
+    }    
+        
+    let user = null;
+    
+    // Email validation
+    try {
+        // console.log(await userRepository.findOne({email: params.email}));
+        // console.log(await userRepository.findOne({email: params.email}) == undefined)
+        if(await userRepository.findOne({email: params.email}) == undefined) {
+            throw new Error("There is no user with this email in database!");
+        }
+        else {
+            user = await userRepository.findOne({email: params.email});
+            // Password validation
+            try {
+                if(user.password != getSaltedPassword(params.password,getSaltFromPassword(user.password)))
+                    throw new Error("There is no user with this email in database!");
+                else
+                    LOGIN_INFO.EMAIL = user.email;
+            }
+            catch(e) {
+                console.log(e)
+                LOGIN_INFO.TOTAL_WARNINGS++;
+                LOGIN_INFO.LOGIN_ERROR_CODE.WRONG_PASSWORD=true;
+            }
+        }
+    }
+    catch(e) {
+        console.log(e)
+        LOGIN_INFO.TOTAL_WARNINGS++;
+        LOGIN_INFO.LOGIN_ERROR_CODE.NO_EMAIL=true;
+    }
 
+    return LOGIN_INFO;
+}
 

@@ -3,11 +3,12 @@ import {Request, Response} from "express";
 import * as bodyParser from  "body-parser";
 import "reflect-metadata";
 import {createConnection} from "typeorm";
-import * as salting from "./src/salting";
-import {User, UserRole} from "./src/entity/User";
-import {validateUser} from "./src/controls/userControl";
+import * as salting from "./src/bin/salting";
+import {generateAccessToken} from "./src/bin/accesTokenGenerator";
 import {Order} from "./src/entity/Order";
 import {Equipment} from "./src/entity/Equipment";
+import {User} from "./src/entity/User";
+import * as UserControl from "./src/controllers/userControl";
 const dotenv = require('dotenv').config({path: __dirname+'/../.env'});
 
 createConnection().then(async connection => {
@@ -28,6 +29,7 @@ createConnection().then(async connection => {
     });
 
     app.get("/admin/users", async function(req: Request, res: Response) {
+        req.cookies
         const users = await userRepository.find();
         res.json(users);
     });
@@ -38,26 +40,14 @@ createConnection().then(async connection => {
         return res.send(results);
     });
 
-    // handle login user TODO
+    // handle login user
     app.post("/login", async function(req: Request, res: Response) {
-        const results = await userRepository.find(req.body)
-        if(results != null) 
-            return res.redirect('/myprofile');
-        else // TODO
-            return res.send({})
+        return UserControl.Login(req, res);
     });
 
-    // handle signup page TODO
+    // handle signup page
     app.post("/register", async function(req: Request, res: Response) {
-        const results = await validateUser(req.body);
-        console.log(results);
-        if(results["TOTAL_WARNINGS"] == 0) {
-            let user = await userRepository.create(req.body);
-            await userRepository.save(user);
-            return res.send(user);
-            //return res.redirect('/login');
-        }
-        return res.json(results);
+        return UserControl.SignUp(req, res);
     });
 
     //myprofile

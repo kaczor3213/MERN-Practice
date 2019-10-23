@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import {createConnection} from "typeorm"
-import * as salting from "./src/salting"
+import * as salting from "./src/bin/salting"
 import {User, UserRole} from "./src/entity/User"
 import {Order} from "./src/entity/Order"
 import {Equipment, EquipmentType, TyreType, Brand} from "./src/entity/Equipment"
