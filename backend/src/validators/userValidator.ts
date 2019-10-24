@@ -2,7 +2,7 @@ import {User, UserRole} from "../entity/User";
 import {getSaltedPassword, getSaltFromPassword} from "../bin/salting";
 import { Dictionary } from "express-serve-static-core";
 import {getConnection} from "typeorm";
-
+import { access } from "fs";
 
 export const validateUserCreate = async (params: Dictionary<string>) => {
 
@@ -192,8 +192,6 @@ export const validateUserLogin = async (params: Dictionary<string>) => {
     
     // Email validation
     try {
-        // console.log(await userRepository.findOne({email: params.email}));
-        // console.log(await userRepository.findOne({email: params.email}) == undefined)
         if(await userRepository.findOne({email: params.email}) == undefined) {
             throw new Error("There is no user with this email in database!");
         }
@@ -221,4 +219,31 @@ export const validateUserLogin = async (params: Dictionary<string>) => {
 
     return LOGIN_INFO;
 }
+
+export const validateUserAccessToken = async (cookies: Dictionary<string>) => {
+    const tmp_connection = getConnection();
+    const userRepository = tmp_connection.getRepository(User);
+
+    var ACCESS_TOKEN_INFO = {
+        "EMAIL": null,
+        "IS_VALID": false
+    }
+
+    let user = await userRepository.findOne({email: cookies.email});
+
+    if(user == undefined)
+         return ACCESS_TOKEN_INFO;
+    else {
+        ACCESS_TOKEN_INFO.EMAIL = user.email;
+        if(user.access_token != cookies.access_token)
+            return ACCESS_TOKEN_INFO;
+        else
+            ACCESS_TOKEN_INFO.IS_VALID = true;
+            //IF STH WENT WRONG BETTER TO CLEAR COOKIES FOR
+            // ACCESS TOKEN AND EMAIL TODO
+    }
+    return ACCESS_TOKEN_INFO;
+}
+
+
 

@@ -36,7 +36,6 @@ export class Order {
     rent_to: string;
 
     @Column()
-    @IsInt()
     @Min(0)
     totalcost: number;
 

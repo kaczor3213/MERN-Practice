@@ -3,7 +3,7 @@ import {Request, Response} from "express";
 import * as bodyParser from  "body-parser";
 import "reflect-metadata";
 import {createConnection} from "typeorm";
-import * as salting from "./src/bin/salting";
+import {genTestOrder} from "./src/bin/orderHelper";
 import {generateAccessToken} from "./src/bin/accesTokenGenerator";
 import {Order} from "./src/entity/Order";
 import {Equipment} from "./src/entity/Equipment";
@@ -15,66 +15,72 @@ createConnection().then(async connection => {
 
     const userRepository = connection.getRepository(User);
     const equipmentRepository = connection.getRepository(Equipment);
-
+    const cookieParser = require('cookie-parser')
     // create and setup express app
     const app = express();
     app.use(bodyParser.json());
+    app.use(cookieParser());
     
     //==================================ADMIN API SECTION==================================
     // admin login view
-    app.get("/admin", async function(req: Request, res: Response) {
-        return AdminControl.Login(req, res);
-    });
+    // app.get("/admin", async function(req: Request, res: Response) {
+    //     return AdminControl.Login(req, res);
+    // });
 
-    // admin panel view
-    app.get("/admin/panel", async function(req: Request, res: Response) {
-        return AdminControl.Panel(req, res);
-    });
+    // // admin panel view
+    // app.get("/admin/panel", async function(req: Request, res: Response) {
+    //     return AdminControl.Panel(req, res);
+    // });
 
-    // admin users view
-    app.get("/admin/users", async function(req: Request, res: Response) {
-        return AdminControl.Users(req, res);
-    });
+    // // admin users view
+    // app.get("/admin/users", async function(req: Request, res: Response) {
+    //     return AdminControl.Users(req, res);
+    // });
 
-    // admin specific user view
-    app.get("admin/users/:id", async function(req: Request, res: Response) {
-        return AdminControl.User(req, res);
-    });
+    // // admin specific user view
+    // app.get("admin/users/:id", async function(req: Request, res: Response) {
+    //     return AdminControl.User(req, res);
+    // });
 
-    // admin orders view
-    app.get("admin/orders", async function(req: Request, res: Response) {
-        return AdminControl.Orders(req, res);
-    });
+    // // admin orders view
+    // app.get("admin/orders", async function(req: Request, res: Response) {
+    //     return AdminControl.Orders(req, res);
+    // });
 
-    // admin specific order view
-    app.get("admin/orders/:id", async function(req: Request, res: Response) {
-        return AdminControl.Order(req, res);
-    });
+    // // admin specific order view
+    // app.get("admin/orders/:id", async function(req: Request, res: Response) {
+    //     return AdminControl.Order(req, res);
+    // });
 
-    // admin equipments view
-    app.get("admin/equipments", async function(req: Request, res: Response) {
-        return AdminControl.Equipments(req, res);
-    });
+    // // admin equipments view
+    // app.get("admin/equipments", async function(req: Request, res: Response) {
+    //     return AdminControl.Equipments(req, res);
+    // });
 
-    // admin specific equipment view
-    app.get("admin/equipments/:id", async function(req: Request, res: Response) {
-        return AdminControl.Equipment(req, res);
-    });
+    // // admin specific equipment view
+    // app.get("admin/equipments/:id", async function(req: Request, res: Response) {
+    //     return AdminControl.Equipment(req, res);
+    // });
 
-    // admin equipment add (provide brands, different parameters) view
-    app.get("admin/equipments/add", async function(req: Request, res: Response) {
-        return AdminControl.EquipmentAddView(req, res);
-    });
+    // // admin equipment add (provide brands, different parameters) view
+    // app.get("admin/equipments/add", async function(req: Request, res: Response) {
+    //     return AdminControl.EquipmentAddView(req, res);
+    // });
 
-    // admin equipment add handle
-    app.post("admin/equipments/add", async function(req: Request, res: Response) {
-        return AdminControl.EquipmentAddHandle(req, res);
-    });
+    // // admin equipment add handle
+    // app.post("admin/equipments/add", async function(req: Request, res: Response) {
+    //     return AdminControl.EquipmentAddHandle(req, res);
+    // });
 
     //==================================USER API SECTION==================================
     // user login handle
     app.post("/login", async function(req: Request, res: Response) {
         return UserControl.Login(req, res);
+    });
+
+    // user logout handle
+    app.post("/logout", async function(req: Request, res: Response) {
+        return UserControl.Logout(req, res);
     });
 
     // user signup handle 
@@ -97,15 +103,15 @@ createConnection().then(async connection => {
         return UserControl.Order(req, res);
     });
 
-    // user settings view TODO
-    app.get("/myprofile/settings", async function(req: Request, res: Response) {
-        return UserControl.SettingsView(req, res);
-    });
+    // // user settings view TODO
+    // app.get("/myprofile/settings", async function(req: Request, res: Response) {
+    //     return UserControl.SettingsView(req, res);
+    // });
 
-    // user settings handle TODO
-    app.post("/myprofile/settings", async function(req: Request, res: Response) {
-        return UserControl.SettingsHandle(req, res);
-    });
+    // // user settings handle TODO
+    // app.post("/myprofile/settings", async function(req: Request, res: Response) {
+    //     return UserControl.SettingsHandle(req, res);
+    // });
 
 
 
