@@ -1,8 +1,7 @@
 import {User, UserRole} from "../entity/User";
 import {getSaltedPassword, getSaltFromPassword} from "../bin/salting";
-import { Dictionary } from "express-serve-static-core";
+import {Dictionary} from "express-serve-static-core";
 import {getConnection} from "typeorm";
-import { access } from "fs";
 
 export const validateUserCreate = async (params: Dictionary<string>) => {
 

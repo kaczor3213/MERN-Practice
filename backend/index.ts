@@ -5,10 +5,10 @@ import "reflect-metadata";
 import {createConnection} from "typeorm";
 import {genTestOrder} from "./src/bin/orderHelper";
 import {generateAccessToken} from "./src/bin/accesTokenGenerator";
-import {Order} from "./src/entity/Order";
 import {Equipment} from "./src/entity/Equipment";
 import {User} from "./src/entity/User";
 import * as UserControl from "./src/controllers/userControl";
+import * as AdminControl from "./src/controllers/adminControl";
 const dotenv = require('dotenv').config({path: __dirname+'/../.env'});
 
 createConnection().then(async connection => {
@@ -23,44 +23,49 @@ createConnection().then(async connection => {
     
     //==================================ADMIN API SECTION==================================
     // admin login view
-    // app.get("/admin", async function(req: Request, res: Response) {
-    //     return AdminControl.Login(req, res);
-    // });
+    app.post("/admin", async function(req: Request, res: Response) {
+        return AdminControl.Login(req, res);
+    });
 
-    // // admin panel view
-    // app.get("/admin/panel", async function(req: Request, res: Response) {
-    //     return AdminControl.Panel(req, res);
-    // });
+    // admin logout view
+    app.post("/admin/logout", async function(req: Request, res: Response) {
+        return AdminControl.Logout(req, res);
+    });
+    // admin panel view
+    app.get("/admin/panel", async function(req: Request, res: Response) {
+        return AdminControl.Panel(req, res);
+    });
 
-    // // admin users view
-    // app.get("/admin/users", async function(req: Request, res: Response) {
-    //     return AdminControl.Users(req, res);
-    // });
+    // admin users view
+    app.get("/admin/users", async function(req: Request, res: Response) {
+        return AdminControl.Users(req, res);
+    });
 
-    // // admin specific user view
-    // app.get("admin/users/:id", async function(req: Request, res: Response) {
-    //     return AdminControl.User(req, res);
-    // });
+    // admin specific user view
+    app.get("admin/users/:id", async function(req: Request, res: Response) {
+        console.log(req.params.id);
+        return AdminControl.UserV(req, res);
+    });
 
-    // // admin orders view
-    // app.get("admin/orders", async function(req: Request, res: Response) {
-    //     return AdminControl.Orders(req, res);
-    // });
+    // admin orders view
+    app.get("admin/orders", async function(req: Request, res: Response) {
+        return AdminControl.Orders(req, res);
+    });
 
-    // // admin specific order view
-    // app.get("admin/orders/:id", async function(req: Request, res: Response) {
-    //     return AdminControl.Order(req, res);
-    // });
+    // admin specific order view
+    app.get("admin/orders/:id", async function(req: Request, res: Response) {
+        return AdminControl.Order(req, res);
+    });
 
-    // // admin equipments view
-    // app.get("admin/equipments", async function(req: Request, res: Response) {
-    //     return AdminControl.Equipments(req, res);
-    // });
+    // admin equipments view
+    app.get("admin/equipments", async function(req: Request, res: Response) {
+        return AdminControl.Equipments(req, res);
+    });
 
-    // // admin specific equipment view
-    // app.get("admin/equipments/:id", async function(req: Request, res: Response) {
-    //     return AdminControl.Equipment(req, res);
-    // });
+    // admin specific equipment view
+    app.get("admin/equipments/:id", async function(req: Request, res: Response) {
+        return AdminControl.Equipment(req, res);
+    });
 
     // // admin equipment add (provide brands, different parameters) view
     // app.get("admin/equipments/add", async function(req: Request, res: Response) {
@@ -93,25 +98,25 @@ createConnection().then(async connection => {
         return UserControl.Profile(req, res);
     });
 
-    // user orders view TODO
+    // user orders view
     app.get("/myprofile/orders", async function(req: Request, res: Response) {
         return UserControl.Orders(req, res);
     });
     
-    // user specific order view TODO
+    // user specific order view
     app.get("/myprofile/orders/:id", async function(req: Request, res: Response) {
         return UserControl.Order(req, res);
     });
 
-    // // user settings view TODO
-    // app.get("/myprofile/settings", async function(req: Request, res: Response) {
-    //     return UserControl.SettingsView(req, res);
-    // });
+    // user settings view
+    app.get("/myprofile/settings", async function(req: Request, res: Response) {
+        return UserControl.SettingsView(req, res);
+    });
 
-    // // user settings handle TODO
-    // app.post("/myprofile/settings", async function(req: Request, res: Response) {
-    //     return UserControl.SettingsHandle(req, res);
-    // });
+    // user settings handle
+    app.post("/myprofile/settings", async function(req: Request, res: Response) {
+        return UserControl.SettingsHandle(req, res);
+    });
 
 
 

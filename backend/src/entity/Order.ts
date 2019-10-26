@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, ManyToMany } from "typeorm";
 import { User } from "./User";
-import { IsDate, IsInt, Min } from "class-validator";
+import { IsDate, Min } from "class-validator";
 import { Equipment } from "./Equipment";
 
 export enum OrderStatus {

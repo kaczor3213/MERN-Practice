@@ -3,7 +3,7 @@ import {generateAccessToken} from "../bin/accesTokenGenerator";
 import {Request, Response} from "express";
 import {getConnection} from "typeorm";
 import {User} from "../entity/User";
-import { DH_CHECK_P_NOT_SAFE_PRIME } from "constants";
+import {getSaltedPassword, getSaltFromPassword} from "../bin/salting";
 export const LOGIN_TIMEOUT = 1800;
 
 // Login controller (takes request, response from route call)
@@ -59,7 +59,7 @@ export const SignUp = async (req: Request, res: Response) => {
     return res.json(results);
 }
 
-// Login controller (takes request, response from route call)
+// Profile controller (takes request, response from route call)
 export const Profile = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);
     const results = await validateUserAccessToken(req.cookies);
@@ -92,11 +92,7 @@ export const Orders = async (req: Request, res: Response) => {
         });
         
         var USER_ORDERS = {
-            "USER": {
-                "firstName": user[0].firstName,
-                "lastName": user[0].lastName,
-                "email": user[0].email,
-            },
+            "USER": user[0],
             "ORDERS": user[0].orders
         }
         return res.json(USER_ORDERS);
@@ -124,14 +120,60 @@ export const Order = async (req: Request, res: Response) => {
                 _order = order;
         }); 
         var USER_ORDER = {
-            "USER": {
-                "firstName": user[0].firstName,
-                "lastName": user[0].lastName,
-                "email": user[0].email,
-            },
+            "USER": user[0],
             "ORDER": _order
         }
         return res.json(USER_ORDER);
+    }
+    return res.json(results);
+}
+
+// SettingsView controller (takes request, response from route call)
+export const SettingsView = async (req: Request, res: Response) => {
+    const userRepository = getConnection().getRepository(User);
+    const results = await validateUserAccessToken(req.cookies);
+    console.log(results);
+    if(results["IS_VALID"] == true ) {
+        let user = await userRepository.findOne({
+            select: ["firstName", "lastName", "email", "address", "phone_number", "place", "post_code"],
+            where: { 
+                email: results["EMAIL"]
+            }
+        });
+        return res.json(user);       
+    }
+    return res.json(results);
+}
+
+// SettingsHandle controller (takes request, response from route call)
+export const SettingsHandle = async (req: Request, res: Response) => {
+    const userRepository = getConnection().getRepository(User);
+    const results = await validateUserAccessToken(req.cookies);
+    console.log(results);
+    if(results["IS_VALID"] == true ) {
+        let user = await userRepository.findOne({
+            select: ["firstName", "lastName", "email", "address", "phone_number", "place", "post_code"],
+            where: { 
+                email: results["EMAIL"]
+            }
+        });
+        var USER_SETTINGS = {
+            "USER": user,
+            "PASSWORD_VALID": false,
+            "NEW_PASSWORD_VALID": false,
+        }
+
+        if(getSaltedPassword(req.body.old_password, getSaltFromPassword(user.password))==user.password) {
+            USER_SETTINGS.PASSWORD_VALID = true;
+            let passwordRegex = /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,})\S$/;
+            if(passwordRegex.test(req.body.new_password)) {
+                USER_SETTINGS.NEW_PASSWORD_VALID = true;
+                await userRepository.update({email: results["EMAIL"]}, {password: getSaltedPassword(req.body.new_password)});
+                
+            }
+            return res.json(USER_SETTINGS);
+        }
+        return res.json(USER_SETTINGS);
     }
     return res.json(results);
 }
