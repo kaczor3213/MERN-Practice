@@ -3,6 +3,7 @@ import {generateAdminAccessToken} from "../bin/accesTokenGenerator";
 import {Request, Response} from "express";
 import {getConnection} from "typeorm";
 import {User, UserRole} from "../entity/User";
+import {Order} from "../entity/Order";
 import {Equipment} from "../entity/Equipment";
 export const LOGIN_TIMEOUT = 1800;
 
@@ -70,6 +71,8 @@ export const UserV = async (req: Request, res: Response) => {
     if(results["IS_VALID"] == true ) {
         console.log(req.params.id)
         let user = await userRepository.findOne({id: parseInt(req.params.id)});
+        if (user == undefined)
+            return res.json({"USER": null})
         return res.json(user);
     }
     return res.json(results);
@@ -89,13 +92,15 @@ export const Orders = async (req: Request, res: Response) => {
 }
 
 // Specific order controller (takes request, response from route call)
-export const Order = async (req: Request, res: Response) => {
+export const OrderV = async (req: Request, res: Response) => {
     const orderRepository = getConnection().getRepository(Order);     
     const results = await validateAdminAccessToken(req.cookies);
 
     console.log(results);
     if(results["IS_VALID"] == true ) {
-        let order = await orderRepository.findOne(req.params.id)
+        let order = await orderRepository.findOne(req.params.id);
+        if (order == undefined)
+            return res.json({"ORDER": null})
         return res.json(order);
     }
     return res.json(results);
@@ -121,7 +126,38 @@ export const EquipmentV = async (req: Request, res: Response) => {
 
     console.log(results);
     if(results["IS_VALID"] == true ) {
-        let equipment = await equipmentRepository.findOne(req.params.id)
+        let equipment = await equipmentRepository.findOne(req.params.id);
+        if (equipment == undefined)
+        return res.json({"EQUIPMENT": null})
+        return res.json(equipment);
+    }
+    return res.json(results);
+}
+
+// Equipments controller (takes request, response from route call)
+export const EquipmentAddView = async (req: Request, res: Response) => {
+    const equipmentRepository = getConnection().getRepository(Equipment);     
+    const results = await validateAdminAccessToken(req.cookies);
+
+    console.log(results);
+    if(results["IS_VALID"] == true) {
+        
+        let equipments = await equipmentRepository.find();        
+        return res.json(equipments);
+    }
+    return res.json(results);
+}
+
+// Specific equipment controller (takes request, response from route call)
+export const EquipmentAddHandle = async (req: Request, res: Response) => {
+    const equipmentRepository = getConnection().getRepository(Equipment);     
+    const results = await validateAdminAccessToken(req.cookies);
+
+    console.log(results);
+    if(results["IS_VALID"] == true ) {
+        let equipment = await equipmentRepository.findOne(req.params.id);
+        if (equipment == undefined)
+        return res.json({"EQUIPMENT": null})
         return res.json(equipment);
     }
     return res.json(results);

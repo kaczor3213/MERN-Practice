@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, TableInheritance} from "typeorm";
 import { Order } from './Order'
 import { IsInt, Min, Max } from "class-validator";
-import { Dictionary } from "express-serve-static-core";
 
 export enum EquipmentType {
     TRACTOR = "tractor",

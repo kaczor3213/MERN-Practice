@@ -42,40 +42,40 @@ createConnection().then(async connection => {
     });
 
     // admin specific user view
-    app.get("admin/users/:id", async function(req: Request, res: Response) {
+    app.get("/admin/users/:id", async function(req: Request, res: Response) {
         console.log(req.params.id);
         return AdminControl.UserV(req, res);
     });
 
     // admin orders view
-    app.get("admin/orders", async function(req: Request, res: Response) {
+    app.get("/admin/orders", async function(req: Request, res: Response) {
         return AdminControl.Orders(req, res);
     });
 
     // admin specific order view
-    app.get("admin/orders/:id", async function(req: Request, res: Response) {
-        return AdminControl.Order(req, res);
+    app.get("/admin/orders/:id", async function(req: Request, res: Response) {
+        return AdminControl.OrderV(req, res);
     });
 
     // admin equipments view
-    app.get("admin/equipments", async function(req: Request, res: Response) {
+    app.get("/admin/equipments", async function(req: Request, res: Response) {
         return AdminControl.Equipments(req, res);
     });
 
     // admin specific equipment view
-    app.get("admin/equipments/:id", async function(req: Request, res: Response) {
-        return AdminControl.Equipment(req, res);
+    app.get("/admin/equipments/:id", async function(req: Request, res: Response) {
+        return AdminControl.EquipmentV(req, res);
     });
 
-    // // admin equipment add (provide brands, different parameters) view
-    // app.get("admin/equipments/add", async function(req: Request, res: Response) {
-    //     return AdminControl.EquipmentAddView(req, res);
-    // });
+    // admin equipment add (provide brands, different parameters) view
+    app.get("admin/equipments/add", async function(req: Request, res: Response) {
+        return AdminControl.EquipmentAddView(req, res);
+    });
 
-    // // admin equipment add handle
-    // app.post("admin/equipments/add", async function(req: Request, res: Response) {
-    //     return AdminControl.EquipmentAddHandle(req, res);
-    // });
+    // admin equipment add handle
+    app.post("admin/equipments/add", async function(req: Request, res: Response) {
+        return AdminControl.EquipmentAddHandle(req, res);
+    });
 
     //==================================USER API SECTION==================================
     // user login handle
@@ -130,17 +130,6 @@ createConnection().then(async connection => {
         const equipments = await equipmentRepository.find();
         res.json(equipments);
     });
-
-    app.get("admin/equipments/add", async function(req: Request, res: Response) {
-        let equipment = new Equipment();
-
-        equipmentRepository.save(equipment)
-        const users = await equipmentRepository.find();
-        res.json(users);
-    });
-
-
-    
 
     app.get("/equipments/:id", async function(req: Request, res: Response) {
         const results = await equipmentRepository.findOne(req.params.id);
