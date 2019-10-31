@@ -4,7 +4,8 @@ import {Request, Response} from "express";
 import {getConnection} from "typeorm";
 import {User, UserRole} from "../entity/User";
 import {Order} from "../entity/Order";
-import {Equipment} from "../entity/Equipment";
+import {Equipment, EquipmentType, TyreType, Brand} from "../entity/Equipment";
+import { validateEquipmentCreate } from "../validators/equipmentValidator";
 export const LOGIN_TIMEOUT = 1800;
 
 // Login controller (takes request, response from route call)
@@ -136,14 +137,15 @@ export const EquipmentV = async (req: Request, res: Response) => {
 
 // Equipments controller (takes request, response from route call)
 export const EquipmentAddView = async (req: Request, res: Response) => {
-    const equipmentRepository = getConnection().getRepository(Equipment);     
     const results = await validateAdminAccessToken(req.cookies);
 
     console.log(results);
     if(results["IS_VALID"] == true) {
-        
-        let equipments = await equipmentRepository.find();        
-        return res.json(equipments);
+        return res.json({
+            "EQUIPMENT_TYPE": EquipmentType,
+            "TYRE_TYPE": TyreType,
+            "BRANDS": Brand
+        });
     }
     return res.json(results);
 }
@@ -155,10 +157,14 @@ export const EquipmentAddHandle = async (req: Request, res: Response) => {
 
     console.log(results);
     if(results["IS_VALID"] == true ) {
-        let equipment = await equipmentRepository.findOne(req.params.id);
-        if (equipment == undefined)
-        return res.json({"EQUIPMENT": null})
-        return res.json(equipment);
+        const equipmentErrors = validateEquipmentCreate(req.body);
+        if(equipmentErrors["TOTAL_WARNINGS"] == 0) {
+            let equipment = await equipmentRepository.create(req.body);
+            await equipmentRepository.save(equipment);
+            return res.send(equipment);
+            //return res.redirect('/admin/equipments');
+        }
+        return res.json(equipmentErrors)
     }
     return res.json(results);
 }

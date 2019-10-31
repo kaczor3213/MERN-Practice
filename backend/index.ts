@@ -3,13 +3,12 @@ import {Request, Response} from "express";
 import * as bodyParser from  "body-parser";
 import "reflect-metadata";
 import {createConnection} from "typeorm";
-import {genTestOrder} from "./src/bin/orderHelper";
-import {generateAccessToken} from "./src/bin/accesTokenGenerator";
 import {Equipment} from "./src/entity/Equipment";
 import {User} from "./src/entity/User";
-import * as UserControl from "./src/controllers/userControl";
+
 import * as AdminControl from "./src/controllers/adminControl";
-const dotenv = require('dotenv').config({path: __dirname+'/../.env'});
+import * as UserControl from "./src/controllers/userControl";
+import * as CommonAccessControl from "./src/controllers/commonAccessControl";
 
 createConnection().then(async connection => {
 
@@ -20,6 +19,11 @@ createConnection().then(async connection => {
     const app = express();
     app.use(bodyParser.json());
     app.use(cookieParser());
+    app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+        next();
+      });
+      
     
     //==================================ADMIN API SECTION==================================
     // admin login view
@@ -58,12 +62,12 @@ createConnection().then(async connection => {
     });
 
     // admin equipments view
-    app.get("/admin/equipments", async function(req: Request, res: Response) {
+    app.get("/admin/equipment", async function(req: Request, res: Response) {
         return AdminControl.Equipments(req, res);
     });
 
     // admin specific equipment view
-    app.get("/admin/equipments/:id", async function(req: Request, res: Response) {
+    app.get("/admin/equipment/:id", async function(req: Request, res: Response) {
         return AdminControl.EquipmentV(req, res);
     });
 
@@ -117,42 +121,46 @@ createConnection().then(async connection => {
     app.post("/myprofile/settings", async function(req: Request, res: Response) {
         return UserControl.SettingsHandle(req, res);
     });
+    
 
+    //==================================COMMON_ACCESS API SECTION==================================
 
-
-
-
-
-
-
-
-    app.get("/equipments", async function(req: Request, res: Response) {
-        const equipments = await equipmentRepository.find();
-        res.json(equipments);
+    // root view
+    app.get("/", async function(req: Request, res: Response) {
+        return CommonAccessControl.Root(req, res);
     });
 
-    app.get("/equipments/:id", async function(req: Request, res: Response) {
-        const results = await equipmentRepository.findOne(req.params.id);
-        return res.send(results);
+    // search equipment view
+    app.post("/search", async function(req: Request, res: Response) {
+        return CommonAccessControl.Search(req, res);
+    });
+    
+    // equipment view
+    app.get("/equipment", async function(req: Request, res: Response) {
+        return CommonAccessControl.Equipments(req, res);
     });
 
-    app.post("/equipments", async function(req: Request, res: Response) {
-        const equipment = equipmentRepository.create(req.body);
-        const results = await equipmentRepository.save(equipment);
-        return res.send(results);
+    // brands view
+    app.get("/brands", async function(req: Request, res: Response) {
+        return CommonAccessControl.Brands(req, res);
     });
 
-    app.put("/equipments/:id", async function(req: Request, res: Response) {
-        const equipment = await userRepository.findOne(req.params.id);
-        userRepository.merge(equipment, req.body);
-        const results = await equipmentRepository.save(equipment);
-        return res.send(results);
+    // equipment for specific brand view
+    app.get("/equipment/:brand", async function(req: Request, res: Response) {
+        return CommonAccessControl.EquipmentOfSpecificBrand(req, res);
     });
 
-    app.delete("/equipments/:id", async function(req: Request, res: Response) {
-        const results = await equipmentRepository.delete(req.params.id);
-        return res.send(results);
+    // equipment_types view
+    app.get("/equipment_types", async function(req: Request, res: Response) {
+        return CommonAccessControl.EquipmentTypes(req, res);
     });
+
+    // equipment_types view
+    app.get("/equipment/:equipment_type", async function(req: Request, res: Response) {
+        return CommonAccessControl.EquipmentOfSpecificType(req, res);
+    });
+
+
 
     // start express server
     app.listen(4000);
