@@ -32,7 +32,7 @@ class NavBar extends Component {
         return (
             
 
-            <MDBNavbar color='green' dark expand='md' fixed='top' scrolling>
+            <MDBNavbar color="bg-success" dark expand='md' fixed='top' scrolling transparent>
                 <MDBNavbarBrand href='/' className='py-0 font-weight-bold'>
                     <img src={require('../assets/logo.png')} style={{ height: '2.5rem', width: '2.5rem' }} />
                     <strong className='align-middle'>RolPol</strong>
@@ -66,7 +66,7 @@ class NavBar extends Component {
                     <MDBNavItem>
                         <MDBNavLink
                         onClick={this.closeCollapse('mainNavbarCollapse')}
-                        to='/css'
+                        to='/category'
                         >
                         <strong>Kategorie</strong>
                         </MDBNavLink>
@@ -100,3 +100,4 @@ class NavBar extends Component {
 }
         
 export default NavBar;
+

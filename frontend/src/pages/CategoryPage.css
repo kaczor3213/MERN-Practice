@@ -1,0 +1,105 @@
+body {
+	background:#fff;
+}
+
+a.border.nav-link.border-light.rounded.mr-1 {
+  color: #3F729B;
+}
+
+a.border.nav-link.border-light.rounded.mr-1:hover {
+  color: #1C2331;
+}
+
+.btn.btn-sm.indigo:hover{
+  color: #fff;
+}
+
+.nav-link.active{
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#categories > .col-md-4.mb-5{
+  margin-bottom: 8rem !important;
+}
+
+.sectionPage {
+  position: relative;
+  top: -15px;
+  margin-bottom: -125px;
+}
+
+.sectionPage::after {
+  content: '';
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background: url('https://mdbootstrap.com/wp-content/uploads/2016/12/big-bundle1.jpg');
+  background-position: center center;
+  background-size: cover;
+  filter: opacity(.1);
+}
+
+
+.btn:hover {
+  border-color: #4caf50 !important; /* Green */
+  color: #4caf50 !important;
+}
+
+.headline {
+  z-index: 1;
+}
+
+.carousel-inner {
+  min-height: 30vh;
+  max-height: 100vh;
+}
+
+.fixed-bg {
+  /* The background image */
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bg-1 {
+  background-image: url("../assets/carousel_1.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
+.bg-2 {
+  background-image: url("../assets/carousel_2.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
+.bg-3 {
+  background-image: url("../assets/carousel_3.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
+.bg-4 {
+  background-image: url("../assets/carousel_4.jpg");
+  height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
+.vertical-center {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+}

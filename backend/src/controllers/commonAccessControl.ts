@@ -46,7 +46,10 @@ export const EquipmentOfSpecificBrand = async (req: Request, res: Response) => {
 
 // Equipments controller (takes request, response from route call)
 export const EquipmentTypes = async (req: Request, res: Response) => {
-    return res.json(EquipmentType);
+    let tmp = [];
+    for(var key in EquipmentType)
+        tmp.push(EquipmentType[key]);
+    return res.json(tmp);
 }
 
 // Specific equipment controller (takes request, response from route call)

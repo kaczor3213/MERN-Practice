@@ -13,10 +13,110 @@ import {
   MDBCardText,
   MDBAnimation,
   MDBNavLink,
-  MDBJumbotron
+  MDBCarousel,
+  MDBCarouselInner,
+  MDBCarouselItem,
+  MDBView,
+  MDBMask,
+  MDBBtn
 } from "mdbreact";
 
-import "./HomePage.css";
+import "./BrandPage.css";
+
+class CustomCard extends Component {
+    constructor(props) {
+        super(props);
+      };
+  
+    render() {
+        return (
+            <MDBRow className="vertical-center" style={{"padding-top": "4rem"}}> 
+              <MDBCol
+                md="8" lg="6"
+                className="mx-auto headline float-none white z-depth-1 p-2"
+              >
+                <MDBCardBody className="text-center">
+                <img
+                        style={{ height: '9rem', width: '9rem' }}
+                        src={require('../assets/logo.png')}
+                        alt="rol-pol-logo"
+                        className="pr-2 d-inline"
+                      />
+                  <h1 className="display-4 mb-4">
+                    <strong className="font-weight-bold">
+                      
+                      Nasze Marki
+                    </strong>
+                  </h1>
+                  <MDBRow />
+                  <p className="pb-4">W naszej ofercie mamy szeroki zakres zarówno marek jak i sprzętu.</p>
+                  <p className="pb-4">Znajdziesz u nas <strong>15+</strong> kultowych marek!</p>
+                  <MDBRow className="d-flex flex-row justify-content-center row">
+                  <MDBBtn outline color="success">
+                    <MDBIcon icon="fas fa-download" className="mr-2" />
+                    <span className="font-weight-bold">Katalog pełnej oferty</span>
+                  </MDBBtn>
+                  </MDBRow>
+                </MDBCardBody>
+              </MDBCol>
+            </MDBRow>
+        );
+    }
+}
+
+class CustomCarousel extends Component {
+    constructor(props) {
+      super(props);
+    };
+  
+    render() {
+    return (
+    <MDBContainer className="px-0 mx-0 w-100 mw-100">
+      <MDBCarousel
+      activeItem={1}
+      length={4}
+      showControls={true}
+      showIndicators={false}
+    >
+      <MDBCarouselInner>
+        <MDBCarouselItem itemId="1">
+          <MDBView>
+          <div className="bg-1 containerfluid">
+            <CustomCard/>
+            <MDBMask overlay="black-light" />
+          </div>
+          </MDBView>
+        </MDBCarouselItem>
+        <MDBCarouselItem itemId="2">
+          <MDBView>
+          <div className="bg-2 containerfluid">
+            <CustomCard/>
+            <MDBMask overlay="black-slight" />
+          </div>
+          </MDBView>
+        </MDBCarouselItem>
+        <MDBCarouselItem itemId="3">
+          <MDBView>
+          <div className="bg-3 containerfluid">
+            <CustomCard/>
+            <MDBMask overlay="black-slight" />
+          </div>
+          </MDBView>
+        </MDBCarouselItem>
+        <MDBCarouselItem itemId="4">
+          <MDBView>
+          <div className="bg-4 containerfluid">
+            <CustomCard/>
+            <MDBMask overlay="black-slight" />
+          </div>
+          </MDBView>
+        </MDBCarouselItem>
+      </MDBCarouselInner>
+    </MDBCarousel>
+    </MDBContainer>
+  );
+  }
+  }
 
 class BrandsPage extends Component {
   constructor(props) {
@@ -49,7 +149,7 @@ class BrandsPage extends Component {
   }
   
   makeAnimatedBrandCard(brand) {
-    return (
+    return (       
     <MDBCol sm="6" md="4" lg="3">
       <MDBAnimation reveal type="fadeIn">
         <MDBCard cascade className="my-3 mx-0 px-0 grey lighten-4">
@@ -87,44 +187,8 @@ class BrandsPage extends Component {
   render() {
     return (
       <>
+        <CustomCarousel /> 
         <div className="mt-3 mb-5">    
-          <MDBContainer className="mt-5 text-center">
-            <MDBRow>
-                <MDBCol>
-                <MDBJumbotron className="text-center">
-                    <MDBCardTitle className="card-title h4 pb-2">
-                    <strong>MARKI</strong>
-                    </MDBCardTitle>
-
-                    <MDBCardImage
-                    src="https://mdbootstrap.com/img/Photos/Slides/img%20(70).jpg"
-                    className="img-fluid"
-                    />
-                    <MDBCardBody>
-                    <MDBCardTitle className="indigo-text h5 m-4">
-                        Photography
-                    </MDBCardTitle>
-                    <MDBCardText>
-                        Sed ut perspiciatis unde omnis iste natus sit voluptatem
-                        accusantium doloremque laudantium, totam rem aperiam.
-                    </MDBCardText>
-
-                    <MDBCol className="d-flex justify-content-center mt-4" md="12">
-                        <MDBCol md="3" className="d-flex justify-content-around">
-                        <a href="#"><MDBIcon
-                            fab
-                            icon="facebook-f"
-                            className="grey-text"
-                            size="lg"
-                        /></a>
-                        </MDBCol>
-                    </MDBCol>
-
-                    </MDBCardBody>
-                </MDBJumbotron>
-                </MDBCol>
-            </MDBRow>
-          </MDBContainer>
           <MDBContainer  md="12" className="mx-1" style={{"max-width": "1920px"}}>
             <MDBRow>
               <MDBCol md="0" lg="1" style={{"max-width": "90%"}}/>

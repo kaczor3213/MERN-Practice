@@ -38,32 +38,15 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
   filter: opacity(.1);
 }
 
-
-.btn:hover {
-  border-color: #4caf50 !important; /* Green */
-  color: #4caf50 !important;
-}
-
-.headline {
-  z-index: 1;
-}
-
-.carousel-inner {
-  max-height: 80vh;
-  min-height: 30vh;
-}
-
-.img-carousel {
-  position: fixed;
+.landing-page {
+  min-height: 100vh;
+  background-image: url("../assets/landing_page.jpg");
+  background-position: center;
   background-repeat: no-repeat;
+  background-size: cover;
   background-attachment: scroll;
 }
 
-.fixed-bg {
-  /* The background image */
-  background-image: url("");
-  min-height: 500px;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
+.bg-transparent {
+  background-color: transparent !important;
 }

@@ -2,8 +2,6 @@ import React, { Component } from "react";
 // import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
-  MDBEdgeHeader,
-  MDBFreeBird,
   MDBContainer,
   MDBCol,
   MDBRow,
@@ -14,75 +12,14 @@ import {
   MDBCardImage,
   MDBCardText,
   MDBAnimation,
-  MDBNavLink
+  MDBNavLink,
+  MDBMask,
+  MDBView,
+  MDBBtn
 } from "mdbreact";
-import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBView, MDBMask } from
-"mdbreact";
 
 import "./HomePage.css";
 
-
-class CustomCarousel extends Component {
-  constructor(props) {
-    super(props);
-  };
-
-  render() {
-  return (
-  <MDBContainer className="px-0 mx-0 w-100 mw-100">
-    <MDBCarousel
-    activeItem={1}
-    length={4}
-    showControls={true}
-    showIndicators={false}
-  >
-    <MDBCarouselInner>
-      <MDBCarouselItem itemId="1">
-        <MDBView>
-          <img
-            className="img-carousel d-block w-100"
-            src={require('../assets/carousel_1.jpg')}
-            alt="First slide"
-          />
-        <MDBMask overlay="black-light" />
-        </MDBView>
-      </MDBCarouselItem>
-      <MDBCarouselItem itemId="2">
-        <MDBView>
-          <img
-            className="img-carousel d-block w-100"
-            src={require('../assets/carousel_2.jpg')}
-            alt="Second slide"
-          />
-        <MDBMask overlay="black-slight" />
-        </MDBView>
-      </MDBCarouselItem>
-      <MDBCarouselItem itemId="3">
-        <MDBView>
-          <img
-            className="img-carousel d-block w-100"
-            src={require('../assets/carousel_3.jpg')}
-            alt="Third slide"
-          />
-        <MDBMask overlay="black-slight" />
-        </MDBView>
-      </MDBCarouselItem>
-      <MDBCarouselItem itemId="4">
-        <MDBView>
-          <img
-            className="img-carousel d-block w-100"
-            src={require('../assets/carousel_4.jpg')}
-            alt="Third slide"
-          />
-        <MDBMask overlay="black-slight" />
-        </MDBView>
-      </MDBCarouselItem>
-    </MDBCarouselInner>
-  </MDBCarousel>
-  </MDBContainer>
-);
-}
-}
 
 class HomePage extends Component {
   constructor(props) {
@@ -154,84 +91,159 @@ class HomePage extends Component {
 
   render() {
     return (
-      <>
-      <CustomCarousel />        
-        <div className="mt-3 mb-5">
-          <MDBFreeBird>
-            <MDBRow>
-              <MDBCol
-                md="10"
-                className="mx-auto headline float-none white z-depth-1 py-2 px-2"
-              >
-                <MDBCardBody className="text-center">
-                  <h1 className="display-3 mb-4">
-                    <strong className="font-weight-bold">
-                      <img
-                        style={{ height: '9rem', width: '9rem' }}
-                        src={require('../assets/logo.png')}
-                        alt="mdbreact-logo"
-                        className="pr-2"
-                      />
-                      Rol Pol
-                    </strong>
-                  </h1>
-                  <MDBRow />
-                  <p>React Bootstrap with Material Design</p>
-                  <p className="pb-4">
-                    This application shows the actual use of MDB React
-                    components in the application.
-                  </p>
-                  <MDBRow className="d-flex flex-row justify-content-center row">
-                    <a
-                      className="border nav-link border-light rounded mr-1 mx-2 mb-2"
-                      href="https://mdbootstrap.com/react/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <MDBIcon icon="graduation-cap" className="mr-2" />
-                      <span className="font-weight-bold">Official Documentation</span>
-                    </a>
-                    <a
-                      className="border nav-link border-light rounded mx-2 mb-2"
-                      href="https://mdbootstrap.com/products/react-ui-kit/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <MDBIcon far icon="gem" className="mr-2" />
-                      <span className="font-weight-bold">PRO</span>
-                    </a>
-                    <a
-                      className="border nav-link border-light rounded mx-2 mb-2"
-                      href="https://mdbootstrap.com/docs/react/getting-started/download/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <MDBIcon icon="download" className="mr-2" />
-                      <span className="font-weight-bold">FREE</span>
-                    </a>
-                  </MDBRow>
-                </MDBCardBody>
+      <>  
+        <MDBView className="landing-page">
+          <MDBMask overlay="stylish-strong" style={{'padding-top': '4rem', 'padding-bottom': '1rem'}}>
+            <MDBRow className="fadeIn vertical-center">
+              <MDBCol md="5" lg="4" className="mx-auto headline white p-2 bg-transparent">
+              <div className="text-center white-text">
+                <h1 className="display-3 mb-4">
+                <img
+                      style={{'height':'9rem', 'width': '9rem' }}
+                      src={require('../assets/logo.png')}
+                      alt="mdbreact-logo"
+                      className="pr-2 d-inline"
+                    />
+                  <strong className="font-weight-bold">
+                    RolPol
+                  </strong>
+                  <hr class="hr-light"/>
+                </h1>
+                <h3>Od ponad <strong>30 lat</strong> na rynku</h3>
+                <h5 className="pb-4">Chcemy się podzielić pasją, doświadczeniem i dobrym sprzętem.</h5>
+                <MDBRow className="d-flex flex-row justify-content-center">  
+                  <MDBBtn outline>
+                    <MDBIcon icon="book" className="mr-2" />
+                    <span className="font-weight-bold">Warunki wynajmu</span>
+                  </MDBBtn>
+                  <MDBBtn outline color="success">
+                    <MDBIcon icon="fas fa-download" className="mr-2" />
+                    <span className="font-weight-bold">Katalog pełnej oferty</span>
+                  </MDBBtn>
+                </MDBRow>
+              </div>
+              </MDBCol>
+              <MDBCol md="5" lg="4" className="mx-auto headline white z-depth-1 p-2">
+                  <MDBCardBody className="bg-white">
+                    <form name="">
+                      <h3 class="dark-grey-text text-center">
+                        <strong>Zapisz się na nasz newsletter:</strong>
+                      </h3>
+                      <hr/>
+                      <div class="md-form">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <input type="text" id="form3" class="form-control"/>
+                        <label for="form3">Imię</label>
+                      </div>
+                      <div class="md-form">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <input type="text" id="form2" class="form-control"/>
+                        <label for="form2">Email</label>
+                      </div>
+                      <div class="text-center">
+                        <hr/>
+                        <fieldset class="form-check">
+                          <input type="checkbox" class="form-check-input" id="checkbox1" required/>
+                          <label for="checkbox1" class="form-check-label dark-grey-text">*Wyrażam zgodę na przetwarzanie moich danych osobowych</label>
+                        </fieldset>
+                      </div>
+                      <div class="text-center">
+                        <MDBBtn type="submit" outline color="primary">
+                          <MDBIcon icon="fas fa-paper-plane" className="mr-1" />
+                          <strong>Subskrybuj</strong>                
+                        </MDBBtn>
+                      </div>
+                    </form>
+                  </MDBCardBody>
               </MDBCol>
             </MDBRow>
-          </MDBFreeBird>
+          </MDBMask>
+        </MDBView>
+        <MDBContainer>
+          <section class="mt-5 wow fadeIn">
+            <MDBRow>
+              <MDBRow>
+                <MDBCol className="mb-4 text-center ">
+                <h3 class="h3 mb-3">Dlaczego my?</h3>
+                  <p>Jesteśmy fimą z wieloletnim doświadczeniem w obsłudze i konserwacji maszyn rolniczych.
+                  Wierzymy, że pod dobrą ręką każdy osprzęt może długo i wiernie służyć.
+                  Rynek dynamicznie się zmienia, a nie każdy rolnik jest w stanie pozwolić sobie na zakup nowego ciągnika.
+                  Dzięki naszej usłudze możesz w dowolnym momencie wynająć maszynę rolniczą do swojej dyspozycji!</p>
+                  <hr/>
+                </MDBCol>
+              </MDBRow>
+              <MDBCol className="mb-4">
+                <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-main.jpg" class="img-fluid z-depth-1-half" alt=""/>
+              </MDBCol>
+              <MDBCol md="6" className="mb-4">
+                <p>
+                  mamy <strong>200+</strong> maszyn rolniczych do wynajęcia,
+                  zatrudniamy <strong>48</strong> wyszkolonych i doświadczonych operatorów,
+                  w razie usterki pokrywamy do <strong>100.000 zł</strong> z ubezpieczenia, 
+                  dajemy <strong>pełną gwarancję</strong>, a w razie usterki dostarczamy sprzęt zastępczy bez dodatkowych kosztów
+                </p>
+                <MDBBtn className="dusty-grass-gradient">
+                  Katalog pełnej oferty
+                  <i class="fas fa-download ml-1"></i>
+                </MDBBtn>
+                <MDBBtn outline color="danger">
+                  Wspiera nas
+                  <i class="fab fa-youtube ml-1"></i>
+                </MDBBtn>
+              </MDBCol>
+            </MDBRow>
+          </section>
+          <hr class="my-5"/>
+          <section>
+            <h3 class="h3 text-center mb-5">O naszej ofercie</h3>
+            <MDBRow class="row wow fadeIn">
+              <MDBCol lg="6" md="12" className="px-4">
+                <MDBRow>
+                  <MDBCol size="1" className="mr-3">
+                    <MDBIcon icon="fas fa-tractor fa-2x" className="green-text"/>
+                  </MDBCol>
+                  <MDBCol size="10">
+                    <h5 class="feature-title">Duże maszyny</h5>
+                    <p class="grey-text">Dysponujemy ciagnikami, kombajnami i innym ciężkim sprzętem.</p>
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                  <MDBCol size="1" className="mr-3">
+                    <MDBIcon icon="fas fa-car-crash fa-2x" className="orange-text"/>
+                  </MDBCol>
+                  <MDBCol size="10">
+                    <h5 class="feature-title">Szerokie ubezpieczenie</h5>
+                    <p class="grey-text">Na każdą maszynę mamy różne formy ubezpieczenia, asekurując udany wynajm.
+                    </p>
+                  </MDBCol>
+                </MDBRow>
+                <MDBRow>
+                  <MDBCol size="1" className="mr-3">
+                    <MDBIcon icon="fas fa-wrench fa-2x" className="grey-text"/>
+                  </MDBCol>
+                  <MDBCol size="10">
+                    <h5 class="feature-title">Serwis i jakość</h5>
+                    <p class="grey-text">Każda maszyna ma aktualne badania techniczne, jest w pełni sprawna, a w razie drobnej awarii dokonujemy szybkiej naprawy.
+                    </p>
+                  </MDBCol>
+                </MDBRow>
+              </MDBCol>
+              <MDBCol lg="6" md="12">
+                <p class="h5 text-center mb-4">Zobacz nasz sprzęt w akcji!</p>
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/mu_SnrMacwA" allowfullscreen></iframe>
+                </div>
+              </MDBCol>
+            </MDBRow>
+          </section>
+        </MDBContainer>
+        <div className="mt-3 mb-5">
           <MDBContainer>
             <MDBRow>
               <MDBCol md="12" className="mt-4">
                 <h2 className="text-center my-5 font-weight-bold">
-                  Dlaczego my?
+                  Obejrzyj nasz sprzęt już teraz!
                 </h2>
-                <p className="text-center text-muted mb-1">
-                  Jesteśmy fimą z wieloletnim doświadczeniem w obsłudze i konserwacji maszyn rolniczych.  
-                </p>
-                <p className="text-center text-muted mb-1">
-                Wierzymy, że pod dobrą ręką każdy osprzęt może długo i wiernie służyć.                
-                </p>
-                <p className="text-center text-muted mb-1">
-                  Rynek dynamicznie się zmienia, a nie każdy rolnik jest w stanie pozwolić sobie na zakup nowego ciągnika.
-                </p>
-                <p className="text-center text-muted">
-                  Dzięki naszej usłudze możesz w dowolnym momencie wynająć maszynę rolniczą do swojej dyspozycji!
-                </p>
                 <hr className="my-5" />
               </MDBCol>
             </MDBRow>

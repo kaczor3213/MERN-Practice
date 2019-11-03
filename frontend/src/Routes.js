@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
 import BrandsPage from "./pages/BrandsPage";
+import CategoryPage from "./pages/CategoryPage";
 
 
 class Routes extends React.Component {
@@ -13,10 +14,10 @@ class Routes extends React.Component {
         {/* COMMON_ACCESS ROUTES */}
         <Route exact path="/" component={HomePage} />
         <Route exact path="/brands" component={BrandsPage} />
-        
+        <Route exact path="/category" component={CategoryPage} />
         {/* <Route exact path="/equipment" component={EquipmentPage} />
         
-        <Route exact path="/categories" component={CategoriesPage} />
+        
 
         <Route exact path="/admin" component={AdminLoginPage} />
         <Route path="/admin/logout" component={AdminLogoutPage} />
