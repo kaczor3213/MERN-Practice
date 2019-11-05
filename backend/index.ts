@@ -146,7 +146,7 @@ createConnection().then(async connection => {
     });
 
     // equipment for specific brand view
-    app.get("/equipment/:brand", async function(req: Request, res: Response) {
+    app.get("/equipment/brand/:brand", async function(req: Request, res: Response) {
         return CommonAccessControl.EquipmentOfSpecificBrand(req, res);
     });
 
@@ -156,7 +156,7 @@ createConnection().then(async connection => {
     });
 
     // equipment_types view
-    app.get("/equipment/:equipment_type", async function(req: Request, res: Response) {
+    app.get("/equipment/category/:type", async function(req: Request, res: Response) {
         return CommonAccessControl.EquipmentOfSpecificType(req, res);
     });
 

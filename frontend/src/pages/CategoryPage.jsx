@@ -1,27 +1,21 @@
 import React, { Component } from "react";
-// import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
   MDBContainer,
   MDBCol,
   MDBRow,
-  MDBCardBody,
   MDBIcon,
-  MDBCard,
   MDBCardTitle,
-  MDBJumbotron,
-  MDBBtn
+  MDBBtn,
+  MDBView,
+  MDBMask,
 } from "mdbreact";
-
-import "./BrandPage.css";
-
-
-
+import "./CategoryPage.css";
 
 class CategoryPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {brands_arr: []};
+    this.state = {category_arr: []};
   }
 
   componentDidMount() {
@@ -36,35 +30,37 @@ class CategoryPage extends Component {
   }
 
   makeCategoryJumbos() {
-    return <MDBRow id="brands">
+    return <MDBRow id="types">
         {this.gatherAllCategoryJumbos()}
         </MDBRow>;
   }
-
+  
   gatherAllCategoryJumbos() {
     let tmp = [];
+    var i=0;
     while (this.state.category_arr.length>0)
-      tmp.push(this.makeCategoryJumbo(this.state.category_arr.pop()));
-    return tmp;
+      tmp.push(this.makeCategoryJumbo(this.state.category_arr.pop(), i));
+      i++;
+    return tmp.reverse();
   }
-  
-  makeCategoryJumbo(category) {
+
+  makeCategoryJumbo(category, index) {
     return (           
-        <MDBRow>
-        <MDBCol>
-            <MDBJumbotron style={{ padding: 0 }}>
-            <MDBCol className="text-white text-center py-5 px-4 my-5" style={{ backgroundImage: `url(https://mdbootstrap.com/img/Photos/Others/gradient1.jpg)` }}>
-                <MDBCol className="py-5">
-                <MDBCardTitle className="h1-responsive pt-3 m-5 font-bold">{category}</MDBCardTitle>
-                <p className="mx-5 mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
-                    optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos. Odit sed qui, dolorum!
-                </p>
-                <MDBBtn outline color="white" className="mb-5"><MDBIcon icon="clone" className="mr-2"></MDBIcon> View project</MDBBtn>
-                </MDBCol>
-            </MDBCol>
-            </MDBJumbotron>
+        <MDBCol md="12" className="m-0 category-card p-0" id={index} style={{'backgroundImage': 'url(' + require("../assets/category/" + category.toLowerCase()+".jpg") + ')' }}>
+            <MDBView className="category-card" >
+              <MDBMask overlay="black-light" style={{'padding-top': '4rem', 'padding-bottom': '1rem'}}>
+                <div className="text-white text-center py-5 px-4" >
+                    <MDBCol className="py-5">
+                    <MDBCardTitle className="h1-responsive pt-3 m-5 font-bold">{category}</MDBCardTitle>
+                    <p className="mx-5 mb-5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
+                        optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos. Odit sed qui, dolorum!
+                    </p>
+                    <MDBBtn outline color="white" className="mb-5"><MDBIcon icon="clone" className="mr-2"></MDBIcon> View project</MDBBtn>
+                    </MDBCol>
+                </div>
+              </MDBMask>
+            </MDBView>            
         </MDBCol>
-        </MDBRow>
     );
   }
 
@@ -73,11 +69,9 @@ class CategoryPage extends Component {
   render() {
     return (
       <>
-        <div className="mt-3 mb-5">    
-          <MDBContainer  md="12" className="mx-1" style={{"max-width": "1920px"}}>
-            {this.makeCategoryJumbos()}
-          </MDBContainer>
-        </div>
+        <MDBContainer  md="12" className="m-0 p-0" style={{"max-width": "1920px"}}>
+          {this.makeCategoryJumbos()}
+        </MDBContainer>
       </>
     );
   }

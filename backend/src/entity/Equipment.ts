@@ -3,11 +3,11 @@ import { Order } from './Order'
 import { IsInt, Min, Max } from "class-validator";
 
 export enum EquipmentType {
-    TRACTOR = "tractor",
-    HARVESTER = "harvester",
-    CULTIVATOR = "cultivator",
-    SOWING_MACHINE = "sowing machine",
-    TIPPER = "tipper",
+    TRACTOR = "TRACTOR",
+    HARVESTER = "HARVESTER",
+    CULTIVATOR = "CULTIVATOR",
+    SOWING_MACHINE = "SOWING_MACHINE",
+    TIPPER = "TIPPER",
 }
 
 export enum TyreType {

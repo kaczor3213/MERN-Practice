@@ -17,9 +17,7 @@ import {
   MDBView,
   MDBBtn
 } from "mdbreact";
-
 import "./HomePage.css";
-
 
 class HomePage extends Component {
   constructor(props) {
@@ -248,7 +246,7 @@ class HomePage extends Component {
               </MDBCol>
             </MDBRow>
           </MDBContainer>
-          <MDBContainer  md="12" className="mx-1" style={{"max-width": "1920px"}}>
+          <MDBContainer md="12" className="mx-1" style={{"max-width": "1920px"}}>
             <MDBRow>
               <MDBCol md="0" lg="1" style={{"max-width": "90%"}}/>
               <MDBCol className="mt-4" md="12" lg="10">

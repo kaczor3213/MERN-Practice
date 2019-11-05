@@ -4,8 +4,8 @@ import { Route, Switch } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import BrandsPage from "./pages/BrandsPage";
 import CategoryPage from "./pages/CategoryPage";
-
-
+import EquipmentPage from "./pages/EquipmentPage";
+import EquipmentCategoryPage from "./pages/EquipmentCategoryPage";
 class Routes extends React.Component {
   render() {
     return (
@@ -15,10 +15,11 @@ class Routes extends React.Component {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/brands" component={BrandsPage} />
         <Route exact path="/category" component={CategoryPage} />
-        {/* <Route exact path="/equipment" component={EquipmentPage} />
-        
+        <Route exact path="/equipment" component={EquipmentPage} />
+        <Route path="/equipment/category/:type" component={EquipmentCategoryPage} />
         
 
+        {/* 
         <Route exact path="/admin" component={AdminLoginPage} />
         <Route path="/admin/logout" component={AdminLogoutPage} />
         <Route path="/admin/panel" component={AdminPanelPage} />
@@ -26,7 +27,6 @@ class Routes extends React.Component {
         <Route path="/admin/orders" component={AdminOrdersPage} />
         <Route path="/admin/equipment" component={AdminEquipmentPage} />
         <Route path="/admin/equipment/add" component={AdminEquipmentAddPage} />
-
         <Route exact path="/login" component={UserLoginPage} />
         <Route exact path="/register" component={UserRegisterPage} />
         <Route exact path="/myprofile" component={UserProfilePage} />

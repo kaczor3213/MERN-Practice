@@ -9,7 +9,11 @@ a.border.nav-link.border-light.rounded.mr-1 {
 a.border.nav-link.border-light.rounded.mr-1:hover {
   color: #1C2331;
 }
- 
+
+.btn.btn-sm.indigo:hover{
+  color: #fff;
+}
+
 .nav-link.active{
   background-color: rgba(255, 255, 255, 0.1);
 }
@@ -17,18 +21,26 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
 #categories > .col-md-4.mb-5{
   margin-bottom: 8rem !important;
 }
+.sectionPage {
+  position: relative;
+  top: -15px;
+  margin-bottom: -125px;
+}
 
-.category-card {
+.equipment-page {
   min-height: 100vh;
+  background-image: url("../assets/equipment_page.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: scroll;
+  background-attachment: fixed;
 }
 
-
-.vertical-center {
-  min-height: 100%;
-  display: flex;
-  align-items: center;
+.masker {
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.2), 
+    rgba(0, 0, 0, 0.2)
+  );
+  margin: 0;
+  padding: 0;
 }

@@ -34,7 +34,7 @@ class NavBar extends Component {
 
             <MDBNavbar color="bg-success" dark expand='md' fixed='top' scrolling transparent>
                 <MDBNavbarBrand href='/' className='py-0 font-weight-bold'>
-                    <img src={require('../assets/logo.png')} style={{ height: '2.5rem', width: '2.5rem' }} />
+                    <img src={require('../assets/logo.png')} style={{ height: '2.5rem', width: '2.5rem' }} alt=""/>
                     <strong className='align-middle'>RolPol</strong>
                 </MDBNavbarBrand>
                 <MDBNavbarToggler
@@ -74,7 +74,7 @@ class NavBar extends Component {
                     <MDBNavItem>
                         <MDBNavLink
                         onClick={this.closeCollapse('mainNavbarCollapse')}
-                        to='/components'
+                        to='/equipment'
                         >
                         <strong>Sprzęt rolniczy</strong>
                         </MDBNavLink>

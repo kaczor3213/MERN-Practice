@@ -25,8 +25,14 @@ export const Search = async (req: Request, res: Response) => {
 // Equipments controller (takes request, response from route call)
 export const Equipments = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
-    let equipments = await equipmentRepository.find();        
-    return res.json(equipments);
+    let equipments = await equipmentRepository.find();
+    let tmp = [];
+    for(var key in EquipmentType)
+        tmp.push(EquipmentType[key]);
+    return res.json({
+        'equipment': equipments,
+        'category': tmp
+    });
 }
 
 // Equipments controller (takes request, response from route call)
@@ -40,7 +46,7 @@ export const Brands = async (req: Request, res: Response) => {
 // Equipments controller (takes request, response from route call)
 export const EquipmentOfSpecificBrand = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
-    let equipments = equipmentRepository.find({brand: req.params.brand});
+    let equipments = await equipmentRepository.find({brand: req.params.brand.toUpperCase()});
     return res.json(equipments);
 }
 
@@ -54,7 +60,13 @@ export const EquipmentTypes = async (req: Request, res: Response) => {
 
 // Specific equipment controller (takes request, response from route call)
 export const EquipmentOfSpecificType = async (req: Request, res: Response) => {
-    const equipmentRepository = getConnection().getRepository(Equipment);
-    let equipments = equipmentRepository.find({equipment_type: req.params.equipment_type});
-    return res.json(equipments);     
+    const equipmentRepository = getConnection().getRepository(Equipment);     
+    let equipments = await equipmentRepository.find({equipment_type: req.params.type.toUpperCase()});
+    let tmp = [];
+    for(var key in EquipmentType)
+        tmp.push(EquipmentType[key]);
+    return res.json({
+        'equipment': equipments,
+        'category': tmp
+    });
 }

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-// import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
   MDBContainer,
@@ -20,13 +19,9 @@ import {
   MDBMask,
   MDBBtn
 } from "mdbreact";
-
 import "./BrandPage.css";
 
 class CustomCard extends Component {
-    constructor(props) {
-        super(props);
-      };
   
     render() {
         return (
@@ -44,7 +39,6 @@ class CustomCard extends Component {
                       />
                   <h1 className="display-4 mb-4">
                     <strong className="font-weight-bold">
-                      
                       Nasze Marki
                     </strong>
                   </h1>
@@ -65,9 +59,6 @@ class CustomCard extends Component {
 }
 
 class CustomCarousel extends Component {
-    constructor(props) {
-      super(props);
-    };
   
     render() {
     return (
