@@ -98,7 +98,7 @@ class HomePage extends Component {
                 <h1 className="display-3 mb-4">
                 <img
                       style={{'height':'9rem', 'width': '9rem' }}
-                      src={require('../assets/logo.png')}
+                      src={require('../../assets/logo.png')}
                       alt="mdbreact-logo"
                       className="pr-2 d-inline"
                     />

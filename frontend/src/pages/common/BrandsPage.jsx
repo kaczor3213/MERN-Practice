@@ -33,7 +33,7 @@ class CustomCard extends Component {
                 <MDBCardBody className="text-center">
                 <img
                         style={{ height: '9rem', width: '9rem' }}
-                        src={require('../assets/logo.png')}
+                        src={require('../../assets/logo.png')}
                         alt="rol-pol-logo"
                         className="pr-2 d-inline"
                       />
@@ -148,7 +148,7 @@ class BrandsPage extends Component {
           <MDBCardImage
             cascade
             className="img-fluid"
-            src={require("../assets/brands/" + brand.toLowerCase()+".png")}
+            src={require("../../assets/brands/" + brand.toLowerCase()+".png")}
             style={{height: "50%", margin: "auto"}}
           />
           </MDBContainer>

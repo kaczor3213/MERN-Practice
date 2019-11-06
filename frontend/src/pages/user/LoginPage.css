@@ -1,0 +1,95 @@
+body {
+	background:#fff;
+}
+
+a.border.nav-link.border-light.rounded.mr-1 {
+  color: #3F729B;
+}
+
+a.border.nav-link.border-light.rounded.mr-1:hover {
+  color: #1C2331;
+}
+
+.btn.btn-sm.indigo:hover{
+  color: #fff;
+}
+
+.nav-link.active{
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+#categories > .col-md-4.mb-5{
+  margin-bottom: 8rem !important;
+}
+.sectionPage {
+  position: relative;
+  top: -15px;
+  margin-bottom: -125px;
+}
+
+.login-page {
+  min-height: 100vh;
+  background-image: url("../../assets/login_page.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.masker {
+  height: 100%;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.4), 
+    rgba(35, 100, 19, 0.4)
+  );
+  margin: 0;
+  padding: 0;
+}
+
+.vertical-center {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+label {
+  color: white !important;
+}
+
+
+.form-group>label.active {
+  color: #00c851 !important;
+}
+
+
+.prefix.active {
+  color: #00c851 !important;
+}
+
+.green-hover {
+  color: black;
+}
+
+
+.green-hover:focus {
+  color: #00c851;
+  border-bottom: 1px solid  #00c851 !important;
+  box-shadow: 0 1px 0 0 #00c851 !important;
+  background-color: white;
+}
+
+.custom-btn {
+  background: white !important; 
+  border-radius: 20px !important;
+}
+
+.custom-btn:hover {
+  color: #00c851 !important;
+  border-radius: 20px !important;
+}
+
+.custom-btn:focus {
+  background: white !important; 
+  border-radius: 20px !important;
+}
+

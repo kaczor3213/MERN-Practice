@@ -46,7 +46,7 @@ class CategoryPage extends Component {
 
   makeCategoryJumbo(category, index) {
     return (           
-        <MDBCol md="12" className="m-0 category-card p-0" id={index} style={{'backgroundImage': 'url(' + require("../assets/category/" + category.toLowerCase()+".jpg") + ')' }}>
+        <MDBCol md="12" className="m-0 category-card p-0" id={index} style={{'backgroundImage': 'url(' + require("../../assets/category/" + category.toLowerCase()+".jpg") + ')' }}>
             <MDBView className="category-card" >
               <MDBMask overlay="black-light" style={{'padding-top': '4rem', 'padding-bottom': '1rem'}}>
                 <div className="text-white text-center py-5 px-4" >

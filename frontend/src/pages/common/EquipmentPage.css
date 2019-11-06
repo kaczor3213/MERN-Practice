@@ -27,26 +27,21 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
   margin-bottom: -125px;
 }
 
-.sectionPage::after {
-  content: '';
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  background: url('https://mdbootstrap.com/wp-content/uploads/2016/12/big-bundle1.jpg');
-  background-position: center center;
-  background-size: cover;
-  filter: opacity(.1);
-}
-
-.landing-page {
+.equipment-page {
   min-height: 100vh;
-  background-image: url("../assets/landing_page.jpg");
+  background-image: url("../../assets/equipment_page.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  background-attachment: scroll;
+  background-attachment: fixed;
 }
 
-.bg-transparent {
-  background-color: transparent !important;
+.masker {
+  height: 100%;
+  background: linear-gradient(
+    rgba(0, 0, 0, 0.2), 
+    rgba(0, 0, 0, 0.2)
+  );
+  margin: 0;
+  padding: 0;
 }
