@@ -13,12 +13,14 @@ class RegisterPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            fname: "",
-            lname: "",
+            firstname: "",
+            lastname: "",
             email: "",
+            address: "",
             city: "",
-            state: "",
-            zip: ""
+            zip: "",
+            password: "",
+            password_r: ""
           };
     }
         
@@ -42,114 +44,163 @@ class RegisterPage extends React.Component {
             <p className="h2 text-center white-text mb-4">Rejestracja</p>
             <hr className="white"/>
             <div className="grey-text">
-                <MDBInput
-                        className="green-hover"
-                        label="Podaj swoje imię"
-                        icon="user"
-                        name="fname"
-                        type="text"
-                        id="firstname"
-                        error="wrong"
-                        success="right"
-                        onChange={this.changeHandler}
-                        required
-                    >
-                    <div className="invalid-tooltip">Please provide a valid first name.</div>
-                    <div className="valid-tooltip">Looks good!</div>
-                </MDBInput>
-                <MDBInput
-                        className="green-hover"
-                        label="Podaj swoje nazwisko"
-                        icon="user"
-                        name="lname"
-                        type="text"
-                        id="lastname"
-                        error="wrong"
-                        success="right"
-                        onChange={this.changeHandler}
-                        required
-                    >
-                    <div className="invalid-tooltip">Please provide a valid last name.</div>
-                    <div className="valid-tooltip">Looks good!</div>
-                </MDBInput>
-                <MDBInput
-                        className="green-hover"
-                        label="Podaj swój email"
-                        icon="at"
-                        name="email"
-                        type="email"
-                        id="email"
-                        error="wrong"
-                        success="right"
-                        onChange={this.changeHandler}
-                        required
-                    >
-                    <div className="invalid-tooltip">Please provide a valid email.</div>
-                    <div className="valid-tooltip">Looks good!</div>
-                </MDBInput>
-                <MDBInput
-                        className="green-hover"
-                        label="Podaj swój adres zamieszkania"
-                        icon="home"
-                        name="address"
-                        type="text"
-                        id="address"
-                        error="wrong"
-                        success="right"
-                        onChange={this.changeHandler}
-                        required
-                    >
-                    <div className="invalid-tooltip">Please provide a valid address.</div>
-                    <div className="valid-tooltip">Looks good!</div>
-                </MDBInput>
-                <MDBInput
-                        className="green-hover"
-                        label="Podaj nazwę swojej miejscowości"
-                        icon="city"
-                        name="city"
-                        type="text"
-                        id="city"
-                        error="wrong"
-                        success="right"
-                        onChange={this.changeHandler}
-                        required
-                    >
-                    <div className="invalid-tooltip">Please provide a valid address.</div>
-                    <div className="valid-tooltip">Looks good!</div>
-                </MDBInput>
-                <MDBInput
-                        className="green-hover"
-                        label="Podaj kod pocztowy"
-                        icon="envelope"
-                        name="postalcode"
-                        type="text"
-                        id="postalcode"
-                        error="wrong"
-                        success="right"
-                        onChange={this.changeHandler}
-                        required
-                    >
-                    <div className="invalid-tooltip">Please provide a valid address.</div>
-                    <div className="valid-tooltip">Looks good!</div>
-                </MDBInput>
-                <MDBInput
-                        className="green-hover"
-                        label="Podaj kod pocztowy"
-                        icon="envelope"
-                        name="postalcode"
-                        type="text"
-                        id="postalcode"
-                        error="wrong"
-                        success="right"
-                        onChange={this.changeHandler}
-                        required
-                    >
-                    <div className="invalid-tooltip">Please provide a valid address.</div>
-                    <div className="valid-tooltip">Looks good!</div>
-                </MDBInput>
+            <div>
+                <MDBRow>
+                    <MDBCol md="6">
+                    <MDBInput
+                            className="green-hover"
+                            label="Podaj swoje imię"
+                            icon="user"
+                            name="firstname"
+                            type="text"
+                            id="firstname"
+                            error="wrong"
+                            success="right"
+                            onChange={this.changeHandler}
+                            required
+                        >
+                        <div className="invalid-tooltip">Please provide a valid first name.</div>
+                        <div className="valid-tooltip">Looks good!</div>
+                    </MDBInput>
+                    </MDBCol>
+                    <MDBCol md="6">
+                    <MDBInput
+                            className="green-hover"
+                            label="Podaj swoje nazwisko"
+                            name="lastname"
+                            type="text"
+                            id="lastname"
+                            error="wrong"
+                            success="right"
+                            onChange={this.changeHandler}
+                            required
+                        >
+                        <div className="invalid-tooltip">Please provide a valid last name.</div>
+                        <div className="valid-tooltip">Looks good!</div>
+                    </MDBInput>
+                    </MDBCol>
+                    <MDBCol md="6">
+                    <MDBInput
+                            className="green-hover"
+                            label="Podaj swój email"
+                            icon="at"
+                            name="email"
+                            type="email"
+                            id="email"
+                            error="wrong"
+                            success="right"
+                            onChange={this.changeHandler}
+                            required
+                        >
+                        <div className="invalid-tooltip">Please provide a valid email.</div>
+                        <div className="valid-tooltip">Looks good!</div>
+                    </MDBInput>
+                    </MDBCol>
+                </MDBRow>
+                </div>
+                <hr className="white"/>
+                <div>
+                    <MDBRow>
+                        <MDBCol md="6">
+                        <MDBInput
+                                className="green-hover"
+                                label="Podaj adres zam."
+                                icon="home"
+                                name="address"
+                                type="text"
+                                id="address"
+                                error="wrong"
+                                success="right"
+                                onChange={this.changeHandler}
+                                required
+                            >
+                            <div className="invalid-tooltip">Please provide a valid address.</div>
+                            <div className="valid-tooltip">Looks good!</div>
+                        </MDBInput>
+                        </MDBCol>
+                        <MDBCol md="6">
+                        <MDBInput
+                                className="green-hover"
+                                label="Podaj miejscowość"
+                                icon="city"
+                                name="city"
+                                type="text"
+                                id="city"
+                                error="wrong"
+                                success="right"
+                                onChange={this.changeHandler}
+                                required
+                            >
+                            <div className="invalid-tooltip">Please provide a valid address.</div>
+                            <div className="valid-tooltip">Looks good!</div>
+                        </MDBInput>
+                        </MDBCol>
+                        <MDBCol md="6">
+                        <MDBInput
+                                className="green-hover"
+                                label="Podaj kod pocztowy"
+                                icon="envelope"
+                                name="postalcode"
+                                type="text"
+                                id="postalcode"
+                                error="wrong"
+                                success="right"
+                                onChange={this.changeHandler}
+                                required
+                            >
+                            <div className="invalid-tooltip">Please provide a valid address.</div>
+                            <div className="valid-tooltip">Looks good!</div>
+                        </MDBInput>
+                        </MDBCol>
+                    </MDBRow>
+                </div>
+                <hr className="white"/>
+                <div>
+                    <MDBRow>
+                        <MDBCol md="6">
+                        <MDBInput
+                                className="green-hover"
+                                label="Podaj hasło"
+                                icon="lock"
+                                name="password"
+                                type="password"
+                                id="password"
+                                error="wrong"
+                                success="right"
+                                onChange={this.changeHandler}
+                                required
+                            >
+                            <div className="invalid-tooltip">Please provide a valid address.</div>
+                            <div className="valid-tooltip">Looks good!</div>
+                        </MDBInput>
+                        </MDBCol>
+                        <MDBCol md="6">
+                        <MDBInput
+                                className="green-hover"
+                                label="Powtórz hasło"
+                                name="password_r"
+                                type="password"
+                                id="password_r"
+                                error="wrong"
+                                success="right"
+                                onChange={this.changeHandler}
+                                required
+                            >
+                            <div className="invalid-tooltip">Please provide a valid address.</div>
+                            <div className="valid-tooltip">Looks good!</div>
+                        </MDBInput>
+                        </MDBCol>
+                    </MDBRow>
+                </div>
+                <hr className="white"/>
+
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="defaultUnchecked"/>
+                    <label class="custom-control-label" for="defaultUnchecked">*Wyrażam zgodę na przetwarzanie danych osobowych i zgadzam się z regulaminem wypożyczalni.</label>
+                </div>
             </div>
-          <MDBBtn color="primary" type="submit">
-            Submit Form
+          <MDBBtn className="custom-btn whitey-text" type="submit">
+            Potwierdź
           </MDBBtn>
         </form>
         </MDBCol>

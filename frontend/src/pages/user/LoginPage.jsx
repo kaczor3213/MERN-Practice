@@ -46,9 +46,9 @@ class LoginPage extends React.Component {
                     <p className="h5 text-center white-text mb-2">Bądź zaloguj się z:</p>
                     <div className="text-center">
                         <MDBBtnGroup>
-                            <MDBBtn className="custom-btn grey-text mx-4"><i class="fab fa-facebook-f fa-2x"></i></MDBBtn>
-                            <MDBBtn className="custom-btn grey-text mx-4"><i class="fab fa-google-plus-g fa-2x"></i></MDBBtn>
-                            <MDBBtn className="custom-btn grey-text mx-4"><i class="fab fa-instagram fa-2x"></i></MDBBtn>
+                            <MDBBtn className="custom-btn whitey-text mx-4"><i class="fab fa-facebook-f fa-2x"></i></MDBBtn>
+                            <MDBBtn className="custom-btn whitey-text mx-4"><i class="fab fa-google-plus-g fa-2x"></i></MDBBtn>
+                            <MDBBtn className="custom-btn whitey-text mx-4"><i class="fab fa-instagram fa-2x"></i></MDBBtn>
                         </MDBBtnGroup>
                     </div>
                     <hr className="white"/>
@@ -59,11 +59,11 @@ class LoginPage extends React.Component {
                             tag="button"
                             to="/register"
                             color="amber"
-                            className="btn grey-text custom-btn mx-5"
+                            className="btn whitey-text custom-btn mx-5"
                         >
                             Rejestracja
                         </MDBNavLink>
-                        <MDBBtn type="submit" className="mx-5 grey-text custom-btn">Login</MDBBtn>
+                        <MDBBtn type="submit" className="mx-5 whitey-text custom-btn">Login</MDBBtn>
                     </MDBBtnGroup>
                     </div>
                 </form>

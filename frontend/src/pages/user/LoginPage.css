@@ -39,8 +39,8 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
 .masker {
   height: 100%;
   background: linear-gradient(
-    rgba(0, 0, 0, 0.4), 
-    rgba(35, 100, 19, 0.4)
+    rgba(0, 0, 0, 0.5), 
+    rgba(19, 56, 10, 0.5)
   );
   margin: 0;
   padding: 0;
@@ -67,7 +67,7 @@ label {
 }
 
 .green-hover {
-  color: black;
+  color: white;
 }
 
 
@@ -79,8 +79,13 @@ label {
 }
 
 .custom-btn {
-  background: white !important; 
+  background: rgb(0, 0, 0, 0.3) !important; 
+  border: 2px white solid !important;
   border-radius: 20px !important;
+}
+
+.whitey-text {
+  color: rgb(218, 218, 218);
 }
 
 .custom-btn:hover {

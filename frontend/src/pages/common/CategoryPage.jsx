@@ -12,6 +12,7 @@ import {
 } from "mdbreact";
 import "./CategoryPage.css";
 
+
 class CategoryPage extends Component {
   constructor(props) {
     super(props);
@@ -59,7 +60,7 @@ class CategoryPage extends Component {
                     </MDBCol>
                 </div>
               </MDBMask>
-            </MDBView>            
+            </MDBView>
         </MDBCol>
     );
   }
