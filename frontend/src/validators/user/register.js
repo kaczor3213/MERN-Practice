@@ -9,8 +9,7 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
     const userRepository = tmp_connection.getRepository(User);
     var USER_ERROR_CODE  = {
         "TOTAL_WARNINGS": 0,
-        "WRONG_FIRST_NAME": false,
-        "WRONG_LAST_NAME": false,
+        "WRONG_NAME": false,
         "WRONG_EMAIL": false,
         "OCCUPIED_EMAIL": false,
         "WRONG_ADDRESS": false,
@@ -19,12 +18,11 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
         "OCCUPIED_PHONE_NUMBER": false,
         "WRONG_POST_CODE": false,
         "WRONG_PASSWORD": false,
-        "PASSWORDS_DONT_MATCH": false,
     }
     let nameRegex = /^[a-zA-Z]{1,50}$/;
     let emailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
-    let phoneNumberRegex = /^[1-9][0-9]{8}$/;
-    let postCodeRegex = /^[0-9]{2}-[0-9]{3}$/;
+    let phone_numberRegex = /^[1-9][0-9]{8}$/;
+    let post_codeRegex = /^[0-9]{2}-[0-9]{3}$/;
     let passwordRegex = /^((?=\S*?[A-Z])(?=\S*?[a-z])(?=\S*?[0-9]).{8,})\S$/;
     // First name validation
     try {
@@ -37,8 +35,7 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
     }
     catch(e) {
         console.log(e);
-        USER_ERROR_CODE.TOTAL_WARNINGS++;
-        USER_ERROR_CODE.WRONG_FIRST_NAME=true;
+        USER_ERROR_CODE.WRONG_NAME=true;
     }
     // Last name validation
     try {
@@ -52,7 +49,7 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
     catch(e) {
         console.log(e);
         USER_ERROR_CODE.TOTAL_WARNINGS++;
-        USER_ERROR_CODE.WRONG_LAST_NAME=true;
+        USER_ERROR_CODE.WRONG_NAME=true;
     }
 
     // Email validation
@@ -83,11 +80,11 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
     
     // Phone number validation
     try {
-        if(params.phoneNumber === undefined)
+        if(params.phone_number === undefined)
             throw new TypeError("Email was not defined for user!");
-        if(params.phoneNumber.length === 0)
+        if(params.phone_number.length === 0)
             throw new TypeError("Email cannot be an empty string!");
-        if(!phoneNumberRegex.test(params.phoneNumber))
+        if(!phone_numberRegex.test(params.phone_number))
             throw new SyntaxError("Given email is not valid!");
     }
     catch(e) {
@@ -98,8 +95,8 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
 
     // Phone number uniqueness validation
     try {
-        if(await userRepository.findOne({phoneNumber: params.phoneNumber}) != undefined)
-            throw new Error("There is user with this phone number in database!");
+        if(await userRepository.findOne({phone_number: params.phone_number}) != undefined)
+            throw new Error("There is user with this email in database!");
     }
     catch(e) {
         console.log(e)
@@ -135,11 +132,11 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
 
     // Post code validation
     try {
-        if(params.postCode === undefined)
+        if(params.post_code === undefined)
             throw new TypeError("Post code was not defined for user!");
-        if(params.postCode.length === 0)
+        if(params.post_code.length === 0)
             throw new TypeError("Post code cannot be an empty string!");
-        if(!postCodeRegex.test(params.postCode))
+        if(!post_codeRegex.test(params.post_code))
             throw new SyntaxError("Post code must be in format 99-999");
     }
     catch(e) {
@@ -161,19 +158,6 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
         console.log(e)
         USER_ERROR_CODE.TOTAL_WARNINGS++;
         USER_ERROR_CODE.WRONG_PASSWORD=true;
-    }
-
-    // Password validation
-    try {
-        if(params.password !== params.password_r)
-            throw new SyntaxError("Passwords don't match.");
-        else
-            delete params.password_r;
-    }
-    catch(e) {
-        console.log(e)
-        USER_ERROR_CODE.TOTAL_WARNINGS++;
-        USER_ERROR_CODE.PASSWORDS_DONT_MATCH=true;
     }
     // role validation
     try {

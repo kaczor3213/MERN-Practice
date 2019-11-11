@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, Unique} from "typeorm";
 import {Length, IsEmail, IsPhoneNumber} from "class-validator";
 import {Order} from "./Order";
 
@@ -8,6 +8,7 @@ export enum UserRole {
 }
 
 @Entity()
+@Unique(["email", "phoneNumber"])
 export class User {
 
     @PrimaryGeneratedColumn()
@@ -27,16 +28,16 @@ export class User {
 
     @Column({unique: true})
     @IsPhoneNumber("PL")
-    phone_number: string;
+    phoneNumber: string;
 
     @Column()
     address: string;
 
     @Column()
-    place: string
+    place: string;
 
     @Column()
-    post_code: string
+    postCode: string;
 
     @Column("text")
     password: string;

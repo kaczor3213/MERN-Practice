@@ -53,8 +53,7 @@ export const SignUp = async (req: Request, res: Response) => {
     if(results["TOTAL_WARNINGS"] == 0) {
         let user = await userRepository.create(req.body);
         await userRepository.save(user);
-        return res.send(user);
-        //return res.redirect('/login');
+        return res.json(results);
     }
     return res.json(results);
 }
@@ -135,7 +134,7 @@ export const SettingsView = async (req: Request, res: Response) => {
     console.log(results);
     if(results["IS_VALID"] == true ) {
         let user = await userRepository.findOne({
-            select: ["firstName", "lastName", "email", "address", "phone_number", "place", "post_code"],
+            select: ["firstName", "lastName", "email", "address", "phoneNumber", "place", "postCode"],
             where: { 
                 email: results["EMAIL"]
             }
@@ -152,7 +151,7 @@ export const SettingsHandle = async (req: Request, res: Response) => {
     console.log(results);
     if(results["IS_VALID"] == true ) {
         let user = await userRepository.findOne({
-            select: ["firstName", "lastName", "email", "address", "phone_number", "place", "post_code"],
+            select: ["firstName", "lastName", "email", "address", "phoneNumber", "place", "postCode"],
             where: { 
                 email: results["EMAIL"]
             }

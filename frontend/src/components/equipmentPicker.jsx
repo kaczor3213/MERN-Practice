@@ -27,13 +27,14 @@ class EquipmentPicker extends React.Component {
   
     gatherAllEquipmentsCols() {
       let tmp = [];
-      if(this.props.category === undefined) {
-        for(var i=0; i<this.state.equipment.length; i++)
-          tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[i]));
+      if(this.props.category !== undefined) {
+        for(var j=0; j<this.state.equipment.length; j++)
+        if(this.state.equipment[j].equipment_type === this.props.category)
+          tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[j]));  
+        
       } else {
         for(var i=0; i<this.state.equipment.length; i++)
-          if(this.state.equipment[i].equipment_type == this.props.category)
-            tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[i]));  
+          tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[i]));
       }
       return tmp;
     }

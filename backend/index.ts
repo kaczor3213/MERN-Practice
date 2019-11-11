@@ -12,15 +12,14 @@ import * as CommonAccessControl from "./src/controllers/commonAccessControl";
 
 createConnection().then(async connection => {
 
-    const userRepository = connection.getRepository(User);
-    const equipmentRepository = connection.getRepository(Equipment);
     const cookieParser = require('cookie-parser')
     // create and setup express app
     const app = express();
     app.use(bodyParser.json());
     app.use(cookieParser());
     app.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+        res.header("Access-Control-Allow-Origin", "*"); 
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         next();
       });
       

@@ -25,7 +25,6 @@ class EquipmentPage extends Component {
         .then(response => {
             this.setState({ equipment_all_array: response.data["equipment"],
                             category_array: response.data["category"],
-                            filter: undefined,
                            });
             this.setState({ category_btns: this.makeCategoryBtns(),
                             equipment: <EquipmentPicker equipment={this.state.equipment_all_array}/>

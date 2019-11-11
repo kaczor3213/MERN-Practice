@@ -22,9 +22,9 @@ class LoginPage extends React.Component {
                 <form>
                     <p className="h2 text-center white-text mb-4">Logowanie</p>
                     <hr className="white"/>
-                    <div className="grey-text">
+                    <div className="whitey-text">
                     <MDBInput
-                        className="green-hover"
+                        className="green-hover "
                         label="Podaj swój email"
                         icon="envelope"
                         group

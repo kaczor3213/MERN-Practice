@@ -84,7 +84,6 @@ class NavBar extends Component {
                         <a 
                             className='nav-link Ripple-parent' 
                             href='/login'
-                            target='_blank'
                             rel="noopener noreferrer" 
                         >
                             <strong><MDBIcon icon="user" /></strong>

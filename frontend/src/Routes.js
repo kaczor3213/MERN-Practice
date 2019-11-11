@@ -5,7 +5,6 @@ import HomePage from "./pages/common/HomePage";
 import BrandsPage from "./pages/common/BrandsPage";
 import CategoryPage from "./pages/common/CategoryPage";
 import EquipmentPage from "./pages/common/EquipmentPage";
-import EquipmentCategoryPage from "./pages/common/EquipmentCategoryPage";
 import UserLoginPage from "./pages/user/LoginPage";
 import UserRegisterPage from "./pages/user/RegisterPage";
 import UserProfilePage from "./pages/user/ProfilePage";
@@ -19,12 +18,9 @@ class Routes extends React.Component {
         <Route exact path="/brands" component={BrandsPage} />
         <Route exact path="/category" component={CategoryPage} />
         <Route exact path="/equipment" component={EquipmentPage} />
-        <Route path="/equipment/category/:type" component={EquipmentCategoryPage} />
         <Route exact path="/login" component={UserLoginPage} />
         <Route exact path="/register" component={UserRegisterPage} />
-        <Route exact path="/myprofile" component={UserProfilePage} />
-
-
+        {/* <Route exact path="/myprofile" component={UserProfilePage} /> */}
         {/* 
         <Route exact path="/admin" component={AdminLoginPage} />
         <Route path="/admin/logout" component={AdminLogoutPage} />
