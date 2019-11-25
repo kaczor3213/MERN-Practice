@@ -32,6 +32,8 @@ class RegisterPage extends React.Component {
         password: "",
         password_r: "",
         password_error: null,
+        rules: "",
+        rules_error: null,
         success: false,
       };
       this.handleInputChange = this.handleInputChange.bind(this);
@@ -50,7 +52,8 @@ class RegisterPage extends React.Component {
           place: this.state.place,
           postCode: this.state.postCode,
           password: this.state.password,
-          password_r: this.state.password_r
+          password_r: this.state.password_r,
+          rules: this.state.rules,
       };
       
       axios.post('http://localhost:4000/register', newUser)
@@ -68,6 +71,7 @@ class RegisterPage extends React.Component {
                     phoneNumber_error: response.data["WRONG_PHONE_NUMBER"]?<ValidationMessage message="Podaj poprawny n. telefonu. "/>:null,
                     postCode_error: response.data["WRONG_POST_CODE"]?<ValidationMessage message="Podaj poprawny kod pocztowy. "/>:null,
                     password_error: response.data["WRONG_PASSWORD"]?<ValidationMessage message="Złe hasło. "/>:null,
+                    rules_error: response.data["RULES_ERROR"]?<ValidationMessage message="Należy wyrazić zgodę na regulamin serwisu. "/>:null
                 })
                 this.setState({
                     email_error: response.data["OCCUPIED_EMAIL"]?<ValidationMessage message="Zajęty adres email. "/>:this.state.email_error,
@@ -83,6 +87,7 @@ class RegisterPage extends React.Component {
         this.setState({
         [event.target.name]: event.target.value
         });
+        console.log(event.target.value)
     }
         
     render() {
@@ -114,8 +119,7 @@ class RegisterPage extends React.Component {
                         />
                         {this.state.firstName_error}
                         </MDBCol>
-                        <MDBCol md="6" style={{'marginLeft': '40px'}}
->
+                        <MDBCol md="6" >
                         <MDBInput
                                 className="green-hover"
                                 label="Podaj swoje nazwisko"
@@ -248,11 +252,13 @@ class RegisterPage extends React.Component {
                     <hr className="white"/>
 
                     <div className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" id="defaultUnchecked"/>
+                        <input type="checkbox" value="true" name="rules" className="custom-control-input" id="defaultUnchecked" onChange={this.handleInputChange}/>
                         <label className="custom-control-label" htmlFor="defaultUnchecked">*Wyrażam zgodę na przetwarzanie danych osobowych i zgadzam się z regulaminem wypożyczalni.</label>
                         <div className="invalid-tooltip">W celu korzystania z serwisu należy wyrazić zgodę na regulamin wypożyczalni.</div>
                         <div className="valid-tooltip">Wygląda dobrze!</div>
                     </div>
+                    {this.state.rules_error}
+
                 </div>
             <MDBBtn className="custom-btn whitey-text" type="submit">
                 { "Potwierdź" }

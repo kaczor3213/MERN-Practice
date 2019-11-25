@@ -21,6 +21,7 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
         "WRONG_POST_CODE": false,
         "WRONG_PASSWORD": false,
         "PASSWORDS_DONT_MATCH": false,
+        "RULES_ERROR": false,
     }
     let nameRegex = /^[a-zA-Z]{1,50}$/;
     let emailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
@@ -178,6 +179,16 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
         USER_ERROR_CODE.PASSWORDS_DONT_MATCH=false;
     }
 
+    try {
+        console.log(params.rules)
+        if(params.rules !== 'true')
+            throw new TypeError("Password was not defined for user!");
+    }
+    catch(e) {
+        console.log(e)
+        USER_ERROR_CODE.TOTAL_WARNINGS++;
+        USER_ERROR_CODE.RULES_ERROR=true;
+    }
 
     // role validation
     try {
