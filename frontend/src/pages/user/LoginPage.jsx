@@ -3,12 +3,10 @@ import axios from 'axios';
 import ValidationMessage from "../../components/validationMessage";
 import {Redirect} from "react-router-dom";
 import { 
-    MDBContainer,
     MDBRow,
     MDBCol,
     MDBInput, 
     MDBBtn,
-    MDBBtnGroup, 
     MDBNavLink} from 'mdbreact';
 
 
@@ -108,19 +106,20 @@ class LoginPage extends React.Component {
                     <hr className="white"/>
 
                     <div className="text-center mt-4">
-                    <MDBBtnGroup>
-                        <MDBCol>
-                        <MDBNavLink tag="button" to="/register" className="mx-5 btn whitey-text custom-btn">
-                            Rejestracja
-                        </MDBNavLink>
+                    <MDBRow>
+                        <MDBCol sm="6">
+                            <MDBNavLink tag="button" to="/register" style={{'display': 'inline-block'}} className="mx-auto btn whitey-text custom-btn">
+                                Rejestracja
+                            </MDBNavLink>
                         </MDBCol>
-                        <MDBBtn type="submit" className="mx-5 whitey-text custom-btn">
-                            Login
-                        </MDBBtn>
-                    </MDBBtnGroup>
+                        <MDBCol sm="6">
+                            <MDBBtn type="submit" className="mx-auto whitey-text custom-btn">
+                                Login
+                            </MDBBtn>
+                        </MDBCol>
+                    </MDBRow>
                     </div>
                 </form>
-                
                 </MDBCol>
             </MDBRow>
             </div>

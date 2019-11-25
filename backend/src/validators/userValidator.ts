@@ -149,22 +149,6 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
         USER_ERROR_CODE.WRONG_POST_CODE=true;
     }
 
-    // Password validation
-    try {
-        if(params.password === undefined)
-            throw new TypeError("Password was not defined for user!");
-        if(params.password.length === 0)
-            throw new TypeError("Password cannot be an empty string!");
-        if(!passwordRegex.test(params.password))
-            throw new SyntaxError("Password must consist of 9 characters, at least 1 big character and 1 number with no spaces!");
-    }
-    catch(e) {
-        console.log(e)
-        USER_ERROR_CODE.TOTAL_WARNINGS++;
-        USER_ERROR_CODE.WRONG_PASSWORD=true;
-    }
-
-    // Password validation
     try {
         if(params.password !== params.password_r)
             throw new SyntaxError("Passwords don't match.");
@@ -176,6 +160,25 @@ export const validateUserCreate = async (params: Dictionary<string>) => {
         USER_ERROR_CODE.TOTAL_WARNINGS++;
         USER_ERROR_CODE.PASSWORDS_DONT_MATCH=true;
     }
+
+    // Password validation
+    try {
+        if(params.password === undefined)
+            throw new TypeError("Password was not defined for user!");
+        if(params.password.length === 0)
+            throw new TypeError("Password cannot be an empty string!");
+        if(!passwordRegex.test(params.password))
+            throw new SyntaxError("Password must consist of 9 characters, at least 1 big character and 1 number with no spaces!");
+                // Password validation
+    }
+    catch(e) {
+        console.log(e)
+        USER_ERROR_CODE.TOTAL_WARNINGS++;
+        USER_ERROR_CODE.WRONG_PASSWORD=true;
+        USER_ERROR_CODE.PASSWORDS_DONT_MATCH=false;
+    }
+
+
     // role validation
     try {
         if(params.role == UserRole.ADMIN) {

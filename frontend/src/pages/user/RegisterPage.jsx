@@ -7,7 +7,7 @@ import {
     MDBBtn,
     MDBInput
     } from 'mdbreact';
-
+import ValidationMessage from "../../components/validationMessage";
 import "./LoginPage.css";
 import { Redirect } from "react-router-dom";
 
@@ -16,23 +16,22 @@ class RegisterPage extends React.Component {
       super(props);
       this.state = {
         firstName: "",
-        firstName_w: "Podaj poprawne imię.",
+        firstName_error: null,
         lastName: "",
-        lastName_w: "Podaj poprawne nazwisko.",
+        lastName_error: null,
         email: "",
-        email_w: "Podaj poprawny adres email.",
+        email_error: null,
         phoneNumber: "",
-        phoneNumber_w: "Podaj poprawny n. telefonu.",
+        phoneNumber_error: null,
         address: "",
-        address_w: "Podaj poprawny adres.",
+        address_error: null,
         place: "",
-        place_w: "Podaj poprawną miejscowość",
+        place_error: null,
         postCode: "",
-        postCode_w: "Podaj poprawny kod pocztowy.",
+        postCode_error: null,
         password: "",
-        password_w: "Zbyt słabe hasło.",
         password_r: "",
-        password_r_w: "Podane hasła są róźne.",
+        password_error: null,
         success: false,
       };
       this.handleInputChange = this.handleInputChange.bind(this);
@@ -57,21 +56,34 @@ class RegisterPage extends React.Component {
       axios.post('http://localhost:4000/register', newUser)
         .then(response => {
             console.log(response.data);
-
-            event.target.className += " was-validated";
             if(response.data["TOTAL_WARNINGS"] === 0)
                 this.setState({success: true})
-            else
-                event.target.className += " was-validated";
+            else {
+                this.setState({
+                    firstName_error: response.data["WRONG_FIRST_NAME"]?<ValidationMessage message="Podaj poprawne imię. "/>:null,
+                    lastName_error: response.data["WRONG_LAST_NAME"]?<ValidationMessage message="Podaj poprawne nazwisko. "/>:null,
+                    email_error: response.data["WRONG_EMAIL"]?<ValidationMessage message="Podaj poprawny adres email. "/>:null,
+                    address_error: response.data["WRONG_ADDRESS"]?<ValidationMessage message="Podaj poprawny adres. "/>:null,
+                    place_error: response.data["WRONG_PLACE"]?<ValidationMessage message="Podaj poprawną miejscowość. "/>:null,
+                    phoneNumber_error: response.data["WRONG_PHONE_NUMBER"]?<ValidationMessage message="Podaj poprawny n. telefonu. "/>:null,
+                    postCode_error: response.data["WRONG_POST_CODE"]?<ValidationMessage message="Podaj poprawny kod pocztowy. "/>:null,
+                    password_error: response.data["WRONG_PASSWORD"]?<ValidationMessage message="Złe hasło. "/>:null,
+                })
+                this.setState({
+                    email_error: response.data["OCCUPIED_EMAIL"]?<ValidationMessage message="Zajęty adres email. "/>:this.state.email_error,
+                    phoneNumber_error: response.data["OCCUPIED_PHONE_NUMBER"]?<ValidationMessage message="Zajęty numer telefonu. "/>:this.state.phoneNumber_error,
+                    password_error: response.data["PASSWORDS_DONT_MATCH"]?<ValidationMessage message="Podane hasła się nie pokrywają. "/>:this.state.password_error,
+                })
+
+            }
         });
     };
     
-    
-  handleInputChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
-  }
+    handleInputChange(event) {
+        this.setState({
+        [event.target.name]: event.target.value
+        });
+    }
         
     render() {
         if(!this.state.success) 
@@ -80,7 +92,7 @@ class RegisterPage extends React.Component {
         <div className="masker">
         <MDBContainer className="py-5">
         <MDBRow className="py-5">
-            <MDBCol md="6" className="mx-auto">
+            <MDBCol md="8" lg="7" className="mx-auto">
             <form className="needs-validation" onSubmit={this.submitHandler} noValidate>
                 <p className="h2 text-center white-text mb-4">Rejestracja</p>
                 <hr className="white"/>
@@ -99,12 +111,11 @@ class RegisterPage extends React.Component {
                                 success="right"
                                 onChange={this.handleInputChange}
                                 required
-                            >
-                            <div className="invalid-tooltip">{this.state.firstName_w}</div>
-                            <div className="valid-tooltip">Wygląda dobrze!</div>
-                        </MDBInput>
+                        />
+                        {this.state.firstName_error}
                         </MDBCol>
-                        <MDBCol md="6">
+                        <MDBCol md="6" style={{'marginLeft': '40px'}}
+>
                         <MDBInput
                                 className="green-hover"
                                 label="Podaj swoje nazwisko"
@@ -115,10 +126,8 @@ class RegisterPage extends React.Component {
                                 success="right"
                                 onChange={this.handleInputChange}
                                 required
-                            >
-                            <div className="invalid-tooltip">{this.state.lastName_w}</div>
-                            <div className="valid-tooltip">Wygląda dobrze!</div>
-                        </MDBInput>
+                        />
+                        {this.state.lastName_error}
                         </MDBCol>
                         <MDBCol md="6">
                         <MDBInput
@@ -132,10 +141,8 @@ class RegisterPage extends React.Component {
                                 success="right"
                                 onChange={this.handleInputChange}
                                 required
-                            >
-                            <div className="invalid-tooltip">{this.state.email_w}</div>
-                            <div className="valid-tooltip">Wygląda dobrze!</div>
-                        </MDBInput>
+                        />
+                        {this.state.email_error}
                         </MDBCol>
                         <MDBCol md="6">
                         <MDBInput
@@ -149,10 +156,8 @@ class RegisterPage extends React.Component {
                                 success="right"
                                 onChange={this.handleInputChange}
                                 required
-                            >
-                            <div className="invalid-tooltip">{this.state.phoneNumber_w}</div>
-                            <div className="valid-tooltip">Wygląda dobrze!</div>
-                        </MDBInput>
+                        />
+                        {this.state.phoneNumber_error}
                         </MDBCol>
                     </MDBRow>
                     </div>
@@ -171,10 +176,8 @@ class RegisterPage extends React.Component {
                                     success="right"
                                     onChange={this.handleInputChange}
                                     required
-                                >
-                                <div className="invalid-tooltip">{this.state.address_w}</div>
-                                <div className="valid-tooltip">Wygląda dobrze!</div>
-                            </MDBInput>
+                            />
+                            {this.state.address_error}
                             </MDBCol>
                             <MDBCol md="6">
                             <MDBInput
@@ -188,10 +191,8 @@ class RegisterPage extends React.Component {
                                     success="right"
                                     onChange={this.handleInputChange}
                                     required
-                                >
-                                <div className="invalid-tooltip">{this.state.place_w}</div>
-                                <div className="valid-tooltip">Wygląda dobrze!</div>
-                            </MDBInput>
+                            />
+                            {this.state.place_error}
                             </MDBCol>
                             <MDBCol md="6">
                             <MDBInput
@@ -205,10 +206,8 @@ class RegisterPage extends React.Component {
                                     success="right"
                                     onChange={this.handleInputChange}
                                     required
-                                >
-                                <div className="invalid-tooltip">{this.state.postCode_w}</div>
-                                <div className="valid-tooltip">Wygląda dobrze!</div>
-                            </MDBInput>
+                            />
+                            {this.state.postCode_error}
                             </MDBCol>
                         </MDBRow>
                     </div>
@@ -228,10 +227,8 @@ class RegisterPage extends React.Component {
                                     success="right"
                                     onChange={this.handleInputChange}
                                     required
-                                >
-                                <div className="invalid-tooltip">{this.state.password_w}</div>
-                                <div className="valid-tooltip">Wygląda dobrze</div>
-                            </MDBInput>
+                            />
+                            {this.state.password_error}
                             </MDBCol>
                             <MDBCol md="6">
                             <MDBInput
@@ -244,9 +241,7 @@ class RegisterPage extends React.Component {
                                     success="right"
                                     onChange={this.handleInputChange}
                                     required
-                                >
-                                <div className="invalid-tooltip">{this.state.password_r_w}</div>
-                            </MDBInput>
+                            />
                             </MDBCol>
                         </MDBRow>
                     </div>
