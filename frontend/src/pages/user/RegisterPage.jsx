@@ -9,6 +9,7 @@ import {
     } from 'mdbreact';
 
 import "./LoginPage.css";
+import { Redirect } from "react-router-dom";
 
 class RegisterPage extends React.Component {
     constructor(props) {
@@ -42,39 +43,33 @@ class RegisterPage extends React.Component {
       event.persist();
 
       const newUser = {
-          firstName: this.state.firstName.replace(/\s+/g, ''),
-          lastName: this.state.lastName.replace(/\s+/g, ''),
-          email: this.state.email.replace(/\s+/g, ''),
-          phoneNumber: this.state.phoneNumber.replace(/\s+/g, ''),
-          address: this.state.address.replace(/\s+/g, ''),
-          place: this.state.place.replace(/\s+/g, ''),
-          postCode: this.state.postCode.replace(/\s+/g, ''),
+          firstName: this.state.firstName,
+          lastName: this.state.lastName,
+          email: this.state.email,
+          phoneNumber: this.state.phoneNumber,
+          address: this.state.address,
+          place: this.state.place,
+          postCode: this.state.postCode,
           password: this.state.password,
           password_r: this.state.password_r
       };
-      console.log(newUser);
+      
       axios.post('http://localhost:4000/register', newUser)
         .then(response => {
             console.log(response.data);
 
             event.target.className += " was-validated";
-            if(response.data["TOTAL_WARNINGS"] === 0) {
+            if(response.data["TOTAL_WARNINGS"] === 0)
                 this.setState({success: true})
-            }
-            else {
+            else
                 event.target.className += " was-validated";
-            }
         });
     };
     
     
   handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === target.value;
-    const name = target.name;
-
     this.setState({
-      [name]: value
+      [event.target.name]: event.target.value
     });
   }
         
@@ -265,25 +260,16 @@ class RegisterPage extends React.Component {
                     </div>
                 </div>
             <MDBBtn className="custom-btn whitey-text" type="submit">
-                Potwierdź
+                { "Potwierdź" }
             </MDBBtn>
             </form>
             </MDBCol>
             </MDBRow>
         </MDBContainer>
         </div>
-        </div>
-            );
+        </div>);
         else
-            return (
-                <div className="login-page">
-                <div className="masker">
-                <MDBContainer className="py-5">
-                    Brawo
-                </MDBContainer>
-                </div>
-                </div>
-            );
+            return <Redirect to="/"/>;
 }
 };
 

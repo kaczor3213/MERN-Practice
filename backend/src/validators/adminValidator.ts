@@ -1,4 +1,5 @@
 import {User, UserRole} from "../entity/User";
+import {decryptHashedToken} from "../bin/adminLoginToken";
 import {getSaltedPassword, getSaltFromPassword} from "../bin/salting";
 import {Dictionary} from "express-serve-static-core";
 import {getConnection} from "typeorm";
@@ -59,25 +60,26 @@ export const validateAdminLogin = async (params: Dictionary<string>) => {
     return LOGIN_INFO;
 }
 
-export const validateAdminAccessToken = async (cookies: Dictionary<string>) => {
+export const validateAdminLoginToken = async (cookies: Dictionary<string>) => {
     const tmp_connection = getConnection();
     const userRepository = tmp_connection.getRepository(User);
 
     var ACCESS_TOKEN_INFO = {
+        "TIMESTAMP_VALID": false,
         "IS_VALID": false
     }
 
-    let admin = await userRepository.findOne({role: UserRole.ADMIN});
+    let token = decryptHashedToken(cookies.adminLoginToken);
+    let admin = await userRepository.findOne({email: token.email});
 
-    if(admin == undefined)
+    if(admin == undefined || admin.role != UserRole.ADMIN)
          return ACCESS_TOKEN_INFO;
     else {
-        if(admin.access_token != cookies.access_token)
+        if(token.date == undefined || Date.parse(token.date) > Date.now())
             return ACCESS_TOKEN_INFO;
         else
+            ACCESS_TOKEN_INFO.TIMESTAMP_VALID = true;
             ACCESS_TOKEN_INFO.IS_VALID = true;
-            // IF STH WENT WRONG BETTER TO CLEAR COOKIES FOR
-            // ACCESS TOKEN AND EMAIL TODO
     }
     return ACCESS_TOKEN_INFO;
 }

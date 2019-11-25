@@ -173,7 +173,7 @@ class HomePage extends Component {
               <MDBCol className="mb-4">
                 <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-main.jpg" class="img-fluid z-depth-1-half" alt=""/>
               </MDBCol>
-              <MDBCol md="6" className="mb-4">
+              <MDBCol md="6" className="mb-4 text-center">
                 <p>
                   mamy <strong>200+</strong> maszyn rolniczych do wynajęcia,
                   zatrudniamy <strong>48</strong> wyszkolonych i doświadczonych operatorów,

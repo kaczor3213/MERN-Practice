@@ -2,7 +2,8 @@ import {User, UserRole} from "../entity/User";
 import {getSaltedPassword, getSaltFromPassword} from "../bin/salting";
 import {Dictionary} from "express-serve-static-core";
 import {getConnection} from "typeorm";
-
+import {decryptHashedToken} from "../bin/loginToken";
+import { deflateRaw } from "zlib";
 export const validateUserCreate = async (params: Dictionary<string>) => {
 
     const tmp_connection = getConnection();
@@ -235,30 +236,26 @@ export const validateUserLogin = async (params: Dictionary<string>) => {
     return LOGIN_INFO;
 }
 
-export const validateUserAccessToken = async (cookies: Dictionary<string>) => {
+export const validateLoginToken = async (cookies: Dictionary<string>) => {
     const tmp_connection = getConnection();
     const userRepository = tmp_connection.getRepository(User);
 
     var ACCESS_TOKEN_INFO = {
-        "EMAIL": null,
+        "TIMESTAMP_VALID": false,
         "IS_VALID": false
     }
 
-    let user = await userRepository.findOne({email: cookies.email});
+    let token = decryptHashedToken(cookies.loginToken);
+    let user = await userRepository.findOne({email: token.email});
 
     if(user == undefined)
          return ACCESS_TOKEN_INFO;
     else {
-        ACCESS_TOKEN_INFO.EMAIL = user.email;
-        if(user.access_token != cookies.access_token)
+        if(token.date == undefined || Date.parse(token.date) > Date.now())
             return ACCESS_TOKEN_INFO;
         else
+            ACCESS_TOKEN_INFO.TIMESTAMP_VALID = true;
             ACCESS_TOKEN_INFO.IS_VALID = true;
-            //IF STH WENT WRONG BETTER TO CLEAR COOKIES FOR
-            // ACCESS TOKEN AND EMAIL TODO
     }
     return ACCESS_TOKEN_INFO;
 }
-
-
-

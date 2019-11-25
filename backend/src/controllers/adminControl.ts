@@ -1,5 +1,5 @@
-import {validateAdminLogin, validateAdminAccessToken} from "../validators/adminValidator";
-import {generateAdminAccessToken} from "../bin/accesTokenGenerator";
+import {validateAdminLogin, validateAdminLoginToken} from "../validators/adminValidator";
+import {generateHashedToken} from "../bin/adminLoginToken";
 import {Request, Response} from "express";
 import {getConnection} from "typeorm";
 import {User, UserRole} from "../entity/User";
@@ -10,16 +10,12 @@ export const LOGIN_TIMEOUT = 1800;
 
 // Login controller (takes request, response from route call)
 export const Login = async (req: Request, res: Response) => {
-    const userRepository = getConnection().getRepository(User);
     const results = await validateAdminLogin(req.body);
     console.log(results);
     if(results["TOTAL_WARNINGS"] == 0) {
-        let a_token = generateAdminAccessToken(results["EMAIL"], req.headers["user-agent"]);
-        await userRepository.update({role: UserRole.ADMIN}, {access_token: a_token});
-        res.cookie("is_logged_on",true,{ expires: new Date(Date.now() + LOGIN_TIMEOUT), httpOnly: true});
-        res.cookie("access_token", a_token, { expires: new Date(Date.now() + LOGIN_TIMEOUT), httpOnly: true});
+        let hashedToken = generateHashedToken(results["EMAIL"], req.headers["user-agent"]);
+        res.cookie("adminLoginToken", hashedToken, { expires: new Date(Date.now() + LOGIN_TIMEOUT), httpOnly: true});
         return res.json(results);
-        //return res.redirect('/admin/panel');       
     }
     return res.json(results);
 }
@@ -27,23 +23,18 @@ export const Login = async (req: Request, res: Response) => {
 // Logout controller (takes request, response from route call)
 export const Logout = async (req: Request, res: Response) => {
     console.log(req.cookies)
-    const userRepository = getConnection().getRepository(User);
-    const results = await validateAdminAccessToken(req.cookies);
+    const results = await validateAdminLoginToken(req.cookies);
     console.log(results);
     if(results["IS_VALID"] == true) {
-        await userRepository.update({email: results["EMAIL"]}, {access_token: null});
-        res.clearCookie("access_token");
-        res.clearCookie("profile");
-        res.cookie("is_logged_on", false);
+        res.cookie("shouldBeLogout", true);
         return res.json(results);
-        //res.redirect("/");
     }
     return res.json(results);
 }
 
 // Profile controller (takes request, response from route call)
 export const Panel = async (req: Request, res: Response) => {
-    const results = await validateAdminAccessToken(req.cookies);
+    const results = await validateAdminLoginToken(req.cookies);
     console.log(results);
     return res.json(results);
 }
@@ -51,7 +42,7 @@ export const Panel = async (req: Request, res: Response) => {
 // Users controller (takes request, response from route call)
 export const Users = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);     
-    const results = await validateAdminAccessToken(req.cookies);
+    const results = await validateAdminLoginToken(req.cookies);
 
     console.log(results);
     if(results["IS_VALID"] == true) {
@@ -64,7 +55,7 @@ export const Users = async (req: Request, res: Response) => {
 // Specific user controller (takes request, response from route call)
 export const UserV = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);     
-    const results = await validateAdminAccessToken(req.cookies);
+    const results = await validateAdminLoginToken(req.cookies);
 
     console.log(results);
     console.log(req.params.id);
@@ -82,7 +73,7 @@ export const UserV = async (req: Request, res: Response) => {
 // Orders controller (takes request, response from route call)
 export const Orders = async (req: Request, res: Response) => {
     const orderRepository = getConnection().getRepository(Order);     
-    const results = await validateAdminAccessToken(req.cookies);
+    const results = await validateAdminLoginToken(req.cookies);
 
     console.log(results);
     if(results["IS_VALID"] == true) {
@@ -95,7 +86,7 @@ export const Orders = async (req: Request, res: Response) => {
 // Specific order controller (takes request, response from route call)
 export const OrderV = async (req: Request, res: Response) => {
     const orderRepository = getConnection().getRepository(Order);     
-    const results = await validateAdminAccessToken(req.cookies);
+    const results = await validateAdminLoginToken(req.cookies);
 
     console.log(results);
     if(results["IS_VALID"] == true ) {
@@ -110,7 +101,7 @@ export const OrderV = async (req: Request, res: Response) => {
 // Equipments controller (takes request, response from route call)
 export const Equipments = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
-    const results = await validateAdminAccessToken(req.cookies);
+    const results = await validateAdminLoginToken(req.cookies);
 
     console.log(results);
     if(results["IS_VALID"] == true) {
@@ -123,7 +114,7 @@ export const Equipments = async (req: Request, res: Response) => {
 // Specific equipment controller (takes request, response from route call)
 export const EquipmentV = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
-    const results = await validateAdminAccessToken(req.cookies);
+    const results = await validateAdminLoginToken(req.cookies);
 
     console.log(results);
     if(results["IS_VALID"] == true ) {
@@ -137,7 +128,7 @@ export const EquipmentV = async (req: Request, res: Response) => {
 
 // Equipments controller (takes request, response from route call)
 export const EquipmentAddView = async (req: Request, res: Response) => {
-    const results = await validateAdminAccessToken(req.cookies);
+    const results = await validateAdminLoginToken(req.cookies);
 
     console.log(results);
     if(results["IS_VALID"] == true) {
@@ -153,7 +144,7 @@ export const EquipmentAddView = async (req: Request, res: Response) => {
 // Specific equipment controller (takes request, response from route call)
 export const EquipmentAddHandle = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
-    const results = await validateAdminAccessToken(req.cookies);
+    const results = await validateAdminLoginToken(req.cookies);
 
     console.log(results);
     if(results["IS_VALID"] == true ) {
@@ -162,7 +153,6 @@ export const EquipmentAddHandle = async (req: Request, res: Response) => {
             let equipment = await equipmentRepository.create(req.body);
             await equipmentRepository.save(equipment);
             return res.send(equipment);
-            //return res.redirect('/admin/equipments');
         }
         return res.json(equipmentErrors)
     }

@@ -83,6 +83,13 @@ label {
   color: rgb(240, 240, 240);
 }
 
+.error {
+  color: white;
+  text-shadow: 0 0 4px red;
+  font-size: 110%;
+}
+
+
 
 .custom-btn {
   background: rgb(0, 0, 0, 0.3) !important; 
@@ -95,11 +102,6 @@ label {
   border-radius: 5px !important;
 }
 
-.custom-btn:focus {
-  color: #00c851 !important;
-  background: white !important; 
-  transition: 300ms;
-
-  border-radius: 15px !important;
+.btn-default:not([disabled]):not(.disabled):active {
+  background-color: unset !important; 
 }
-

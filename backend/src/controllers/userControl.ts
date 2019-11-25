@@ -1,45 +1,32 @@
-import {validateUserCreate, validateUserLogin, validateUserAccessToken} from "../validators/userValidator";
-import {generateAccessToken} from "../bin/accesTokenGenerator";
+import {validateUserCreate, validateUserLogin, validateLoginToken} from "../validators/userValidator";
+import {generateHashedToken} from "../bin/loginToken";
 import {Request, Response} from "express";
 import {getConnection} from "typeorm";
 import {User} from "../entity/User";
 import {getSaltedPassword, getSaltFromPassword} from "../bin/salting";
-export const LOGIN_TIMEOUT = 1800;
+export const LOGIN_TIMEOUT = 60 * 60 * 1000;
 
 // Login controller (takes request, response from route call)
 export const Login = async (req: Request, res: Response) => {
-    const userRepository = getConnection().getRepository(User);
     const results = await validateUserLogin(req.body);
-    console.log(results);
     if(results["TOTAL_WARNINGS"] == 0) {
-        let a_token = generateAccessToken(results["EMAIL"], req.headers["user-agent"]);
-        await userRepository.update({email: results["EMAIL"]}, {access_token: a_token});
-        // SET COOKIE PROFILE: EMAIL
-        res.cookie("email",results["EMAIL"],{ expires: new Date(Date.now() + LOGIN_TIMEOUT), httpOnly: true});
-        // SET COOKIE ISLOGGEDON: TRUE
-        res.cookie("is_logged_on",true,{ expires: new Date(Date.now() + LOGIN_TIMEOUT), httpOnly: true});
+        let hashedToken = generateHashedToken(results["EMAIL"], req.headers["user-agent"]);
         // SET AUTHORIZATION COOKIE FOR USER
-        res.cookie("access_token", a_token, { expires: new Date(Date.now() + LOGIN_TIMEOUT), httpOnly: true});
-        return res.json(results);
-        //return res.redirect('/myprofile');       
+        res.cookie("loginToken", hashedToken, { expires: new Date(Date.now() + LOGIN_TIMEOUT)});
+        return res.json(results);       
     }
+    res.clearCookie("loginToken");
     return res.json(results);
 }
 
 // Logout controller (takes request, response from route call)
 export const Logout = async (req: Request, res: Response) => {
     console.log(req.cookies)
-    const userRepository = getConnection().getRepository(User);
-    const results = await validateUserAccessToken(req.cookies);
+    const results = await validateLoginToken(req.cookies);
     console.log(results);
     if(results["IS_VALID"] == true) {
-        
-        await userRepository.update({email: results["EMAIL"]}, {access_token: null});
-        res.clearCookie("access_token");
-        res.clearCookie("profile");
-        res.cookie("is_logged_on", false);
+        res.cookie("shouldBeLogout", true);
         return res.json(results);
-        //res.redirect("/");
     }
     return res.json(results);
 }
@@ -49,9 +36,9 @@ export const SignUp = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);
     const results = await validateUserCreate(req.body);
     console.log(results);
-    // dorobić solenie hasła
     if(results["TOTAL_WARNINGS"] == 0) {
         let user = await userRepository.create(req.body);
+        user['password']=getSaltedPassword(user['password']);
         await userRepository.save(user);
         return res.json(results);
     }
@@ -61,7 +48,7 @@ export const SignUp = async (req: Request, res: Response) => {
 // Profile controller (takes request, response from route call)
 export const Profile = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);
-    const results = await validateUserAccessToken(req.cookies);
+    const results = await validateLoginToken(req.cookies);
     console.log(results);
     if(results["IS_VALID"] == true ) {
         let user = await userRepository.findOne({
@@ -78,7 +65,7 @@ export const Profile = async (req: Request, res: Response) => {
 // Orders controller (takes request, response from route call)
 export const Orders = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);     
-    const results = await validateUserAccessToken(req.cookies);
+    const results = await validateLoginToken(req.cookies);
 
     console.log(results);
     if(results["IS_VALID"] == true) {
@@ -102,7 +89,7 @@ export const Orders = async (req: Request, res: Response) => {
 // Specific order controller (takes request, response from route call)
 export const Order = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);     
-    const results = await validateUserAccessToken(req.cookies);
+    const results = await validateLoginToken(req.cookies);
 
     console.log(results);
     if(results["IS_VALID"] == true ) {
@@ -130,7 +117,7 @@ export const Order = async (req: Request, res: Response) => {
 // SettingsView controller (takes request, response from route call)
 export const SettingsView = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);
-    const results = await validateUserAccessToken(req.cookies);
+    const results = await validateLoginToken(req.cookies);
     console.log(results);
     if(results["IS_VALID"] == true ) {
         let user = await userRepository.findOne({
@@ -147,7 +134,7 @@ export const SettingsView = async (req: Request, res: Response) => {
 // SettingsHandle controller (takes request, response from route call)
 export const SettingsHandle = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);
-    const results = await validateUserAccessToken(req.cookies);
+    const results = await validateLoginToken(req.cookies);
     console.log(results);
     if(results["IS_VALID"] == true ) {
         let user = await userRepository.findOne({

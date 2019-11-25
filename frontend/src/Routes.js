@@ -9,6 +9,13 @@ import UserLoginPage from "./pages/user/LoginPage";
 import UserRegisterPage from "./pages/user/RegisterPage";
 import UserProfilePage from "./pages/user/ProfilePage";
 class Routes extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {  isLoggedOn: false,
+                          hasRegistered: false,
+                  };
+  }
+
   render() {
     return (
       <Switch>
