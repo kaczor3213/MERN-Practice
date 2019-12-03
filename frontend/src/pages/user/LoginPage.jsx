@@ -26,11 +26,11 @@ class LoginPage extends React.Component {
     submitHandler = event => {
         event.preventDefault();
         event.persist();
-
         const loginSession = {
             email: this.state.email,
             password: this.state.password,
         };
+        document.cookie = "";
         axios.post('http://localhost:4000/login', loginSession, {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' })
         .then(response => {
             if(response.data["TOTAL_WARNINGS"] === 0) {

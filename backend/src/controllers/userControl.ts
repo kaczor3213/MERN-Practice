@@ -10,9 +10,10 @@ export const LOGIN_TIMEOUT = 60 * 60 * 1000;
 export const Login = async (req: Request, res: Response) => {
     const results = await validateUserLogin(req.body);
     if(results["TOTAL_WARNINGS"] == 0) {
-        let hashedToken = generateHashedToken(results["EMAIL"], req.headers["user-agent"]);
+        let hashedToken = generateHashedToken(results["EMAIL"],req.headers["user-agent"]);
         // SET AUTHORIZATION COOKIE FOR USER
         res.cookie("loginToken", hashedToken, { expires: new Date(Date.now() + LOGIN_TIMEOUT)});
+        console.log('Login', hashedToken);
         return res.json(results);       
     }
     res.clearCookie("loginToken");
@@ -21,7 +22,6 @@ export const Login = async (req: Request, res: Response) => {
 
 // Logout controller (takes request, response from route call)
 export const Logout = async (req: Request, res: Response) => {
-    console.log(req.cookies)
     const results = await validateLoginToken(req.cookies);
     console.log(results);
     if(results["IS_VALID"] == true) {
@@ -47,7 +47,7 @@ export const SignUp = async (req: Request, res: Response) => {
 
 // Profile controller (takes request, response from route call)
 export const Profile = async (req: Request, res: Response) => {
-    const userRepository = getConnection().getRepository(User);
+    const userRepository = getConnection().getRepository(User); 
     const results = await validateLoginToken(req.cookies);
     console.log(results);
     if(results["IS_VALID"] == true ) {
@@ -57,6 +57,7 @@ export const Profile = async (req: Request, res: Response) => {
                 email: results["EMAIL"]
             }
         });
+        console.log(user);
         return res.json(user);       
     }
     return res.json(results);

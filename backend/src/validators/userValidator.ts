@@ -3,7 +3,6 @@ import {getSaltedPassword, getSaltFromPassword} from "../bin/salting";
 import {Dictionary} from "express-serve-static-core";
 import {getConnection} from "typeorm";
 import {decryptHashedToken} from "../bin/loginToken";
-import { deflateRaw } from "zlib";
 export const validateUserCreate = async (params: Dictionary<string>) => {
 
     const tmp_connection = getConnection();
@@ -256,12 +255,19 @@ export const validateLoginToken = async (cookies: Dictionary<string>) => {
 
     var ACCESS_TOKEN_INFO = {
         "TIMESTAMP_VALID": false,
-        "IS_VALID": false
+        "IS_VALID": false,
+        "EMAIL": null
     }
+    let token = null;
+    let user = null;
 
-    let token = decryptHashedToken(cookies.loginToken);
-    let user = await userRepository.findOne({email: token.email});
-
+    try {
+        token = decryptHashedToken(cookies.loginToken);
+    } catch(e) {
+        return ACCESS_TOKEN_INFO;
+    }
+    user = await userRepository.findOne({email: token.email});
+    
     if(user == undefined)
          return ACCESS_TOKEN_INFO;
     else {
@@ -270,6 +276,7 @@ export const validateLoginToken = async (cookies: Dictionary<string>) => {
         else
             ACCESS_TOKEN_INFO.TIMESTAMP_VALID = true;
             ACCESS_TOKEN_INFO.IS_VALID = true;
+            ACCESS_TOKEN_INFO.EMAIL = token.email;
     }
     return ACCESS_TOKEN_INFO;
 }

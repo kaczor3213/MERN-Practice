@@ -14,7 +14,7 @@ class CategoryPicker extends React.Component {
       return (
         <MDBBtn 
         onClick ={e=>this.props.onClick(e)}
-        color="cyan"
+        color="light-green"
         value={this.state.category}
         >
           {this.state.category}

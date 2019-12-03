@@ -27,7 +27,7 @@ class Routes extends React.Component {
         <Route exact path="/equipment" component={EquipmentPage} />
         <Route exact path="/login" component={UserLoginPage} />
         <Route exact path="/register" component={UserRegisterPage} />
-        {/* <Route exact path="/myprofile" component={UserProfilePage} /> */}
+        <Route exact path="/myprofile" component={UserProfilePage} />
         {/* 
         <Route exact path="/admin" component={AdminLoginPage} />
         <Route path="/admin/logout" component={AdminLogoutPage} />

@@ -104,7 +104,7 @@ createConnection().then(async connection => {
     });
 
     // user profile view
-    app.get("/myprofile", async function(req: Request, res: Response) {
+    app.post("/myprofile", async function(req: Request, res: Response) {
         return UserControl.Profile(req, res);
     });
 
