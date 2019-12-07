@@ -8,6 +8,7 @@ import {
     MDBInput, 
     MDBBtn,
     MDBNavLink} from 'mdbreact';
+import "./LoginPage.css";
 
 
 class LoginPage extends React.Component {
@@ -19,9 +20,26 @@ class LoginPage extends React.Component {
           error_message: "Podany email, bądź hasło są nieprawidłowe. Spróbuj ponownie. ",
           ValidationMessage: null,
           success: false,
+          redirectToProfile: false,
+          readyToRender: false
         };
         this.handleInputChange = this.handleInputChange.bind(this);
     }
+    
+    componentDidMount() {
+        axios.post('http://localhost:4000/myprofile', null ,  {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' }).then(response => {
+            if(response.data.IS_VALID !== false)  {
+                this.setState({
+                    redirectToProfile: true,
+                });
+            }
+        });
+        this.setState({
+            readyToRender: true     
+        });
+        console.log(this.state.readyToRender, this.state.redirectToProfile)
+    }
+
     
     submitHandler = event => {
         event.preventDefault();
@@ -49,12 +67,15 @@ class LoginPage extends React.Component {
     }
     
   render() {
-    if(!this.state.success) 
+    if(this.state.redirectToProfile) {
+        return <Redirect to="/myprofile"/>;
+    }
+    if(!this.state.success && this.state.readyToRender) {
     return (
             <div className="login-page">
             <div className="masker">
             <div className="py-5">
-            <MDBRow className="p-5">
+            <MDBRow className="p-5 w-100">
                 <MDBCol md="6" xl="4" className="mx-auto">
                 <form className="needs-validation" onSubmit={this.submitHandler} noValidate>
                     <p className="h2 text-center white-text mb-4">Logowanie</p>
@@ -125,9 +146,12 @@ class LoginPage extends React.Component {
             </div>
             </div>
             </div>
-        );
-        else
-            return <Redirect to="/"/>;
+        ) } else {
+            if(this.state.success) {
+                return <Redirect to="/myprofile"/>;
+            }
+            return "";
+        }
     }
 };
 

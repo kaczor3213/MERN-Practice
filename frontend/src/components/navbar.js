@@ -8,8 +8,15 @@ import {
   MDBNavItem,
   MDBNavLink,
   MDBTooltip,
-  MDBIcon
+  MDBIcon,
+  MDBDropdownMenu,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBBtn,
+  MDBRow,
+  MDBCol
 } from 'mdbreact';
+import "./navbar.css"
 
 class NavBar extends Component {
 
@@ -80,17 +87,35 @@ class NavBar extends Component {
                         </MDBNavLink>
                     </MDBNavItem>
                     <MDBNavItem>
+                    
                         <MDBTooltip placement='bottom' domElement style={{ display: "block" }}>
                         <a 
                             className='nav-link Ripple-parent' 
                             href='/login'
                             rel="noopener noreferrer" 
                         >
-                            <strong><MDBIcon icon="user" /></strong>
                         </a>
                         <span>Profil</span>
                         </MDBTooltip>                   
                     </MDBNavItem>
+                    <MDBNavItem>
+                        <MDBDropdown>
+                            <MDBDropdownToggle nav caret>
+                            <strong><MDBIcon icon="user" /></strong>
+                            </MDBDropdownToggle>
+                            <MDBDropdownMenu  className="p-1 profile-dropdown">
+                                <MDBRow style={{  width: '24rem' }}>
+                                    <MDBCol className="p-0">
+                                    <MDBBtn color="primary">Logowanie</MDBBtn>
+                                    </MDBCol>
+                                    <MDBCol className="p-0">
+                                    <MDBBtn color="indigo">Rejestracja</MDBBtn>
+                                    </MDBCol>
+                                </MDBRow>
+                            </MDBDropdownMenu>
+                        </MDBDropdown>
+                        </MDBNavItem>
+                    
                     </MDBNavbarNav>
                 </MDBCollapse>
             </MDBNavbar>            

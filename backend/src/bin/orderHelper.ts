@@ -25,6 +25,5 @@ export const genTestOrder = async () => {
 
 export const delTestOrders = async () => {
     let orderRepository = getConnection().getRepository(Order);
-
     //orderRepository.save(order);
 }

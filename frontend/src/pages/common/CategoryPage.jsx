@@ -31,7 +31,7 @@ class CategoryPage extends Component {
   }
 
   makeCategoryJumbos() {
-    return <MDBRow id="types">
+    return <MDBRow className="w-100 m-0" id="types">
         {this.gatherAllCategoryJumbos()}
         </MDBRow>;
   }
@@ -47,8 +47,8 @@ class CategoryPage extends Component {
 
   makeCategoryJumbo(category, index) {
     return (           
-        <MDBCol md="12" className="m-0 category-card p-0" id={index} style={{'backgroundImage': 'url(' + require("../../assets/category/" + category.toLowerCase()+".jpg") + ')' }}>
-            <MDBView className="category-card" >
+        <MDBCol md="12" className="category-card p-0 w-100" id={index} style={{'backgroundImage': 'url(' + require("../../assets/category/" + category.toLowerCase()+".jpg") + ')' }}>
+            <MDBView className="category-card">
               <MDBMask overlay="black-light" style={{'padding-top': '4rem', 'padding-bottom': '1rem'}}>
                 <div className="text-white text-center py-5 px-4" >
                     <MDBCol className="py-5">
@@ -70,9 +70,7 @@ class CategoryPage extends Component {
   render() {
     return (
       <>
-        <MDBContainer  md="12" className="m-0 p-0" style={{"max-width": "1920px"}}>
           {this.makeCategoryJumbos()}
-        </MDBContainer>
       </>
     );
   }

@@ -66,15 +66,15 @@ class EquipmentPage extends Component {
               </MDBCol>
             </MDBRow>
           </MDBContainer>
-          <MDBContainer md="12" className="clear-mask mx-1" style={{"max-width": "1920px"}}>
-            <MDBRow>
+          <div className="clear-mask mx-1" style={{"max-width": "1920px"}}>
+            <MDBRow className="w-100">
               <MDBCol md="0" lg="1" style={{"max-width": "90%"}}/>
               <MDBCol className="mt-4" md="12" lg="10">
                 {this.state.equipment}
               </MDBCol>
               <MDBCol md="0" lg="1" style={{"max-width": "90%"}}/>
             </MDBRow>
-          </MDBContainer>
+          </div>
           </div>
         </div>
       </>

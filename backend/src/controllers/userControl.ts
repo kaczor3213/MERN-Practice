@@ -52,12 +52,11 @@ export const Profile = async (req: Request, res: Response) => {
     console.log(results);
     if(results["IS_VALID"] == true ) {
         let user = await userRepository.findOne({
-            select: ["firstName", "lastName", "email"],
+            select: ["firstName", "lastName", "email", "address", "phoneNumber", "place", "postCode"],
             where: { 
                 email: results["EMAIL"]
             }
         });
-        console.log(user);
         return res.json(user);       
     }
     return res.json(results);

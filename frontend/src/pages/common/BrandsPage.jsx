@@ -25,7 +25,7 @@ class CustomCard extends Component {
   
     render() {
         return (
-            <MDBRow className="vertical-center" style={{"padding-top": "4rem"}}> 
+            <MDBRow className="vertical-center w-100" style={{"padding-top": "4rem"}}> 
               <MDBCol
                 md="8" lg="6"
                 className="mx-auto headline float-none white z-depth-1 p-2"
@@ -42,14 +42,13 @@ class CustomCard extends Component {
                       Nasze Marki
                     </strong>
                   </h1>
-                  <MDBRow />
                   <p className="pb-4">W naszej ofercie mamy szeroki zakres zarówno marek jak i sprzętu.</p>
                   <p className="pb-4">Znajdziesz u nas <strong>15+</strong> kultowych marek!</p>
                   <MDBRow className="d-flex flex-row justify-content-center row">
-                  <MDBBtn outline color="success">
-                    <MDBIcon icon="fas fa-download" className="mr-2" />
-                    <span className="font-weight-bold">Katalog pełnej oferty</span>
-                  </MDBBtn>
+                    <MDBBtn outline color="success">
+                      <MDBIcon icon="fas fa-download" className="mr-2" />
+                      <span className="font-weight-bold">Katalog pełnej oferty</span>
+                    </MDBBtn>
                   </MDBRow>
                 </MDBCardBody>
               </MDBCol>
@@ -62,7 +61,7 @@ class CustomCarousel extends Component {
   
     render() {
     return (
-    <MDBContainer className="px-0 mx-0 w-100 mw-100">
+    <div>
       <MDBCarousel
       activeItem={1}
       length={4}
@@ -104,7 +103,7 @@ class CustomCarousel extends Component {
         </MDBCarouselItem>
       </MDBCarouselInner>
     </MDBCarousel>
-    </MDBContainer>
+    </div>
   );
   }
   }
@@ -127,7 +126,7 @@ class BrandsPage extends Component {
   }
 
   makeBrandsRow() {
-    return <MDBRow id="brands">
+    return <MDBRow className="w-100" id="brands">
         {this.gatherAllBrandsCols()}
         </MDBRow>;
   }
