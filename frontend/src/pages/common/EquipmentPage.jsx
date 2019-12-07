@@ -60,7 +60,7 @@ class EquipmentPage extends Component {
                 <hr className="my-5 white" />
                 <div className="btn-toolbar" role="toolbar">
                   <MDBBtnGroup className="mx-auto">
-                  {this.state.category_btns}
+                    {this.state.category_btns}
                   </MDBBtnGroup>
                 </div>
               </MDBCol>

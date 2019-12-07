@@ -4,11 +4,13 @@ import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 class Footer extends Component {
   render() {
       return (
-    <MDBFooter color="light-green" className="font-small pt-4">
+    <MDBFooter style={{'backgroundColor': '#3b613c'}} className="font-small pt-4">
       <MDBContainer fluid className="text-center">
         <MDBRow>
         <MDBCol md="4">
             <h5 className="title text-uppercase">twoje konto</h5>
+            <hr class="hr-light"/>
+
             <ul className="px-0">
               <li className="list-unstyled">
                 <a href="#!">Profil</a>
@@ -20,6 +22,8 @@ class Footer extends Component {
           </MDBCol>
           <MDBCol md="4">
             <h5 className="title text-uppercase">Informacje prawne</h5>
+            <hr class="hr-light"/>
+
             <ul className="px-0">
               <li className="list-unstyled">
                 <a href="#!">Regulamin sklepu</a>
@@ -31,6 +35,8 @@ class Footer extends Component {
           </MDBCol>
           <MDBCol md="4">
             <h5 className="title text-uppercase">Pomocne linki</h5>
+            <hr class="hr-light"/>
+
             <ul className="px-0">
               <li className="list-unstyled">
                 <a href="#!">Kategorie</a>

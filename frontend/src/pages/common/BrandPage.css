@@ -58,6 +58,7 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
 .bg-1 {
   background-image: url("../../assets/carousel_1.jpg");
   height: 100vh;
+  width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -67,6 +68,8 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
 .bg-2 {
   background-image: url("../../assets/carousel_2.jpg");
   height: 100vh;
+  width: 100%;
+
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -76,6 +79,7 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
 .bg-3 {
   background-image: url("../../assets/carousel_3.jpg");
   height: 100vh;
+  width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -85,6 +89,7 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
 .bg-4 {
   background-image: url("../../assets/carousel_4.jpg");
   height: 100vh;
+  width: 100%;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -95,4 +100,14 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
   min-height: 100%;
   display: flex;
   align-items: center;
+}
+
+.masker-brands {
+  height: 100%;
+  background: linear-gradient(
+    rgba(20, 20, 26, 0.5), 
+    rgba(42, 41, 49, 0.5)
+  );
+  margin: 0;
+  padding: 0;
 }

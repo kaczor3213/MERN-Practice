@@ -7,9 +7,7 @@ import {
   MDBCardBody,
   MDBIcon,
   MDBCard,
-  MDBCardTitle,
   MDBCardImage,
-  MDBCardText,
   MDBAnimation,
   MDBNavLink,
   MDBCarousel,
@@ -28,7 +26,7 @@ class CustomCard extends Component {
             <MDBRow className="vertical-center w-100" style={{"padding-top": "4rem"}}> 
               <MDBCol
                 md="8" lg="6"
-                className="mx-auto headline float-none white z-depth-1 p-2"
+                className="mx-auto headline float-none white-text p-2"
               >
                 <MDBCardBody className="text-center">
                 <img
@@ -42,12 +40,12 @@ class CustomCard extends Component {
                       Nasze Marki
                     </strong>
                   </h1>
-                  <p className="pb-4">W naszej ofercie mamy szeroki zakres zarówno marek jak i sprzętu.</p>
-                  <p className="pb-4">Znajdziesz u nas <strong>15+</strong> kultowych marek!</p>
+                  <p className="pb-4" style={{'font-size': '140%'}}>W naszej ofercie mamy szeroki zakres zarówno marek jak i sprzętu.</p>
+                  <p className="pb-4" style={{'font-size': '120%'}}>Znajdziesz u nas <strong>15+</strong> kultowych marek!</p>
                   <MDBRow className="d-flex flex-row justify-content-center row">
-                    <MDBBtn outline color="success">
+                    <MDBBtn href="/equipment" color="success">
                       <MDBIcon icon="fas fa-download" className="mr-2" />
-                      <span className="font-weight-bold">Katalog pełnej oferty</span>
+                      <span>Katalog pełnej oferty</span>
                     </MDBBtn>
                   </MDBRow>
                 </MDBCardBody>
@@ -58,10 +56,8 @@ class CustomCard extends Component {
 }
 
 class CustomCarousel extends Component {
-  
     render() {
     return (
-    <div>
       <MDBCarousel
       activeItem={1}
       length={4}
@@ -70,40 +66,35 @@ class CustomCarousel extends Component {
     >
       <MDBCarouselInner>
         <MDBCarouselItem itemId="1">
-          <MDBView>
           <div className="bg-1 containerfluid">
-            <CustomCard/>
-            <MDBMask overlay="black-light" />
+            <div className="masker-brands">
+              <CustomCard/>
+            </div>
           </div>
-          </MDBView>
         </MDBCarouselItem>
         <MDBCarouselItem itemId="2">
-          <MDBView>
           <div className="bg-2 containerfluid">
+          <div className="masker-brands">
             <CustomCard/>
-            <MDBMask overlay="black-slight" />
           </div>
-          </MDBView>
+          </div>
         </MDBCarouselItem>
         <MDBCarouselItem itemId="3">
-          <MDBView>
-          <div className="bg-3 containerfluid">
+        <div className="bg-3 containerfluid">
+          <div className="masker-brands">
             <CustomCard/>
-            <MDBMask overlay="black-slight" />
+            </div>
           </div>
-          </MDBView>
         </MDBCarouselItem>
         <MDBCarouselItem itemId="4">
-          <MDBView>
-          <div className="bg-4 containerfluid">
+        <div className="bg-4 containerfluid">
+          <div className="masker-brands">
             <CustomCard/>
-            <MDBMask overlay="black-slight" />
+            </div>
           </div>
-          </MDBView>
         </MDBCarouselItem>
       </MDBCarouselInner>
     </MDBCarousel>
-    </div>
   );
   }
   }
@@ -126,7 +117,7 @@ class BrandsPage extends Component {
   }
 
   makeBrandsRow() {
-    return <MDBRow className="w-100" id="brands">
+    return <MDBRow className="w-100 mx-auto" id="brands">
         {this.gatherAllBrandsCols()}
         </MDBRow>;
   }
@@ -149,21 +140,16 @@ class BrandsPage extends Component {
             className="img-fluid"
             src={require("../../assets/brands/" + brand.toLowerCase()+".png")}
             style={{height: "50%", margin: "auto"}}
+            alt={brand}
           />
           </MDBContainer>
           <MDBCardBody cascade className="text-center">
-            <MDBCardTitle>
-              <strong>{brand}</strong>
-            </MDBCardTitle>
-            <MDBCardText>
-
-            </MDBCardText>
             <MDBNavLink 
                 tag="button"
-                to={"/equipment/"+brand}
+                to={"/equipment/"+ brand}
                 className="btn btn-outline-mdb-color btn-sm btn-rounded"
               >
-                Obejrz ofertę
+                Obejrz
             </MDBNavLink>
           </MDBCardBody>
         </MDBCard>
@@ -179,15 +165,13 @@ class BrandsPage extends Component {
       <>
         <CustomCarousel /> 
         <div className="mt-3 mb-5">    
-          <MDBContainer  md="12" className="mx-1" style={{"max-width": "1920px"}}>
-            <MDBRow>
-              <MDBCol md="0" lg="1" style={{"max-width": "90%"}}/>
+            <MDBRow className="w-100 m-0">
+              <MDBCol md="0" lg="1" className="p-0" style={{"max-width": "90%"}}/>
               <MDBCol className="mt-4" md="12" lg="10">
                 {this.makeBrandsRow()}
               </MDBCol>
-              <MDBCol md="0" lg="1" style={{"max-width": "90%"}}/>
+              <MDBCol md="0" lg="1" className="p-0" style={{"max-width": "90%"}}/>
             </MDBRow>
-          </MDBContainer>
         </div>
       </>
     );

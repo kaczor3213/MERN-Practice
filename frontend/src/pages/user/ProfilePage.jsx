@@ -3,10 +3,7 @@ import axios from 'axios';
 import { 
     MDBRow,
     MDBCol,
-    MDBJumbotron,
-    MDBInput, 
-    MDBBtn,
-    MDBNavLink} from 'mdbreact';
+    MDBBtn} from 'mdbreact';
 import {Redirect} from "react-router-dom";
 import "./ProfilePage.css";
 
@@ -40,7 +37,7 @@ class ProfilePage extends React.Component {
     render() {
         if(!this.state.redirectToLogin && this.state.readyToRender) {
             return (
-                <div className="profile-page">
+                <div className="profile-page pt-5">
                     <MDBRow className="my-5 py-5">
                         <MDBCol xl="6" lg="8" md="10" className="p-5 mx-auto bg-white">
                             <MDBRow>
@@ -94,7 +91,7 @@ class ProfilePage extends React.Component {
                             </MDBRow>
                         </MDBCol>
                     </MDBRow>
-                </div>      
+                </div>
             );
         } else {
             if(this.state.redirectToLogin) {

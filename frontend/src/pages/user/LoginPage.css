@@ -37,7 +37,7 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
 }
 
 .masker {
-  height: 100%;
+  min-height: 100vh;
   background: linear-gradient(
     rgba(0, 0, 0, 0.5), 
     rgba(19, 56, 10, 0.5)

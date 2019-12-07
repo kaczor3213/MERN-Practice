@@ -14,31 +14,85 @@ import {
   MDBDropdownToggle,
   MDBBtn,
   MDBRow,
-  MDBCol
 } from 'mdbreact';
 import "./navbar.css"
+import {Redirect} from "react-router-dom";
+import axios from 'axios';
+
 
 class NavBar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            modal: this.makeLoginModal(),
+            collapseID: ''
+        };
+    }
 
-    state = {
-        collapseID: ''
-      };
-    
+    handleLogout(event) {
+        event.preventDefault();
+        document.cookie = 'loginToken' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.location.reload();
+    }
+
+    makeLoginModal() {
+        return(
+            <div>
+                <MDBRow >
+                    <div className="p-1 mx-auto">
+                        <MDBBtn href='/login' style={{'font-size': '70%', 'font-weight': '400'}} className="m-0 white-text" color="primary">Logowanie</MDBBtn>
+                    </div>
+                    <div className="p-1 mx-auto">
+                        <MDBBtn href='/register' style={{'font-size': '70%', 'font-weight': '400'}} className="m-0  white-text" color="indigo">Rejestracja</MDBBtn>
+                    </div>
+                </MDBRow>
+            </div>
+        );
+    }
+
+    makeProfileModal() {
+        return (
+            <div>
+                <MDBRow >
+                    <div className="p-1 mx-auto">
+                        <MDBBtn href='/myprofile' style={{'font-size': '70%', 'font-weight': '400'}} className="m-0  white-text" color="success">Mój profil</MDBBtn>
+                    </div>
+                    <div className="p-1 mx-auto">
+                        <MDBBtn href='/login' onClick={e => this.handleLogout(e)} style={{'font-size': '70%', 'font-weight': '400'}} className="m-0 white-text" color="danger">Wyloguj</MDBBtn>
+                    </div>
+                </MDBRow>
+            </div>
+        );
+    }
+
+    componentDidMount() {
+        axios.post('http://localhost:4000/myprofile', null ,  {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' }).then(response => {
+            if(response.data.IS_VALID === false) {
+                this.setState({
+                    redirectToLogin: true,
+                });
+            } else {  
+            this.setState(
+                {
+                    modal: this.makeProfileModal()
+                }
+            );
+            }
+        });
+    }
+
     toggleCollapse = collapseID => () =>
         this.setState(prevState => ({
             collapseID: prevState.collapseID !== collapseID ? collapseID : ''
-        }));
+    }));
 
     closeCollapse = collapseID => () => {
         window.scrollTo(0, 0);
         this.state.collapseID === collapseID && this.setState({ collapseID: '' });
     };
 
-
     render() {
         return (
-            
-
             <MDBNavbar color="bg-success" dark expand='md' fixed='top' scrolling transparent>
                 <MDBNavbarBrand href='/' className='py-0 font-weight-bold'>
                     <img src={require('../assets/logo.png')} style={{ height: '2.5rem', width: '2.5rem' }} alt=""/>
@@ -103,15 +157,8 @@ class NavBar extends Component {
                             <MDBDropdownToggle nav caret>
                             <strong><MDBIcon icon="user" /></strong>
                             </MDBDropdownToggle>
-                            <MDBDropdownMenu  className="p-1 profile-dropdown">
-                                <MDBRow style={{  width: '24rem' }}>
-                                    <MDBCol className="p-0">
-                                    <MDBBtn color="primary">Logowanie</MDBBtn>
-                                    </MDBCol>
-                                    <MDBCol className="p-0">
-                                    <MDBBtn color="indigo">Rejestracja</MDBBtn>
-                                    </MDBCol>
-                                </MDBRow>
+                            <MDBDropdownMenu style={{'width':'200px'}} className="p-1 profile-dropdown">
+                                    {this.state.modal}
                             </MDBDropdownMenu>
                         </MDBDropdown>
                         </MDBNavItem>

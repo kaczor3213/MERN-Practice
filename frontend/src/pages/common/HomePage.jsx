@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-// import { Link } from 'react-router-dom';
 import axios from 'axios';
 import {
-  MDBContainer,
   MDBCol,
   MDBRow,
   MDBCardBody,
@@ -12,10 +10,9 @@ import {
   MDBCardImage,
   MDBCardText,
   MDBAnimation,
-  MDBNavLink,
-  MDBMask,
   MDBView,
-  MDBBtn
+  MDBBtn,
+  MDBNavLink
 } from "mdbreact";
 import "./HomePage.css";
 
@@ -73,7 +70,6 @@ class HomePage extends Component {
             <MDBNavLink 
                 tag="button"
                 to={"/equipment/"+equipment.id}
-                color="amber"
                 className="btn btn-outline-mdb-color btn-sm btn-rounded"
               >
                 Obejrz
@@ -91,85 +87,54 @@ class HomePage extends Component {
     return (
       <>  
         <MDBView className="landing-page">
-          <MDBMask overlay="stylish-strong" style={{'padding-top': '4rem', 'padding-bottom': '1rem'}}>
-            <MDBRow className="fadeIn vertical-center">
+          <div className="masker-home " style={{'padding-top': '4rem', 'padding-bottom': '1rem'}}>
+            <MDBRow className="fadeIn vertical-center w-100">
               <MDBCol md="5" lg="4" className="mx-auto headline white p-2 bg-transparent">
-              <div className="text-center white-text">
-                <h1 className="display-3 mb-4">
-                <img
-                      style={{'height':'9rem', 'width': '9rem' }}
-                      src={require('../../assets/logo.png')}
-                      alt="mdbreact-logo"
-                      className="pr-2 d-inline"
-                    />
-                  <strong className="font-weight-bold">
-                    RolPol
-                  </strong>
-                  <hr class="hr-light"/>
-                </h1>
-                <h3>Od ponad <strong>30 lat</strong> na rynku</h3>
-                <h5 className="pb-4">Chcemy się podzielić pasją, doświadczeniem i dobrym sprzętem.</h5>
-                <MDBRow className="d-flex flex-row justify-content-center">  
-                  <MDBBtn outline>
-                    <MDBIcon icon="book" className="mr-2" />
-                    <span className="font-weight-bold">Warunki wynajmu</span>
-                  </MDBBtn>
-                  <MDBBtn outline color="success">
-                    <MDBIcon icon="fas fa-download" className="mr-2" />
-                    <span className="font-weight-bold">Katalog pełnej oferty</span>
-                  </MDBBtn>
-                </MDBRow>
-              </div>
+                <div className="text-center white-text">
+                  <h1 className="display-3 mb-4">
+                  <img
+                        style={{'height':'9rem', 'width': '9rem' }}
+                        src={require('../../assets/logo.png')}
+                        alt="mdbreact-logo"
+                        className="pr-2 d-inline"
+                      />
+                    <strong className="font-weight-bold">
+                      RolPol
+                    </strong>
+                    <hr class="hr-light"/>
+                  </h1>
+                  <h3>Od ponad <strong>30 lat</strong> na rynku</h3>
+                  <h5 className="pb-4">Chcemy się podzielić pasją, doświadczeniem i dobrym sprzętem.</h5>
+                  <MDBRow className="d-flex flex-row justify-content-center w-100">  
+                    <MDBBtn>
+                      <MDBIcon icon="book" className="mr-2" />
+                      <span>Warunki wynajmu</span>
+                    </MDBBtn>
+                    <MDBBtn href="/equipment" color="success">
+                      <MDBIcon icon="fas fa-download" className="mr-2" />
+                      <span>Katalog pełnej oferty</span>
+                    </MDBBtn>
+                  </MDBRow>
+                </div>
+                <hr class="hr-light"/>
               </MDBCol>
-              <MDBCol md="5" lg="4" className="mx-auto headline white z-depth-1 p-2">
-                  <MDBCardBody className="bg-white">
-                    <form name="">
-                      <h3 class="dark-grey-text text-center">
-                        <strong>Zapisz się na nasz newsletter:</strong>
-                      </h3>
-                      <hr/>
-                      <div class="md-form">
-                        <i class="fas fa-user prefix grey-text"></i>
-                        <input type="text" id="form3" class="form-control"/>
-                        <label for="form3">Imię</label>
-                      </div>
-                      <div class="md-form">
-                        <i class="fas fa-envelope prefix grey-text"></i>
-                        <input type="text" id="form2" class="form-control"/>
-                        <label for="form2">Email</label>
-                      </div>
-                      <div class="text-center">
-                        <hr/>
-                        <fieldset class="form-check">
-                          <input type="checkbox" class="form-check-input" id="checkbox1" required/>
-                          <label for="checkbox1" class="form-check-label dark-grey-text">*Wyrażam zgodę na przetwarzanie moich danych osobowych</label>
-                        </fieldset>
-                      </div>
-                      <div class="text-center">
-                        <MDBBtn type="submit" outline color="primary">
-                          <MDBIcon icon="fas fa-paper-plane" className="mr-1" />
-                          <strong>Subskrybuj</strong>                
-                        </MDBBtn>
-                      </div>
-                    </form>
-                  </MDBCardBody>
-              </MDBCol>
-            </MDBRow>
-          </MDBMask>
-        </MDBView>
-        <MDBContainer>
-          <section class="mt-5 wow fadeIn">
-            <MDBRow>
-              <MDBRow>
-                <MDBCol className="mb-4 text-center ">
-                <h3 class="h3 mb-3">Dlaczego my?</h3>
-                  <p>Jesteśmy fimą z wieloletnim doświadczeniem w obsłudze i konserwacji maszyn rolniczych.
+              <MDBCol md="5" lg="4" className="mx-auto white-text p-2">
+                <div className="px-3">
+                <h3 class="h2 mb-3">Dlaczego my?</h3>
+                <p style={{'font-size': '125%'}}>
+                  Jesteśmy fimą z wieloletnim doświadczeniem w obsłudze i konserwacji maszyn rolniczych.
                   Wierzymy, że pod dobrą ręką każdy osprzęt może długo i wiernie służyć.
                   Rynek dynamicznie się zmienia, a nie każdy rolnik jest w stanie pozwolić sobie na zakup nowego ciągnika.
-                  Dzięki naszej usłudze możesz w dowolnym momencie wynająć maszynę rolniczą do swojej dyspozycji!</p>
-                  <hr/>
-                </MDBCol>
-              </MDBRow>
+                  Dzięki naszej usłudze możesz w dowolnym momencie wynająć maszynę rolniczą do swojej dyspozycji!
+                </p>
+                </div>
+              </MDBCol>
+            </MDBRow>
+          </div>
+        </MDBView>
+        <div>
+          <section class="mt-5 wow fadeIn">
+            <MDBRow>
               <MDBCol className="mb-4">
                 <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-main.jpg" class="img-fluid z-depth-1-half" alt=""/>
               </MDBCol>
@@ -234,9 +199,8 @@ class HomePage extends Component {
               </MDBCol>
             </MDBRow>
           </section>
-        </MDBContainer>
+        </div>
         <div className="mt-3 mb-5">
-          <MDBContainer>
             <MDBRow>
               <MDBCol md="12" className="mt-4">
                 <h2 className="text-center my-5 font-weight-bold">
@@ -245,8 +209,6 @@ class HomePage extends Component {
                 <hr className="my-5" />
               </MDBCol>
             </MDBRow>
-          </MDBContainer>
-          <MDBContainer md="12" className="mx-1" style={{"max-width": "1920px"}}>
             <MDBRow>
               <MDBCol md="0" lg="1" style={{"max-width": "90%"}}/>
               <MDBCol className="mt-4" md="12" lg="10">
@@ -254,7 +216,6 @@ class HomePage extends Component {
               </MDBCol>
               <MDBCol md="0" lg="1" style={{"max-width": "90%"}}/>
             </MDBRow>
-          </MDBContainer>
         </div>
       </>
     );
