@@ -15,8 +15,7 @@ import {
 class EquipmentPicker extends React.Component {
     constructor(props) {
       super(props);
-      this.state = {  equipment: this.props.equipment,
-                    };
+      this.state = {  equipment: this.props.equipment};
     }
   
     makeEquipmentsRow() {
@@ -27,16 +26,32 @@ class EquipmentPicker extends React.Component {
   
     gatherAllEquipmentsCols() {
       let tmp = [];
-      if(this.props.category !== undefined) {
-        for(var j=0; j<this.state.equipment.length; j++)
-        if(this.state.equipment[j].equipment_type === this.props.category)
-          tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[j]));  
-        
-      } else {
-        for(var i=0; i<this.state.equipment.length; i++)
-          tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[i]));
+      if(this.props.category === 'none' && this.props.brand === 'none') {
+        for(j=0; j<this.state.equipment.length; j++)
+          tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[j]));
       }
-      return tmp;
+
+      if(this.props.brand !== 'none' && this.props.category !== 'none') {
+        for(var j=0; j<this.state.equipment.length; j++)
+          if(this.state.equipment[j].equipment_type === this.props.category && this.state.equipment[j].brand === this.props.brand)
+            tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[j]));      
+      }
+
+      if(this.props.brand !== 'none' && this.props.category === 'none') {
+        for( j=0; j<this.state.equipment.length; j++)
+          if(this.state.equipment[j].brand === this.props.brand)
+            tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[j]));     
+      }
+
+      if(this.props.category !== 'none' && this.props.brand === 'none') {
+        for( j=0; j<this.state.equipment.length; j++)
+          if(this.state.equipment[j].equipment_type === this.props.category)
+            tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[j]));      
+      } 
+
+      if(tmp.length===0)
+        return <p className='white-text' style={{'fontSize': '130%'}}>Ups, nie ma takiego sprzętu ... </p>
+      return tmp;    
     }
 
     makeAnimatedEquipmentCard(equipment) {
@@ -53,12 +68,12 @@ class EquipmentPicker extends React.Component {
             <MDBCardBody cascade className="text-center">
               <MDBCardTitle>
                 <MDBIcon icon="cubes" className="green-text pr-2" />
-                <span class="text-capitalize">{equipment.equipment_type}</span><br/>
+                <span className="text-capitalize">{equipment.equipment_type}</span><br/>
                 <strong>{equipment.model}</strong>
               </MDBCardTitle>
               <MDBCardText>
                 <strong>Producent: </strong>{equipment.brand}<br/>
-                <p class="success">{equipment.cost_per_day} zł</p>
+                <p className="success">{equipment.cost_per_day} zł</p>
               </MDBCardText>
               <MDBNavLink 
                   tag="button"

@@ -36,11 +36,12 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
   background-attachment: fixed;
 }
 
-.masker {
+.masker-equipment {
+  min-height: 100vh;
   height: 100%;
   background: linear-gradient(
-    rgba(0, 0, 0, 0.2), 
-    rgba(0, 0, 0, 0.2)
+    rgba(0, 0, 0, 0.5), 
+    rgba(0, 0, 0, 0.5)
   );
   margin: 0;
   padding: 0;

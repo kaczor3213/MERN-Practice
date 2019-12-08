@@ -26,12 +26,16 @@ export const Search = async (req: Request, res: Response) => {
 export const Equipments = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
     let equipments = await equipmentRepository.find();
-    let tmp = [];
+    let categories = [];
+    let brands = [];
     for(var key in EquipmentType)
-        tmp.push(EquipmentType[key]);
+        categories.push(EquipmentType[key]);
+    for(var key in Brand)
+        brands.push(Brand[key]);
     return res.json({
         'equipment': equipments,
-        'category': tmp
+        'category': categories,
+        'brand': brands
     });
 }
 

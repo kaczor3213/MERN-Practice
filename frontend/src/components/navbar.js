@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
   MDBNavbar,
   MDBNavbarBrand,
@@ -16,11 +16,10 @@ import {
   MDBRow,
 } from 'mdbreact';
 import "./navbar.css"
-import {Redirect} from "react-router-dom";
 import axios from 'axios';
 
 
-class NavBar extends Component {
+class NavBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,7 +30,7 @@ class NavBar extends Component {
 
     handleLogout(event) {
         event.preventDefault();
-        document.cookie = 'loginToken' + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        document.cookie = 'loginToken=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         document.location.reload();
     }
 
@@ -40,10 +39,10 @@ class NavBar extends Component {
             <div>
                 <MDBRow >
                     <div className="p-1 mx-auto">
-                        <MDBBtn href='/login' style={{'font-size': '70%', 'font-weight': '400'}} className="m-0 white-text" color="primary">Logowanie</MDBBtn>
+                        <MDBBtn href='/login' style={{'fonSize': '70%', 'fontWeight': '400'}} className="m-0 white-text" color="primary">Logowanie</MDBBtn>
                     </div>
                     <div className="p-1 mx-auto">
-                        <MDBBtn href='/register' style={{'font-size': '70%', 'font-weight': '400'}} className="m-0  white-text" color="indigo">Rejestracja</MDBBtn>
+                        <MDBBtn href='/register' style={{'fontSize': '70%', 'fontWeight': '400'}} className="m-0  white-text" color="indigo">Rejestracja</MDBBtn>
                     </div>
                 </MDBRow>
             </div>
@@ -55,10 +54,10 @@ class NavBar extends Component {
             <div>
                 <MDBRow >
                     <div className="p-1 mx-auto">
-                        <MDBBtn href='/myprofile' style={{'font-size': '70%', 'font-weight': '400'}} className="m-0  white-text" color="success">Mój profil</MDBBtn>
+                        <MDBBtn href='/myprofile' style={{'fontSize': '70%', 'fontWeight': '400'}} className="m-0  white-text" color="success">Mój profil</MDBBtn>
                     </div>
                     <div className="p-1 mx-auto">
-                        <MDBBtn href='/login' onClick={e => this.handleLogout(e)} style={{'font-size': '70%', 'font-weight': '400'}} className="m-0 white-text" color="danger">Wyloguj</MDBBtn>
+                        <MDBBtn href='/login' onClick={e => this.handleLogout(e)} style={{'fontSize': '70%', 'fontWeight': '400'}} className="m-0 white-text" color="danger">Wyloguj</MDBBtn>
                     </div>
                 </MDBRow>
             </div>

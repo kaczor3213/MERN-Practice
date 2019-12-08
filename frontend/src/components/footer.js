@@ -9,7 +9,7 @@ class Footer extends Component {
         <MDBRow>
         <MDBCol md="4">
             <h5 className="title text-uppercase">twoje konto</h5>
-            <hr class="hr-light"/>
+            <hr className="hr-light"/>
 
             <ul className="px-0">
               <li className="list-unstyled">
@@ -22,7 +22,7 @@ class Footer extends Component {
           </MDBCol>
           <MDBCol md="4">
             <h5 className="title text-uppercase">Informacje prawne</h5>
-            <hr class="hr-light"/>
+            <hr className="hr-light"/>
 
             <ul className="px-0">
               <li className="list-unstyled">
@@ -35,7 +35,7 @@ class Footer extends Component {
           </MDBCol>
           <MDBCol md="4">
             <h5 className="title text-uppercase">Pomocne linki</h5>
-            <hr class="hr-light"/>
+            <hr className="hr-light"/>
 
             <ul className="px-0">
               <li className="list-unstyled">
