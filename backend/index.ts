@@ -146,6 +146,11 @@ createConnection().then(async connection => {
         return CommonAccessControl.Equipments(req, res);
     });
 
+    // equipment view
+    app.get("/equipment/:id", async function(req: Request, res: Response) {
+        return CommonAccessControl.EquipmentSpecific(req, res);
+    });
+
     // brands view
     app.get("/brands", async function(req: Request, res: Response) {
         return CommonAccessControl.Brands(req, res);

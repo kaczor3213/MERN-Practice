@@ -39,6 +39,13 @@ export const Equipments = async (req: Request, res: Response) => {
     });
 }
 
+export const EquipmentSpecific = async (req: Request, res: Response) => {
+    const equipmentRepository = getConnection().getRepository(Equipment);     
+    console.log(req.params.id);
+    let equipment = await equipmentRepository.findOne(req.params.id);
+    return res.json(equipment);
+}
+
 // Equipments controller (takes request, response from route call)
 export const Brands = async (req: Request, res: Response) => {
     let tmp = [];

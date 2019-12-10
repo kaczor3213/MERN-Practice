@@ -39,7 +39,7 @@ class NavBar extends React.Component {
             <div>
                 <MDBRow >
                     <div className="p-1 mx-auto">
-                        <MDBBtn href='/login' style={{'fonSize': '70%', 'fontWeight': '400'}} className="m-0 white-text" color="primary">Logowanie</MDBBtn>
+                        <MDBBtn href='/login' style={{'fontSize': '70%', 'fontWeight': '400'}} className="m-0 white-text" color="primary">Logowanie</MDBBtn>
                     </div>
                     <div className="p-1 mx-auto">
                         <MDBBtn href='/register' style={{'fontSize': '70%', 'fontWeight': '400'}} className="m-0  white-text" color="indigo">Rejestracja</MDBBtn>
