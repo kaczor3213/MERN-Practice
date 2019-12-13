@@ -69,12 +69,12 @@ createConnection().then(async connection => {
 
     // admin specific equipment view
     app.post("/panel/equipment/:id", async function(req: Request, res: Response) {
-        return AdminControl.EquipmentV(req, res);
+        return AdminControl.EquipmentDetails(req, res);
     });
 
     // admin equipment add (provide brands, different parameters) view
     app.post("/panel/equipments/add", async function(req: Request, res: Response) {
-        return AdminControl.EquipmentAddView(req, res);
+        return AdminControl.EquipmentSupportData(req, res);
     });
 
     // admin equipment add handle

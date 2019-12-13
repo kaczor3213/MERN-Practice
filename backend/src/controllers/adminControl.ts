@@ -129,7 +129,7 @@ export const EquipmentList = async (req: Request, res: Response) => {
 }
 
 // Specific equipment controller (takes request, response from route call)
-export const EquipmentV = async (req: Request, res: Response) => {
+export const EquipmentDetails = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
     const results = await validateAdminLoginToken(req.cookies);
     if(results["IS_VALID"] == true ) {

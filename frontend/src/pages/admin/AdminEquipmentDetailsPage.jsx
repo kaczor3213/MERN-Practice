@@ -52,27 +52,40 @@ class EquipmentDetailsPage extends Component {
         }).catch(function(error){console.log(error);});
   }
 
-  renderEquipmentData() {
-    return <SDLContainer elements={this.state.equipment}/>;
+  onDelete() {
+
+  }
+
+  renderNavLinks() {
+    return(
+        <MDBNav className="ml-5">
+            <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
+            <MDBNavLink className="my-auto indigo-text" style={{'fontSize': '120%'}} to="/admin/panel">Panel</MDBNavLink>
+            <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
+            <MDBNavLink className="my-auto indigo-text" style={{'fontSize': '120%'}} to="/admin/panel/equipment">Sprzęt</MDBNavLink>                
+            <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
+            <MDBNavLink className="my-auto indigo-text" style={{'fontSize': '120%'}} active to={"/admin/panel/equipment/details/"+this.state.id}>{this.state.equipment['nazwa modelu']+'_id['+this.state.id+']'}</MDBNavLink>
+        </MDBNav>
+    );
   }
 
   render() {
     if(!this.state.redirectToLogin && this.state.readyToRender) {
         return (
         <div style={{'backgroundColor': '#37474F', "paddingTop": "100px", "paddingBottom": "100px"}} className="">
-            <div className="bg-white pt-5">
-            <MDBNav className="ml-5">
-                <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
-                <MDBNavLink className="my-auto indigo-text" style={{'fontSize': '120%'}} to="/admin/panel">Panel</MDBNavLink>
-                <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
-                <MDBNavLink className="my-auto indigo-text" style={{'fontSize': '120%'}} to="/admin/panel/equipment">Sprzęt</MDBNavLink>                
-                <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
-                <MDBNavLink className="my-auto indigo-text" style={{'fontSize': '120%'}} active to={"/admin/panel/equipment/details/"+this.state.id}>{this.state.equipment['nazwa modelu']+'_id['+this.state.id+']'}</MDBNavLink>
-            </MDBNav>
+            <div className="bg-white py-5">
+            {this.renderNavLinks()}
             <p className="h2 pb-3 text-center">Sprzęt</p>
             <MDBRow className="pb-5">   
                 <MDBCol md="8" lg="8" className="mx-auto">
-                    {this.renderEquipmentData()}
+                    <SDLContainer elements={this.state.equipment}/>
+                </MDBCol>
+            </MDBRow>
+            <MDBRow>
+                <MDBCol md="8" className="mx-auto text-center">
+                    <MDBBtn href="/admin/panel/equipment" color="success" className="mx-1"><MDBIcon icon="chevron-left" className="mr-1"/>cofnij</MDBBtn>
+                    <MDBBtn href={"/admin/panel/equipment/edit/"+this.state.id} color="warning" className="mx-1"><MDBIcon icon="cogs" className="mr-1"/>edytuj</MDBBtn>
+                    <MDBBtn onClick={this.onDelete} color="danger" className="mx-1"><MDBIcon icon="trash-alt" className="mr-1"/>usuń</MDBBtn>
                 </MDBCol>
             </MDBRow>
             </div>
