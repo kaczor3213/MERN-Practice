@@ -1,41 +1,34 @@
 import {validateAdminLogin, validateAdminLoginToken} from "../validators/adminValidator";
-import {generateHashedToken} from "../bin/adminLoginToken";
+import {generateHashedToken} from "../bin/loginToken";
 import {Request, Response} from "express";
 import {getConnection} from "typeorm";
 import {User, UserRole} from "../entity/User";
 import {Order} from "../entity/Order";
 import {Equipment, EquipmentType, TyreType, Brand} from "../entity/Equipment";
 import { validateEquipmentCreate } from "../validators/equipmentValidator";
-export const LOGIN_TIMEOUT = 1800;
+export const LOGIN_TIMEOUT = 60 * 60 * 1000;
 
 // Login controller (takes request, response from route call)
 export const Login = async (req: Request, res: Response) => {
     const results = await validateAdminLogin(req.body);
-    console.log(results);
     if(results["TOTAL_WARNINGS"] == 0) {
-        let hashedToken = generateHashedToken(results["EMAIL"], req.headers["user-agent"]);
+        let hashedToken = generateHashedToken(results["EMAIL"], req.headers["user-agent"], 'ADMIN_KEY');
         res.cookie("adminLoginToken", hashedToken, { expires: new Date(Date.now() + LOGIN_TIMEOUT), httpOnly: true});
-        return res.json(results);
     }
     return res.json(results);
 }
 
-// Logout controller (takes request, response from route call)
-export const Logout = async (req: Request, res: Response) => {
-    console.log(req.cookies)
-    const results = await validateAdminLoginToken(req.cookies);
-    console.log(results);
-    if(results["IS_VALID"] == true) {
-        res.cookie("shouldBeLogout", true);
-        return res.json(results);
-    }
-    return res.json(results);
-}
-
-// Profile controller (takes request, response from route call)
+// Panel controller (takes request, response from route call)
 export const Panel = async (req: Request, res: Response) => {
-    const results = await validateAdminLoginToken(req.cookies);
-    console.log(results);
+    let results = await validateAdminLoginToken(req.cookies);
+    const users_count = await getConnection().getRepository(User).count();     
+    const equipment_count = await getConnection().getRepository(Equipment).count();     
+    const order_7days = await getConnection().getRepository(Order).count();
+    if(results["IS_VALID"] == true ) {
+        results['users_count']=users_count;
+        results['equipment_count']=equipment_count;
+        results['orders_7days']=order_7days;
+    }
     return res.json(results);
 }
 
@@ -46,8 +39,20 @@ export const Users = async (req: Request, res: Response) => {
 
     console.log(results);
     if(results["IS_VALID"] == true) {
-        let users = await userRepository.find({role: UserRole.CLIENT})     
-        return res.json(users);
+        let usersArr = await userRepository.find({
+            select: ["id","email"],
+        });
+        let users = [];
+        usersArr.forEach(function (u) {
+            users.push({
+                id: u.id,
+                content_type: 'user',
+                params: {
+                    email: u.email,
+                }
+            })
+        });
+        results['users'] = users;
     }
     return res.json(results);
 }
@@ -99,14 +104,26 @@ export const OrderV = async (req: Request, res: Response) => {
 }
 
 // Equipments controller (takes request, response from route call)
-export const Equipments = async (req: Request, res: Response) => {
+export const EquipmentList = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
     const results = await validateAdminLoginToken(req.cookies);
-
-    console.log(results);
+    
     if(results["IS_VALID"] == true) {
-        let equipments = await equipmentRepository.find();        
-        return res.json(equipments);
+        let equipmentArr = await equipmentRepository.find({
+            select: ["id","model","equipment_type"]
+        });
+        let equipment = [];
+        equipmentArr.forEach(function (e) {
+            equipment.push({
+                id: e.id,
+                content_type: 'equipment',
+                params: {
+                    equipment_type: e.equipment_type,
+                    model: e.model
+                }
+            })
+        });
+        results['equipment'] = equipment;
     }
     return res.json(results);
 }
@@ -115,8 +132,6 @@ export const Equipments = async (req: Request, res: Response) => {
 export const EquipmentV = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
     const results = await validateAdminLoginToken(req.cookies);
-
-    console.log(results);
     if(results["IS_VALID"] == true ) {
         let equipment = await equipmentRepository.findOne(req.params.id);
         if (equipment == undefined)

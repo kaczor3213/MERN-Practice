@@ -10,7 +10,7 @@ class ValidationMessage extends React.Component {
 
     render() {
             return(
-                <div className="bg-danger p-2" style={{'borderRadius': '5px'}}>
+                <div className="bg-danger p-2 white-text" style={{'borderRadius': '5px'}}>
                 {this.state.message}
                 <i class="far fa-frown"></i> 
                 </div>

@@ -27,7 +27,8 @@ class LoginPage extends React.Component {
     }
     
     componentDidMount() {
-        axios.post('http://localhost:4000/myprofile', null,  {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' }).then(response => {
+        axios.post('http://localhost:4000/myprofile', null,  {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' })
+        .then(response => {
             if(response.data.IS_VALID !== false)  {
                 this.setState({
                     redirectToProfile: true,
@@ -37,10 +38,8 @@ class LoginPage extends React.Component {
         this.setState({
             readyToRender: true     
         });
-        console.log(this.state.readyToRender, this.state.redirectToProfile)
     }
 
-    
     submitHandler = event => {
         event.preventDefault();
         event.persist();
@@ -148,7 +147,6 @@ class LoginPage extends React.Component {
             </div>
         ) } else {
             if(this.state.success) {
-                {window.location.reload()}
                 return <Redirect to="/myprofile"/>;
             }
             return "";

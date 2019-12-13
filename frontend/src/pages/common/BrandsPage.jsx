@@ -13,8 +13,6 @@ import {
   MDBCarousel,
   MDBCarouselInner,
   MDBCarouselItem,
-  MDBView,
-  MDBMask,
   MDBBtn
 } from "mdbreact";
 import "./BrandPage.css";
@@ -146,7 +144,7 @@ class BrandsPage extends Component {
           <MDBCardBody cascade className="text-center">
             <MDBNavLink 
                 tag="button"
-                to={"/equipment/"+ brand}
+                to={"/equipment/brand/"+ brand}
                 className="btn btn-outline-mdb-color btn-sm btn-rounded"
               >
                 Obejrz

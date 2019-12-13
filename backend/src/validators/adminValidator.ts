@@ -1,5 +1,5 @@
 import {User, UserRole} from "../entity/User";
-import {decryptHashedToken} from "../bin/adminLoginToken";
+import {decryptHashedToken} from "../bin/loginToken";
 import {getSaltedPassword, getSaltFromPassword} from "../bin/salting";
 import {Dictionary} from "express-serve-static-core";
 import {getConnection} from "typeorm";
@@ -11,6 +11,7 @@ export const validateAdminLogin = async (params: Dictionary<string>) => {
 
     
     var LOGIN_INFO = {
+        "EMAIL": null,
         "TOTAL_WARNINGS": 0,
         "LOGIN_ERROR_CODE": {
             "ADMIN": true,
@@ -18,7 +19,7 @@ export const validateAdminLogin = async (params: Dictionary<string>) => {
             "WRONG_PASSWORD": false,
         }
     }    
-        
+    let errors = '';
     let admin = null;
     // Email validation
     try {
@@ -33,7 +34,7 @@ export const validateAdminLogin = async (params: Dictionary<string>) => {
                     throw new Error("Not an admin: " + admin.email);
             }
             catch(e) {
-                console.log(e)
+                errors += e+'\n';
                 LOGIN_INFO.TOTAL_WARNINGS++;
                 LOGIN_INFO.LOGIN_ERROR_CODE.ADMIN=false;
             }
@@ -41,22 +42,24 @@ export const validateAdminLogin = async (params: Dictionary<string>) => {
             try {
                 if(admin.password != getSaltedPassword(params.password,getSaltFromPassword(admin.password)))
                     throw new Error("Wrong password for this user: " + admin.email);
+                else
+                    LOGIN_INFO.EMAIL = admin.email;
             }
             catch(e) {
-                console.log(e)
+                errors += e+'\n';
                 LOGIN_INFO.TOTAL_WARNINGS++;
                 LOGIN_INFO.LOGIN_ERROR_CODE.WRONG_PASSWORD=true;
             }
         }
     }
     catch(e) {
-        console.log(e)
+        errors += e+'\n';
         LOGIN_INFO.TOTAL_WARNINGS++;
         LOGIN_INFO.LOGIN_ERROR_CODE.ADMIN=false;
         LOGIN_INFO.TOTAL_WARNINGS++;
         LOGIN_INFO.LOGIN_ERROR_CODE.NO_EMAIL=true;
     }
-
+    console.log(errors);
     return LOGIN_INFO;
 }
 
@@ -66,11 +69,18 @@ export const validateAdminLoginToken = async (cookies: Dictionary<string>) => {
 
     var ACCESS_TOKEN_INFO = {
         "TIMESTAMP_VALID": false,
-        "IS_VALID": false
+        "IS_VALID": false,
+        "EMAIL": null
     }
+    let token = null;
+    let admin = null;
 
-    let token = decryptHashedToken(cookies.adminLoginToken);
-    let admin = await userRepository.findOne({email: token.email});
+    try {
+        token = decryptHashedToken(cookies.adminLoginToken,'ADMIN_KEY');
+    } catch(e) {
+        return ACCESS_TOKEN_INFO;
+    }
+    admin = await userRepository.findOne({email: token.email});
 
     if(admin == undefined || admin.role != UserRole.ADMIN)
          return ACCESS_TOKEN_INFO;
@@ -80,6 +90,7 @@ export const validateAdminLoginToken = async (cookies: Dictionary<string>) => {
         else
             ACCESS_TOKEN_INFO.TIMESTAMP_VALID = true;
             ACCESS_TOKEN_INFO.IS_VALID = true;
+            ACCESS_TOKEN_INFO.EMAIL = token.email;
     }
     return ACCESS_TOKEN_INFO;
 }

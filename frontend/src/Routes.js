@@ -10,6 +10,16 @@ import EquipmentSpecificPage from "./pages/common/EquipmentSpecificPage";
 import UserLoginPage from "./pages/user/LoginPage";
 import UserRegisterPage from "./pages/user/RegisterPage";
 import UserProfilePage from "./pages/user/ProfilePage";
+
+
+import AdminLoginPage from "./pages/admin/AdminLoginPage";
+import AdminPanelPage from "./pages/admin/AdminPanelPage";
+import AdminUsersPage from "./pages/admin/AdminUsersPage"
+import AdminEquipmentPage from "./pages/admin/AdminEquipmentPage";
+import AdminEquipmentAddPage from "./pages/admin/AdminEquipmentAddPage";
+import AdminEquipmentDetailsPage from "./pages/admin/AdminEquipmentDetailsPage";
+import AdminEquipmentEditPage from "./pages/admin/AdminEquipmentEditPage";
+
 class Routes extends React.Component {
   constructor(props) {
     super(props);
@@ -20,28 +30,38 @@ class Routes extends React.Component {
 
   render() {
     return (
+      
       <Switch>
-
+        
         {/* COMMON_ACCESS ROUTES */}
         <Route exact path="/" component={HomePage} />
+
         <Route exact path="/brands" component={BrandsPage} />
         <Route exact path="/category" component={CategoryPage} />
         <Route exact path="/equipment" component={EquipmentPage} />
+        <Route path="/equipment/category/:category" component={EquipmentPage} />
+        <Route path="/equipment/brand/:brand" component={EquipmentPage} />
+        <Route path="/equipment/:id" component={EquipmentSpecificPage} />
+
         <Route exact path="/login" component={UserLoginPage} />
         <Route exact path="/register" component={UserRegisterPage} />
         <Route exact path="/myprofile" component={UserProfilePage} />
-
-        <Route path="/equipment/:id" component={EquipmentSpecificPage} />
-        {/* 
-        <Route exact path="/admin" component={AdminLoginPage} />
-        <Route path="/admin/logout" component={AdminLogoutPage} />
-        <Route path="/admin/panel" component={AdminPanelPage} />
-        <Route path="/admin/users" component={AdminUsersPage} />
-        <Route path="/admin/orders" component={AdminOrdersPage} />
         
-        <Route path="/admin/equipment/add" component={AdminEquipmentAddPage} />
+        <Route exact path="/admin" component={AdminLoginPage} />
+        <Route exact path="/admin/panel" component={AdminPanelPage} />
+        <Route exact path="/admin/panel/equipment" component={AdminEquipmentPage} />
+        <Route path="/admin/panel/equipment/details/:id" component={AdminEquipmentDetailsPage} />
+
+        <Route exact path="/admin/panel/users" component={AdminUsersPage} />
+        {/* 
+        <Route path="/admin/panel/equipment/add" component={AdminEquipmentAddPage} />
+        <Route path="/admin/panel/equipment/edit/:id" component={AdminEquipmentEditPage} /> */}
+
+        {/* 
+        <Route path="/myprofile/settings" component={UserOrdersPage} />
+        <Route path="/admin/orders" component={AdminOrdersPage} />
         <Route path="/myprofile/orders" component={UserOrdersPage} />
-        <Route path="/myprofile/settings" component={UserOrdersPage} /> */}
+         */}
 
         <Route
           render={function () {

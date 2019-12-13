@@ -60,12 +60,12 @@ class HomePage extends Component {
           <MDBCardBody cascade className="text-center">
             <MDBCardTitle>
               <MDBIcon icon="cubes" className="green-text pr-2" />
-              <span class="text-capitalize">{equipment.equipment_type}</span><br/>
+              <span className="text-capitalize">{equipment.equipment_type}</span><br/>
               <strong>{equipment.model}</strong>
             </MDBCardTitle>
             <MDBCardText>
               <strong>Producent: </strong>{equipment.brand}<br/>
-              <strong>Koszt (1 dzień): </strong><p class="success">{equipment.cost_per_day} zł</p>
+              <strong>Koszt (1 dzień): </strong><p className="success">{equipment.cost_per_day} zł</p>
             </MDBCardText>
             <MDBNavLink 
                 tag="button"
@@ -87,7 +87,7 @@ class HomePage extends Component {
     return (
       <>  
         <MDBView className="landing-page">
-          <div className="masker-home " style={{'padding-top': '4rem', 'padding-bottom': '1rem'}}>
+          <div className="masker-home " style={{'paddingTop': '4rem', 'paddingBottom': '1rem'}}>
             <MDBRow className="fadeIn vertical-center w-100">
               <MDBCol md="5" lg="4" className="mx-auto headline white p-2 bg-transparent">
                 <div className="text-center white-text">
@@ -101,7 +101,7 @@ class HomePage extends Component {
                     <strong className="font-weight-bold">
                       RolPol
                     </strong>
-                    <hr class="hr-light"/>
+                    <hr className="hr-light"/>
                   </h1>
                   <h3>Od ponad <strong>30 lat</strong> na rynku</h3>
                   <h5 className="pb-4">Chcemy się podzielić pasją, doświadczeniem i dobrym sprzętem.</h5>
@@ -116,12 +116,12 @@ class HomePage extends Component {
                     </MDBBtn>
                   </MDBRow>
                 </div>
-                <hr class="hr-light"/>
+                <hr className="hr-light"/>
               </MDBCol>
               <MDBCol md="5" lg="4" className="mx-auto white-text p-2">
                 <div className="px-3">
-                <h3 class="h2 mb-3">Dlaczego my?</h3>
-                <p style={{'font-size': '125%'}}>
+                <h3 className="h2 mb-3">Dlaczego my?</h3>
+                <p style={{'fontSize': '125%'}}>
                   Jesteśmy fimą z wieloletnim doświadczeniem w obsłudze i konserwacji maszyn rolniczych.
                   Wierzymy, że pod dobrą ręką każdy osprzęt może długo i wiernie służyć.
                   Rynek dynamicznie się zmienia, a nie każdy rolnik jest w stanie pozwolić sobie na zakup nowego ciągnika.
@@ -133,10 +133,10 @@ class HomePage extends Component {
           </div>
         </MDBView>
         <div>
-          <section class="mt-5 wow fadeIn">
+          <section className="mt-5 wow fadeIn">
             <MDBRow>
               <MDBCol className="mb-4">
-                <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-main.jpg" class="img-fluid z-depth-1-half" alt=""/>
+                <img src="https://mdbootstrap.com/img/Marketing/mdb-press-pack/mdb-main.jpg" className="img-fluid z-depth-1-half" alt=""/>
               </MDBCol>
               <MDBCol md="6" className="mb-4 text-center">
                 <p>
@@ -147,27 +147,27 @@ class HomePage extends Component {
                 </p>
                 <MDBBtn className="dusty-grass-gradient">
                   Katalog pełnej oferty
-                  <i class="fas fa-download ml-1"></i>
+                  <i className="fas fa-download ml-1"></i>
                 </MDBBtn>
                 <MDBBtn outline color="danger">
                   Wspiera nas
-                  <i class="fab fa-youtube ml-1"></i>
+                  <i className="fab fa-youtube ml-1"></i>
                 </MDBBtn>
               </MDBCol>
             </MDBRow>
           </section>
-          <hr class="my-5"/>
+          <hr className="my-5"/>
           <section>
-            <h3 class="h3 text-center mb-5">O naszej ofercie</h3>
-            <MDBRow class="row wow fadeIn">
+            <h3 className="h3 text-center mb-5">O naszej ofercie</h3>
+            <MDBRow className="row wow fadeIn">
               <MDBCol lg="6" md="12" className="px-4">
                 <MDBRow>
                   <MDBCol size="1" className="mr-3">
                     <MDBIcon icon="fas fa-tractor fa-2x" className="green-text"/>
                   </MDBCol>
                   <MDBCol size="10">
-                    <h5 class="feature-title">Duże maszyny</h5>
-                    <p class="grey-text">Dysponujemy ciagnikami, kombajnami i innym ciężkim sprzętem.</p>
+                    <h5 className="feature-title">Duże maszyny</h5>
+                    <p className="grey-text">Dysponujemy ciagnikami, kombajnami i innym ciężkim sprzętem.</p>
                   </MDBCol>
                 </MDBRow>
                 <MDBRow>
@@ -175,8 +175,8 @@ class HomePage extends Component {
                     <MDBIcon icon="fas fa-car-crash fa-2x" className="orange-text"/>
                   </MDBCol>
                   <MDBCol size="10">
-                    <h5 class="feature-title">Szerokie ubezpieczenie</h5>
-                    <p class="grey-text">Na każdą maszynę mamy różne formy ubezpieczenia, asekurując udany wynajm.
+                    <h5 className="feature-title">Szerokie ubezpieczenie</h5>
+                    <p className="grey-text">Na każdą maszynę mamy różne formy ubezpieczenia, asekurując udany wynajm.
                     </p>
                   </MDBCol>
                 </MDBRow>
@@ -185,16 +185,16 @@ class HomePage extends Component {
                     <MDBIcon icon="fas fa-wrench fa-2x" className="grey-text"/>
                   </MDBCol>
                   <MDBCol size="10">
-                    <h5 class="feature-title">Serwis i jakość</h5>
-                    <p class="grey-text">Każda maszyna ma aktualne badania techniczne, jest w pełni sprawna, a w razie drobnej awarii dokonujemy szybkiej naprawy.
+                    <h5 className="feature-title">Serwis i jakość</h5>
+                    <p className="grey-text">Każda maszyna ma aktualne badania techniczne, jest w pełni sprawna, a w razie drobnej awarii dokonujemy szybkiej naprawy.
                     </p>
                   </MDBCol>
                 </MDBRow>
               </MDBCol>
               <MDBCol lg="6" md="12">
-                <p class="h5 text-center mb-4">Zobacz nasz sprzęt w akcji!</p>
-                <div class="embed-responsive embed-responsive-16by9">
-                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/mu_SnrMacwA" allowfullscreen></iframe>
+                <p className="h5 text-center mb-4">Zobacz nasz sprzęt w akcji!</p>
+                <div className="embed-responsive embed-responsive-16by9">
+                  <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/mu_SnrMacwA" allowFullScreen></iframe>
                 </div>
               </MDBCol>
             </MDBRow>
@@ -210,11 +210,11 @@ class HomePage extends Component {
               </MDBCol>
             </MDBRow>
             <MDBRow>
-              <MDBCol md="0" lg="1" style={{"max-width": "90%"}}/>
+              <MDBCol md="0" lg="1" style={{"maxWidth": "90%"}}/>
               <MDBCol className="mt-4" md="12" lg="10">
                 {this.makeEquipmentsRow()}
               </MDBCol>
-              <MDBCol md="0" lg="1" style={{"max-width": "90%"}}/>
+              <MDBCol md="0" lg="1" style={{"maxWidth": "90%"}}/>
             </MDBRow>
         </div>
       </>

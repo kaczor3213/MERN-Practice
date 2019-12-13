@@ -51,20 +51,20 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
   display: flex;
   align-items: center;
 }
-
+/* 
 label {
   color: white !important;
-}
+} */
 
 
-.form-group>label.active {
+/* .form-group>label.active {
   color: #00c851 !important;
-}
+} */
 
 
-.prefix.active {
+/* .prefix.active {
   color: #00c851 !important;
-}
+} */
 
 .green-hover {
   color: white;
@@ -73,11 +73,9 @@ label {
 
 .green-hover:focus {
   color: #00c851;
-  border-bottom: 1px solid  #00c851 !important;
   box-shadow: 0 1px 0 0 #00c851 !important;
   background-color: white;
 }
-
 
 .whitey-text {
   color: rgb(240, 240, 240);

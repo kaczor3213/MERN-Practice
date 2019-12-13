@@ -3,11 +3,11 @@ import { Order } from './Order'
 import { IsInt, Min, Max } from "class-validator";
 
 export enum EquipmentType {
-    TRACTOR = "TRACTOR",
-    HARVESTER = "HARVESTER",
-    CULTIVATOR = "CULTIVATOR",
-    SOWING_MACHINE = "SOWING_MACHINE",
-    TIPPER = "TIPPER",
+    TRACTOR = "traktor",
+    HARVESTER = "kombajn",
+    CULTIVATOR = "kultywator",
+    SOWING_MACHINE = "siewnik",
+    TIPPER = "naczepa",
 }
 
 export enum TyreType {
@@ -19,21 +19,21 @@ export enum TyreType {
 }
 
 export enum Brand {
-    NEW_HOLLAND = "NEW_HOLLAND",
-    VALTRA = "VALTRA",
-    DEUTZ = "DEUTZ",
-    MASSEY_FERGUSON = "MASSEY_FERGUSON",
-    CASE_IH = "CASE_IH",
-    STEYR = "STEYR",
-    FENDT = "FENDT",
-    ROSTSELMASH = "ROSTSELMASH",
-    KROEGER = "KROEGER",
-    METALTECH = "METALTECH",
-    FLIEGL = "FLIEGL",
-    VADERSTAD = "VADERSTAD",
-    GRIMME = "GRIMME",
-    ZETOR = "ZETOR",
-    HORSCH = "HORSCH",
+    NEW_HOLLAND = "new holland",
+    VALTRA = "valtra",
+    DEUTZ = "deutz",
+    MASSEY_FERGUSON = "massey fergusson",
+    CASE_IH = "case ih",
+    STEYR = "steyr",
+    FENDT = "fendt",
+    ROSTSELMASH = "rostselmash",
+    KROEGER = "kroeger",
+    METALTECH = "metaltech",
+    FLIEGL = "fliegl",
+    VADERSTAD = "vaderstad",
+    GRIMME = "grimme",
+    ZETOR = "zetor",
+    HORSCH = "horsch",
 }
 
 export enum Status {
@@ -118,25 +118,3 @@ export class Equipment {
     orders: Order[];
 
 }
-
-// export const createEquipment = async (params: Dictionary<string>) => {
-//     try {
-
-//         let equipment = new Equipment();
-//         equipment.brand = params.brand;
-//         equipment.model = params.model;
-//         equipment.image = params.image
-//         equipment.tyre_type = params.tyre_type;
-//         equipment.equipment_type = params.equipment_type
-
-//         equipment.mass = Number(params.mass);
-//         equipment.max_speed = Number(params.max_speed);
-//         equipment.capacity = Number(params.capacity)
-//         equipment.crop_capacity = Number(params.crop_capacity)
-//         equipment.cost_per_day = Number(params.cost_per_day)
-//         equipment.fuel_capacity = Number(params.fuel_capacity)
-//         equipment.horsepower = Number(params.horsepower)
-//         equipment.working_width = Number(params.working_width)
-//         equipment.power_required = Number(params.power_required) 
-//     }
-// };

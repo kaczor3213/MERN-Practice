@@ -10,24 +10,11 @@ export const LOGIN_TIMEOUT = 60 * 60 * 1000;
 export const Login = async (req: Request, res: Response) => {
     const results = await validateUserLogin(req.body);
     if(results["TOTAL_WARNINGS"] == 0) {
-        let hashedToken = generateHashedToken(results["EMAIL"],req.headers["user-agent"]);
-        // SET AUTHORIZATION COOKIE FOR USER
+        let hashedToken = generateHashedToken(results["EMAIL"],req.headers["user-agent"],'TOKEN_KEY');
         res.cookie("loginToken", hashedToken, { expires: new Date(Date.now() + LOGIN_TIMEOUT)});
-        console.log('Login', hashedToken);
         return res.json(results);       
     }
     res.clearCookie("loginToken");
-    return res.json(results);
-}
-
-// Logout controller (takes request, response from route call)
-export const Logout = async (req: Request, res: Response) => {
-    const results = await validateLoginToken(req.cookies);
-    console.log(results);
-    if(results["IS_VALID"] == true) {
-        res.cookie("shouldBeLogout", true);
-        return res.json(results);
-    }
     return res.json(results);
 }
 
@@ -35,7 +22,6 @@ export const Logout = async (req: Request, res: Response) => {
 export const SignUp = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);
     const results = await validateUserCreate(req.body);
-    console.log(results);
     if(results["TOTAL_WARNINGS"] == 0) {
         let user = await userRepository.create(req.body);
         user['password']=getSaltedPassword(user['password']);
@@ -49,7 +35,6 @@ export const SignUp = async (req: Request, res: Response) => {
 export const Profile = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User); 
     const results = await validateLoginToken(req.cookies);
-    console.log(results);
     if(results["IS_VALID"] == true ) {
         let user = await userRepository.findOne({
             select: ["firstName", "lastName", "email", "address", "phoneNumber", "place", "postCode"],

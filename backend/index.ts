@@ -37,53 +37,48 @@ createConnection().then(async connection => {
         return AdminControl.Login(req, res);
     });
 
-    // admin logout view
-    app.post("/admin/logout", async function(req: Request, res: Response) {
-        return AdminControl.Logout(req, res);
-    });
     // admin panel view
-    app.get("/admin/panel", async function(req: Request, res: Response) {
+    app.post("/panel", async function(req: Request, res: Response) {
         return AdminControl.Panel(req, res);
     });
 
     // admin users view
-    app.get("/admin/users", async function(req: Request, res: Response) {
+    app.post("/panel/users", async function(req: Request, res: Response) {
         return AdminControl.Users(req, res);
     });
 
     // admin specific user view
-    app.get("/admin/users/:id", async function(req: Request, res: Response) {
-        console.log(req.params.id);
+    app.get("/panel/users/:id", async function(req: Request, res: Response) {
         return AdminControl.UserV(req, res);
     });
 
     // admin orders view
-    app.get("/admin/orders", async function(req: Request, res: Response) {
+    app.get("/panel/orders", async function(req: Request, res: Response) {
         return AdminControl.Orders(req, res);
     });
 
     // admin specific order view
-    app.get("/admin/orders/:id", async function(req: Request, res: Response) {
+    app.get("/panel/orders/:id", async function(req: Request, res: Response) {
         return AdminControl.OrderV(req, res);
     });
 
     // admin equipments view
-    app.get("/admin/equipment", async function(req: Request, res: Response) {
-        return AdminControl.Equipments(req, res);
+    app.post("/panel/equipment", async function(req: Request, res: Response) {
+        return AdminControl.EquipmentList(req, res);
     });
 
     // admin specific equipment view
-    app.get("/admin/equipment/:id", async function(req: Request, res: Response) {
+    app.post("/panel/equipment/:id", async function(req: Request, res: Response) {
         return AdminControl.EquipmentV(req, res);
     });
 
     // admin equipment add (provide brands, different parameters) view
-    app.get("admin/equipments/add", async function(req: Request, res: Response) {
+    app.post("/panel/equipments/add", async function(req: Request, res: Response) {
         return AdminControl.EquipmentAddView(req, res);
     });
 
     // admin equipment add handle
-    app.post("admin/equipments/add", async function(req: Request, res: Response) {
+    app.post("/panel/equipments/add", async function(req: Request, res: Response) {
         return AdminControl.EquipmentAddHandle(req, res);
     });
 
@@ -91,11 +86,6 @@ createConnection().then(async connection => {
     // user login handle
     app.post("/login", async function(req: Request, res: Response) {
         return UserControl.Login(req, res);
-    });
-
-    // user logout handle
-    app.post("/logout", async function(req: Request, res: Response) {
-        return UserControl.Logout(req, res);
     });
 
     // user signup handle 
@@ -156,22 +146,10 @@ createConnection().then(async connection => {
         return CommonAccessControl.Brands(req, res);
     });
 
-    // equipment for specific brand view
-    app.get("/equipment/brand/:brand", async function(req: Request, res: Response) {
-        return CommonAccessControl.EquipmentOfSpecificBrand(req, res);
-    });
-
     // equipment_types view
     app.get("/equipment_types", async function(req: Request, res: Response) {
         return CommonAccessControl.EquipmentTypes(req, res);
     });
-
-    // equipment_types view
-    app.get("/equipment/category/:type", async function(req: Request, res: Response) {
-        return CommonAccessControl.EquipmentOfSpecificType(req, res);
-    });
-
-
 
     // start express server
     app.listen(4000);

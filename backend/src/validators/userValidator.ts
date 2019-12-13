@@ -258,11 +258,12 @@ export const validateLoginToken = async (cookies: Dictionary<string>) => {
         "IS_VALID": false,
         "EMAIL": null
     }
+    
     let token = null;
     let user = null;
 
     try {
-        token = decryptHashedToken(cookies.loginToken);
+        token = decryptHashedToken(cookies.loginToken, 'TOKEN_KEY');
     } catch(e) {
         return ACCESS_TOKEN_INFO;
     }

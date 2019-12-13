@@ -5,9 +5,7 @@ import {
   MDBRow,
   MDBIcon,
   MDBCardTitle,
-  MDBBtn,
-  MDBView,
-  MDBMask,
+  MDBNavLink
 } from "mdbreact";
 import "./CategoryPage.css";
 
@@ -50,11 +48,12 @@ class CategoryPage extends Component {
               <div className="masker-categories">
                 <div className="text-white vertical-center text-center py-5 px-4" >
                     <MDBCol className="py-5">
-                    <MDBCardTitle className="display-4  pt-3 m-5 font-bold">{category}</MDBCardTitle>
-                    <p className="mx-5 mb-5" style={{'fontSize': '130%'}}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat fugiat, laboriosam, voluptatem,
-                        optio vero odio nam sit officia accusamus minus error nisi architecto nulla ipsum dignissimos. Odit sed qui, dolorum!
-                    </p>
-                    <MDBBtn color="light-green" className="mb-5"><MDBIcon icon="clone" className="mr-2"></MDBIcon> Obejrz kategorię</MDBBtn>
+                    <MDBCardTitle className="display-4  pt-3 m-5 font-bold">{category[0].toUpperCase()+category.slice(1)}</MDBCardTitle>
+                    <MDBNavLink 
+                        to={"/equipment/category/"+category}
+                        className="btn btn-light-green mb-5 text-center mx-auto" style={{'maxWidth': '300px'}}>
+                        <MDBIcon icon="clone" className="mr-2"></MDBIcon> Obejrz kategorię
+                    </MDBNavLink>
                     </MDBCol>
                 </div>
                 </div>

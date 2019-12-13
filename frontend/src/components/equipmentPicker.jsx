@@ -26,13 +26,14 @@ class EquipmentPicker extends React.Component {
   
     gatherAllEquipmentsCols() {
       let tmp = [];
+      var j;
       if(this.props.category === 'none' && this.props.brand === 'none') {
         for(j=0; j<this.state.equipment.length; j++)
           tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[j]));
       }
 
       if(this.props.brand !== 'none' && this.props.category !== 'none') {
-        for(var j=0; j<this.state.equipment.length; j++)
+        for(j=0; j<this.state.equipment.length; j++)
           if(this.state.equipment[j].equipment_type === this.props.category && this.state.equipment[j].brand === this.props.brand)
             tmp.push(this.makeAnimatedEquipmentCard(this.state.equipment[j]));      
       }
@@ -72,7 +73,7 @@ class EquipmentPicker extends React.Component {
                 <strong>{equipment.model}</strong>
               </MDBCardTitle>
               <MDBCardText>
-                <strong>Producent: </strong>{equipment.brand}<br/>
+                <strong>Producent: </strong>{equipment.brand[0].toUpperCase()+equipment.brand.slice(1)}<br/>
                 <p className="success">{equipment.cost_per_day} zł</p>
               </MDBCardText>
               <MDBNavLink 

@@ -23,8 +23,8 @@ class EquipmentPage extends Component {
      category_btns: undefined,
      brand_btns: undefined,
 
-     category_filter: 'none',
-     brand_filter: 'none',
+     category_filter: this.props.match.params.category !== undefined ? this.props.match.params.category : 'none',
+     brand_filter: this.props.match.params.brand !== undefined ? this.props.match.params.brand : 'none',
     };
   }
 
@@ -42,6 +42,7 @@ class EquipmentPage extends Component {
               category_btns: this.makeCategoryBtns(),
               equipment: <EquipmentPicker  brand={this.state.brand_filter} category={this.state.category_filter} equipment={this.state.equipment_all_array}/>
             });
+
         }).catch(function(error){console.log(error);});
   }
 
