@@ -67,19 +67,23 @@ createConnection().then(async connection => {
         return AdminControl.EquipmentList(req, res);
     });
 
+     // admin equipment add (provide brands, different parameters) view
+     app.post("/panel/equipment/side/data", async function(req: Request, res: Response) {
+        return AdminControl.EquipmentSideData(req, res);
+    });
+
     // admin specific equipment view
     app.post("/panel/equipment/:id", async function(req: Request, res: Response) {
         return AdminControl.EquipmentDetails(req, res);
     });
 
-    // admin equipment add (provide brands, different parameters) view
-    app.post("/panel/equipments/add", async function(req: Request, res: Response) {
-        return AdminControl.EquipmentSupportData(req, res);
+    app.post("/panel/equipment/edit/:id", async function(req: Request, res: Response) {
+        return AdminControl.EquipmentUpdate(req, res);
     });
 
     // admin equipment add handle
-    app.post("/panel/equipments/add", async function(req: Request, res: Response) {
-        return AdminControl.EquipmentAddHandle(req, res);
+    app.post("/panel/equipment/add", async function(req: Request, res: Response) {
+        return AdminControl.EquipmentAdd(req, res);
     });
 
     //==================================USER API SECTION==================================

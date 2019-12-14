@@ -45,7 +45,7 @@ class GDLElement extends React.Component {
     render() {
         return (
             <MDBContainer>
-                <hr className="hr-dark m-0"/>
+                <hr className="m-0"/>
                 <MDBRow className="bg-white">
                     <div className="col-1 p-0 my-auto text-center"><strong>{this.state.id}</strong></div>
                     {this.renderParams()}

@@ -57,7 +57,6 @@ class Routes extends React.Component {
 
         {/* 
         <Route path="/admin/panel/equipment/add" component={AdminEquipmentAddPage} />
-        <Route path="/admin/panel/equipment/edit/:id" component={AdminEquipmentEditPage} />
         <Route path="/myprofile/settings" component={UserOrdersPage} />
         <Route path="/admin/orders" component={AdminOrdersPage} />
         <Route path="/myprofile/orders" component={UserOrdersPage} />

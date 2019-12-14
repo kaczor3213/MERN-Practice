@@ -5,7 +5,7 @@ import {getConnection} from "typeorm";
 import {User, UserRole} from "../entity/User";
 import {Order} from "../entity/Order";
 import {Equipment, EquipmentType, TyreType, Brand} from "../entity/Equipment";
-import { validateEquipmentCreate } from "../validators/equipmentValidator";
+import { validateEquipment } from "../validators/equipmentValidator";
 export const LOGIN_TIMEOUT = 60 * 60 * 1000;
 
 // Login controller (takes request, response from route call)
@@ -36,8 +36,6 @@ export const Panel = async (req: Request, res: Response) => {
 export const Users = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);     
     const results = await validateAdminLoginToken(req.cookies);
-
-    console.log(results);
     if(results["IS_VALID"] == true) {
         let usersArr = await userRepository.find({
             select: ["id","email"],
@@ -79,8 +77,6 @@ export const UserV = async (req: Request, res: Response) => {
 export const Orders = async (req: Request, res: Response) => {
     const orderRepository = getConnection().getRepository(Order);     
     const results = await validateAdminLoginToken(req.cookies);
-
-    console.log(results);
     if(results["IS_VALID"] == true) {
         let orders = await orderRepository.find();        
         return res.json(orders);
@@ -107,7 +103,6 @@ export const OrderV = async (req: Request, res: Response) => {
 export const EquipmentList = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
     const results = await validateAdminLoginToken(req.cookies);
-    
     if(results["IS_VALID"] == true) {
         let equipmentArr = await equipmentRepository.find({
             select: ["id","model","equipment_type"]
@@ -134,42 +129,53 @@ export const EquipmentDetails = async (req: Request, res: Response) => {
     const results = await validateAdminLoginToken(req.cookies);
     if(results["IS_VALID"] == true ) {
         let equipment = await equipmentRepository.findOne(req.params.id);
-        if (equipment == undefined)
-        return res.json({"EQUIPMENT": null})
-        return res.json(equipment);
+        let tmp = {}
+        for(var key in equipment) 
+            if(equipment[key] !== null)
+                tmp[key] = equipment[key]
+        results['equipment'] = tmp;
     }
     return res.json(results);
 }
 
 // Equipments controller (takes request, response from route call)
-export const EquipmentAddView = async (req: Request, res: Response) => {
+export const EquipmentSideData = async (req: Request, res: Response) => {
     const results = await validateAdminLoginToken(req.cookies);
-
-    console.log(results);
     if(results["IS_VALID"] == true) {
         return res.json({
-            "EQUIPMENT_TYPE": EquipmentType,
-            "TYRE_TYPE": TyreType,
-            "BRANDS": Brand
+            "equipment_type": EquipmentType,
+            "tyre_type": TyreType,
+            "brand": Brand
         });
     }
     return res.json(results);
 }
 
+// Equipments controller (takes request, response from route call)
+export const EquipmentUpdate = async (req: Request, res: Response) => {
+    const equipmentRepository = getConnection().getRepository(Equipment);     
+    const results = await validateAdminLoginToken(req.cookies);
+    
+    if(results["IS_VALID"] == true) {
+        const equipmentErrors = await validateEquipment(req.body);
+        if(equipmentErrors["TOTAL_WARNINGS"] == 0)
+            await equipmentRepository.update(req.params.id, req.body);
+        results['equipmentErrors'] = equipmentErrors;
+    }
+    return res.json(results);
+}
+
 // Specific equipment controller (takes request, response from route call)
-export const EquipmentAddHandle = async (req: Request, res: Response) => {
+export const EquipmentAdd = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
     const results = await validateAdminLoginToken(req.cookies);
 
-    console.log(results);
     if(results["IS_VALID"] == true ) {
-        const equipmentErrors = validateEquipmentCreate(req.body);
-        if(equipmentErrors["TOTAL_WARNINGS"] == 0) {
-            let equipment = await equipmentRepository.create(req.body);
-            await equipmentRepository.save(equipment);
-            return res.send(equipment);
-        }
-        return res.json(equipmentErrors)
+        const equipmentErrors = await validateEquipment(req.body);
+        console.log(equipmentErrors);
+        if(equipmentErrors["TOTAL_WARNINGS"] == 0)
+            await equipmentRepository.create(req.body);
+        results['equipmentErrors'] = equipmentErrors;
     }
     return res.json(results);
 }

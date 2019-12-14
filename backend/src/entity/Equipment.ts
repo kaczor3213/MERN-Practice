@@ -2,43 +2,38 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, TableInheritance} f
 import { Order } from './Order'
 import { IsInt, Min, Max } from "class-validator";
 
-export enum EquipmentType {
-    TRACTOR = "traktor",
-    HARVESTER = "kombajn",
-    CULTIVATOR = "kultywator",
-    SOWING_MACHINE = "siewnik",
-    TIPPER = "naczepa",
+export const EquipmentType = {
+    TRACTOR: "traktor",
+    HARVESTER: "kombajn",
+    CULTIVATOR: "kultywator",
+    SOWER: "siewnik",
+    TIPPER: "naczepa",
 }
 
-export enum TyreType {
-    R1 = "r1",
-    R1W = "r1w",
-    R2 = "r2",
-    R3 = "r3",
-    R4 = "r4",
+export const TyreType = {
+    R1: "r1",
+    R1w: "r1w",
+    R2: "r2",
+    R3: "r3",
+    R4: "r4",
 }
 
-export enum Brand {
-    NEW_HOLLAND = "new holland",
-    VALTRA = "valtra",
-    DEUTZ = "deutz",
-    MASSEY_FERGUSON = "massey fergusson",
-    CASE_IH = "case ih",
-    STEYR = "steyr",
-    FENDT = "fendt",
-    ROSTSELMASH = "rostselmash",
-    KROEGER = "kroeger",
-    METALTECH = "metaltech",
-    FLIEGL = "fliegl",
-    VADERSTAD = "vaderstad",
-    GRIMME = "grimme",
-    ZETOR = "zetor",
-    HORSCH = "horsch",
-}
-
-export enum Status {
-    RENTED = "X",
-    FREE = "O"
+export const Brand = {
+    NEW_HOLLAND: "new holland",
+    VALTRA: "valtra",
+    DEUTZ: "deutz",
+    MASSEY_FERGUSON: "massey fergusson",
+    CASE_IH: "case ih",
+    STEYR: "steyr",
+    FENDT: "fendt",
+    ROSTSELMASH: "rostselmash",
+    KROEGER: "kroeger",
+    METALTECH: "metaltech",
+    FLIEGL: "fliegl",
+    VADERSTAD: "vaderstad",
+    GRIMME: "grimme",
+    ZETOR: "zetor",
+    HORSCH: "horsch",
 }
 
 @Entity()

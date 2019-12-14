@@ -10,6 +10,7 @@ class SDLElement extends Component {
       this.state = {
           label: this.props.label,
           data: this.props.data,
+          unit: this.props.unit
       }
     }
     render() {
@@ -18,7 +19,7 @@ class SDLElement extends Component {
         <hr className='mb-2'/>
         <MDBRow>
           <MDBCol className="mx-auto"><strong>{this.state.label[0].toUpperCase()+this.state.label.slice(1)} </strong></MDBCol>
-          <MDBCol>{this.state.data}</MDBCol>
+          <MDBCol>{this.state.data} {this.state.unit}</MDBCol>
         </MDBRow>
         </>
       )

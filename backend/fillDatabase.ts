@@ -231,7 +231,7 @@ createConnection().then(async connection => {
             orders: null,
         },
         {
-            equipment_type: EquipmentType.SOWING_MACHINE,
+            equipment_type: EquipmentType.SOWER,
             model: "GL 420",
             capacity: 2740,
             working_width: 3,
@@ -242,7 +242,7 @@ createConnection().then(async connection => {
             orders: null,
         },
         {
-            equipment_type: EquipmentType.SOWING_MACHINE,
+            equipment_type: EquipmentType.SOWER,
             model: "RAPID A 600S",
             capacity: 3100,
             working_width: 6,
@@ -253,7 +253,7 @@ createConnection().then(async connection => {
             orders: null,
         },
         {
-            equipment_type: EquipmentType.SOWING_MACHINE,
+            equipment_type: EquipmentType.SOWER,
             model: "MAESTRO 12 SW",
             capacity: 9000,
             working_width: 9,

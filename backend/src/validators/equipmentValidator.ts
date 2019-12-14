@@ -1,32 +1,33 @@
-import {EquipmentType, TyreType, Brand, Status} from "../entity/Equipment";
+import {EquipmentType, TyreType, Brand} from "../entity/Equipment";
 import {Dictionary} from "express-serve-static-core";
-import {getConnection} from "typeorm";
 
-var EQUIPMENT_ERROR_CODE  = {
-    "TOTAL_WARNINGS": 0,
-    "BRAND_ERROR": false,
-    "EQUIPMENT_TYPE_ERROR": false,
-    "TYRE_TYPE_ERROR": false,
-    "MODEL_ERROR": false,
-    "HORSEPOWER_ERROR": false,
-    "MAX_SPEED_ERROR": false,
-    "MASS_ERROR": false,
-    "COST_PER_DAY_ERROR": false,
-    "FUEL_CAPACITY_ERROR": false,
-    "CROP_CAPACITY_ERROR": false,
-    "CAPACITY_ERROR": false,
-    "WORKING_WIDTH_ERROR": false,
-    "POWER_REQUIRED_ERROR": false,
-}
+var EQUIPMENT_ERROR_CODE = {
+    total_warnings: 0,
+    equipment_type: false,
+    brand: false,
+    model: false,
+    capacity: false,
+    crop_capacity: false,
+    fuel_capacity: false,
+    working_width: false,
+    horsepower: false,
+    power_required: false,
+    mass: false,
+    max_speed: false,
+    tyre_type: false,
+    cost_per_day: false
+  }
 
-export const validateEquipmentCreate = async (params: Dictionary<string>) => {
+export const validateEquipment = async (params: Dictionary<string>) => {
+    let errors = '';
+
     try {
-        if(!(params.brand in Brand))
+        if(!(Object.values(Brand).includes(params.brand) ))
             throw new TypeError("There is no such brand!");
     } catch(e) {
-        console.log(e);
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.BRAND_ERROR=true;
+        errors += e+'\n';
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.brand=true;
     }
     
     try {
@@ -35,9 +36,9 @@ export const validateEquipmentCreate = async (params: Dictionary<string>) => {
         if(params.model.length == 0)
             throw new TypeError("Model name cannot be an empty string!");
     } catch(e) {
-        console.log(e);
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.MODEL_ERROR=true;
+        errors += e+'\n';
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.model=true;
     }
 
     try {
@@ -48,102 +49,117 @@ export const validateEquipmentCreate = async (params: Dictionary<string>) => {
             if(parseFloat(params.model) <= 0)
             throw new TypeError("Equipment cannot be weightless!");
     } catch(e) {
-        console.log(e);
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.MASS_ERROR=true;
+        errors += e+'\n';
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.mass=true;
     }
 
     try {
         switch(params.equipment_type) {
-            case EquipmentType.TRACTOR:
+            case EquipmentType.TRACTOR: {
                 validateTractorCreate(params);
+                break;
+            }
 
-            case EquipmentType.HARVESTER:
+            case EquipmentType.HARVESTER: {
                 validateHarvesterCreate(params);
+                break;
+            }
 
-            case EquipmentType.CULTIVATOR:
+            case EquipmentType.CULTIVATOR: {
                 validateCultivatorCreate(params);
+                break;
+            }
 
-            case EquipmentType.SOWING_MACHINE:
+            case EquipmentType.SOWER: {
                 validateSowingMachineCreate(params);
+                break;
+            }
 
-            case EquipmentType.TIPPER:
+            case EquipmentType.TIPPER: {
                 validateTipperCreate(params);
+                break;
+            }
 
             default:
                 throw new TypeError("No proper equipment type was declared!")
         }
     } catch(e) {
-        console.log(e);
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.EQUIPMENT_TYPE_ERROR=true;
+        errors += e+'\n';
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.equipment_type=true;
     }
+
+    console.log(errors)
+    return EQUIPMENT_ERROR_CODE;
 }
 
 
 export function validateTractorCreate(params: Dictionary<string>): boolean {
-    if(!(params.tyre_type in TyreType)) {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.TYRE_TYPE_ERROR=true;
+        
+    if(!(Object.values(TyreType).includes(params.tyre_type) )) {
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.tyre_type=true;
         return false;
     }
     if(parseInt(params.fuel_capacity) < 0 || params.fuel_capacity === undefined || params.fuel_capacity == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.FUEL_CAPACITY_ERROR=true;
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.fuel_capacity=true;
         return false;
     }
     if(parseInt(params.horsepower) < 0 || params.horsepower === undefined || params.horsepower == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.HORSEPOWER_ERROR=true;
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.horsepower=true;
         return false;
     } 
     if(parseInt(params.max_speed) < 0 || params.max_speed === undefined || params.max_speed == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.MAX_SPEED_ERROR=true;
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.max_speed=true;
         return false;
     }
-    EQUIPMENT_ERROR_CODE.POWER_REQUIRED_ERROR = null;
-    EQUIPMENT_ERROR_CODE.CROP_CAPACITY_ERROR = null;
-    EQUIPMENT_ERROR_CODE.WORKING_WIDTH_ERROR = null;
-    EQUIPMENT_ERROR_CODE.CAPACITY_ERROR = null;
+    EQUIPMENT_ERROR_CODE.power_required = null;
+    EQUIPMENT_ERROR_CODE.crop_capacity = null;
+    EQUIPMENT_ERROR_CODE.working_width = null;
+    EQUIPMENT_ERROR_CODE.capacity = null;
 
     return true;
 }
 
 
 export function validateHarvesterCreate(params: Dictionary<string>): boolean {
-    if(!(params.tyre_type in TyreType)) {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.TYRE_TYPE_ERROR=true;
+        
+    if(!(Object.values(TyreType).includes(params.tyre_type) )) {
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.tyre_type=true;
         return false;
     }
     if(parseInt(params.working_width) < 0 || params.working_width === undefined || params.working_width == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.FUEL_CAPACITY_ERROR=true;    
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.fuel_capacity=true;    
         return false;
     }
     if(parseInt(params.fuel_capacity) < 0 || params.fuel_capacity === undefined || params.fuel_capacity == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.FUEL_CAPACITY_ERROR=true;
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.fuel_capacity=true;
         return false;
     }
     if(parseInt(params.horsepower) < 0 || params.horsepower === undefined || params.horsepower == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.HORSEPOWER_ERROR=true;
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.horsepower=true;
         return false;
     } 
     if(parseInt(params.max_speed) < 0 || params.max_speed === undefined || params.max_speed == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.MAX_SPEED_ERROR=true;
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.max_speed=true;
         return false;
     }
     if(parseInt(params.crop_cpacity) < 0 || params.crop_cpacity === undefined || params.crop_cpacity == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.CROP_CAPACITY_ERROR=true;
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.crop_capacity=true;
         return false;
     }
-    EQUIPMENT_ERROR_CODE.POWER_REQUIRED_ERROR = null;
-    EQUIPMENT_ERROR_CODE.CAPACITY_ERROR= null;
+    EQUIPMENT_ERROR_CODE.power_required = null;
+    EQUIPMENT_ERROR_CODE.capacity= null;
 
     return true;    
 }
@@ -151,67 +167,67 @@ export function validateHarvesterCreate(params: Dictionary<string>): boolean {
 
 export function validateCultivatorCreate(params: Dictionary<string>): boolean {
     if(parseInt(params.working_width) < 0 || params.working_width === undefined || params.working_width == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.FUEL_CAPACITY_ERROR=true;    
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.fuel_capacity=true;    
         return false;
     }
     if(parseInt(params.power_required) < 0 || params.power_required === undefined || params.power_required == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.POWER_REQUIRED_ERROR=true;     
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.power_required=true;     
         return false;
     }
-    EQUIPMENT_ERROR_CODE.FUEL_CAPACITY_ERROR = null;
-    EQUIPMENT_ERROR_CODE.CROP_CAPACITY_ERROR = null;
-    EQUIPMENT_ERROR_CODE.HORSEPOWER_ERROR = null;
-    EQUIPMENT_ERROR_CODE.MAX_SPEED_ERROR = null;
-    EQUIPMENT_ERROR_CODE.TYRE_TYPE_ERROR = null;
-    EQUIPMENT_ERROR_CODE.CAPACITY_ERROR = null;
+    EQUIPMENT_ERROR_CODE.fuel_capacity = null;
+    EQUIPMENT_ERROR_CODE.crop_capacity = null;
+    EQUIPMENT_ERROR_CODE.horsepower = null;
+    EQUIPMENT_ERROR_CODE.max_speed = null;
+    EQUIPMENT_ERROR_CODE.tyre_type = null;
+    EQUIPMENT_ERROR_CODE.capacity = null;
 
     return true;
 }
 
 export function validateSowingMachineCreate(params: Dictionary<string>): boolean {
     if(parseInt(params.working_width) < 0 || params.working_width === undefined || params.working_width == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.FUEL_CAPACITY_ERROR=true;    
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.fuel_capacity=true;    
         return false;
     }
     if(parseInt(params.capacity) < 0 || params.capacity === undefined || params.capacity == "") {     
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.CAPACITY_ERROR=true;
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.capacity=true;
         return false;
     }
     if(parseInt(params.power_required) < 0 || params.power_required === undefined || params.power_required == "") {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.POWER_REQUIRED_ERROR=true;     
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.power_required=true;     
         return false;
     }
-    EQUIPMENT_ERROR_CODE.FUEL_CAPACITY_ERROR = null;
-    EQUIPMENT_ERROR_CODE.CROP_CAPACITY_ERROR = null;
-    EQUIPMENT_ERROR_CODE.HORSEPOWER_ERROR = null;
-    EQUIPMENT_ERROR_CODE.MAX_SPEED_ERROR = null;
-    EQUIPMENT_ERROR_CODE.TYRE_TYPE_ERROR = null;
+    EQUIPMENT_ERROR_CODE.fuel_capacity = null;
+    EQUIPMENT_ERROR_CODE.crop_capacity = null;
+    EQUIPMENT_ERROR_CODE.horsepower = null;
+    EQUIPMENT_ERROR_CODE.max_speed = null;
+    EQUIPMENT_ERROR_CODE.tyre_type = null;
 
     return true;
 }
 
 export function validateTipperCreate(params: Dictionary<string>): boolean {
-    if(!(params.tyre_type in TyreType)) {
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.TYRE_TYPE_ERROR=true;
+    if(!(Object.values(TyreType).includes(params.tyre_type) )) {
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.tyre_type=true;
         return false;
     }
     if(parseInt(params.capacity) < 0 || params.capacity === undefined || params.capacity == "") {     
-        EQUIPMENT_ERROR_CODE.TOTAL_WARNINGS++;
-        EQUIPMENT_ERROR_CODE.CAPACITY_ERROR=true;
+        EQUIPMENT_ERROR_CODE.total_warnings++;
+        EQUIPMENT_ERROR_CODE.capacity=true;
         return false;
     }
-    EQUIPMENT_ERROR_CODE.POWER_REQUIRED_ERROR = null;
-    EQUIPMENT_ERROR_CODE.WORKING_WIDTH_ERROR = null;
-    EQUIPMENT_ERROR_CODE.FUEL_CAPACITY_ERROR = null;
-    EQUIPMENT_ERROR_CODE.CROP_CAPACITY_ERROR = null;
-    EQUIPMENT_ERROR_CODE.HORSEPOWER_ERROR = null;
-    EQUIPMENT_ERROR_CODE.MAX_SPEED_ERROR = null;
+    EQUIPMENT_ERROR_CODE.power_required = null;
+    EQUIPMENT_ERROR_CODE.working_width = null;
+    EQUIPMENT_ERROR_CODE.fuel_capacity = null;
+    EQUIPMENT_ERROR_CODE.crop_capacity = null;
+    EQUIPMENT_ERROR_CODE.horsepower = null;
+    EQUIPMENT_ERROR_CODE.max_speed = null;
 
     return true;
 }
