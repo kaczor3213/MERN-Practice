@@ -3,6 +3,7 @@ import EditableElement from './EditableElement';
 import {MDBBtn,MDBIcon, MDBRow, MDBCol} from 'mdbreact';
 import EQUIPMENT_TRANS_PL from "../translation/equipmentParametersTranslation";
 import EQUIPMENT_UNITS_PL from "./equipmentUnits";
+import EQUIPMENT_VALIDATE_MESSAGES_PL from "./equipmentValidateMessages";
 
 class EditForm extends Component {
   constructor(props) {
@@ -12,7 +13,6 @@ class EditForm extends Component {
       data: this.props.data,
       options: this.props.options,
       selectable: this.props.selectable,
-      errors: this.props.errors !== undefined ? this.props.errors : null
     }
     this.handleInputChange = this.props.onChange.bind();
     this.resetHandler = this.props.onReset.bind();
@@ -26,6 +26,8 @@ class EditForm extends Component {
         if(this.state.selectable[key] !== undefined)
           tmp.push(
             <EditableElement 
+              error_present={this.props.errors[key]}
+              error_message={EQUIPMENT_VALIDATE_MESSAGES_PL[key]}
               onChange={this.handleInputChange} 
               options={this.state.options[key]} 
               field_type="select"
@@ -38,6 +40,8 @@ class EditForm extends Component {
         else if(!(this.state.selectable[key] === undefined && this.state.options[key] !== undefined))
           tmp.push(
             <EditableElement 
+              error_present={this.props.errors[key]}
+              error_message={EQUIPMENT_VALIDATE_MESSAGES_PL[key]}
               onChange={this.handleInputChange} 
               field_type="text" 
               unit={EQUIPMENT_UNITS_PL[key]}

@@ -21,6 +21,7 @@ class EquipmentEditPage extends Component {
         brand: undefined,
         equipment: undefined,
         redirectToLogin: false,
+        errors: {},
 
         sideDataFetchSuccess: false,
         equipmentFetchSuccess: false
@@ -70,19 +71,22 @@ class EquipmentEditPage extends Component {
 
   handleReset() {
     this.setState({equipment_m: Object.assign({}, this.state.equipment)});
+    this.setState({errors: {}});
+
   }
   
   handleSumbit(event) {
     event.preventDefault()
     axios.post('http://localhost:4000/panel/equipment/edit/'+this.props.match.params.id, this.state.equipment_m,  {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' })
     .then(response => {
-        console.log(response.data);
         if(response.data["TOTAL_WARNINGS"] === 0)
             this.setState({success: true})
         else {
+            delete response.data.equipmentErrors.TOTAL_WARNINGS;
             this.setState({
                 errors: response.data.equipmentErrors
-            })
+            });
+            console.log(response.data.equipmentErrors)
         }
     });
   }

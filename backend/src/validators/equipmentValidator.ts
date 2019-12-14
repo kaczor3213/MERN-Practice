@@ -20,7 +20,7 @@ var EQUIPMENT_ERROR_CODE = {
 
 export const validateEquipment = async (params: Dictionary<string>) => {
     let errors = '';
-
+    EQUIPMENT_ERROR_CODE.total_warnings=0;
     try {
         if(!(Object.values(Brand).includes(params.brand) ))
             throw new TypeError("There is no such brand!");

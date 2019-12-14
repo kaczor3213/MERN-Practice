@@ -4,11 +4,14 @@ import {
   MDBCol
 } from 'mdbreact';
 import SelectField from './selectField';
+import ValidationMessage from './validationMessage';
 
 class EditableElement extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      error_present: this.props.error_present !== undefined ? this.state.error_present : false,
+      error_message: this.props.error_message,
       value: this.props.value,
       name: this.props.name,
       label: this.props.label,
@@ -17,6 +20,7 @@ class EditableElement extends Component {
       unit: this.props.unit
     }
     this.handleInputChange = this.props.onChange.bind();
+
   }
 
   prepareField() {
@@ -25,15 +29,26 @@ class EditableElement extends Component {
     if(this.state.field_type === "select")
       return <SelectField onChange={this.handleInputChange} name={this.state.name} options={this.state.options} value={this.state.value}/>
   }
+
+  prepareError() {
+    console.log(this.props.error_present)
+    if(this.props.error_present)
+      return <MDBRow><ValidationMessage message={this.props.error_message}/></MDBRow>
+    else
+      return null;
+  }
   
   render() {
     return(
       <>
+        {
+}
         <hr className='mb-2'/>
         <MDBRow>
           <MDBCol className="mx-auto"><strong>{this.state.label[0].toUpperCase()+this.state.label.slice(1)}</strong></MDBCol>
           <MDBCol>{this.prepareField()} {this.state.unit}</MDBCol>
         </MDBRow>
+        {this.prepareError()}
       </>
     );
   }
