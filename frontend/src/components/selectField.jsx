@@ -28,7 +28,12 @@ class SelectField extends Component {
 
   render() {
     return (
-        <select required name={this.state.name} defaultValue={this.state.value} onChange={this.handleInputChange} className="browser-default">
+        <select 
+        required name={this.state.name} 
+        defaultValue={this.state.value}  
+        onFocus={this.handleInputChange} 
+        onChange={this.handleInputChange} 
+        className="browser-default">
             {this.renderOptions()}
         </select>
     );

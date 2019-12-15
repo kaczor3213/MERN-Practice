@@ -158,8 +158,10 @@ export const EquipmentUpdate = async (req: Request, res: Response) => {
     
     if(results["IS_VALID"] == true) {
         const equipmentErrors = await validateEquipment(req.body);
-        if(equipmentErrors["TOTAL_WARNINGS"] == 0)
-            await equipmentRepository.update(req.params.id, req.body);
+        if(equipmentErrors.total_warnings == 0) {
+            let equipment = await equipmentRepository.update(req.params.id, req.body);
+            console.log(equipment);
+        }
         results['equipmentErrors'] = equipmentErrors;
     }
     return res.json(results);
@@ -173,7 +175,7 @@ export const EquipmentAdd = async (req: Request, res: Response) => {
     if(results["IS_VALID"] == true ) {
         const equipmentErrors = await validateEquipment(req.body);
         console.log(equipmentErrors);
-        if(equipmentErrors["TOTAL_WARNINGS"] == 0)
+        if(equipmentErrors.total_warnings == 0)
             await equipmentRepository.create(req.body);
         results['equipmentErrors'] = equipmentErrors;
     }

@@ -22,6 +22,7 @@ class EquipmentEditPage extends Component {
         equipment: undefined,
         redirectToLogin: false,
         errors: {},
+        success: false,
 
         sideDataFetchSuccess: false,
         equipmentFetchSuccess: false
@@ -70,24 +71,29 @@ class EquipmentEditPage extends Component {
   }
 
   handleReset() {
-    this.setState({equipment_m: Object.assign({}, this.state.equipment)});
-    this.setState({errors: {}});
-
+    this.setState({
+        equipment_m: Object.assign({}, this.state.equipment),
+        errors: {},
+        success: false,
+    });
   }
   
   handleSumbit(event) {
     event.preventDefault()
     axios.post('http://localhost:4000/panel/equipment/edit/'+this.props.match.params.id, this.state.equipment_m,  {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' })
     .then(response => {
-        if(response.data["TOTAL_WARNINGS"] === 0)
+
+        if(response.data.equipmentErrors.total_warnings === 0) {
             this.setState({success: true})
-        else {
+            console.log('adsad')
+        } else {
             delete response.data.equipmentErrors.TOTAL_WARNINGS;
             this.setState({
+                success: false,
                 errors: response.data.equipmentErrors
             });
-            console.log(response.data.equipmentErrors)
         }
+
     });
   }
 
@@ -102,6 +108,20 @@ class EquipmentEditPage extends Component {
             <MDBNavLink className="my-auto indigo-text" style={{'fontSize': '120%'}} active to={"/admin/panel/equipment/details/"+this.props.match.params.id}>{this.state.equipment.model+'_id['+this.props.match.params.id+']'}</MDBNavLink>
         </MDBNav>
     );
+  }
+
+  renderSuccess() {
+    if(this.state.success)
+        return (
+            <MDBRow>
+                <MDBCol md="6" className="mx-auto text-center" style={{'fontSize': '120%'}}>
+                <MDBIcon icon="check" className="green-text mr-1"/>
+                <strong>Pomyślnie zmieniono sprzęt</strong>
+                </MDBCol>
+            </MDBRow>
+        );
+    else
+        return null;
   }
 
   render() {
@@ -126,6 +146,7 @@ class EquipmentEditPage extends Component {
                         />
                 </MDBCol>
             </MDBRow>
+            {this.renderSuccess()}
             </div>
         </div>
         );

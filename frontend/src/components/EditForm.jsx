@@ -66,7 +66,7 @@ class EditForm extends Component {
             <MDBIcon icon="chevron-left" className="mr-1"/>
               cofnij
             </MDBBtn>
-            <MDBBtn onClick={this.resetHandler} type="reset">
+            <MDBBtn color="cyan" onClick={this.resetHandler} type="reset">
             <MDBIcon icon="undo" className="mr-1"/>
               anuluj
             </MDBBtn>

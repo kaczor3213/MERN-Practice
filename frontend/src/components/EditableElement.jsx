@@ -20,18 +20,16 @@ class EditableElement extends Component {
       unit: this.props.unit
     }
     this.handleInputChange = this.props.onChange.bind();
-
   }
 
   prepareField() {
     if(this.state.field_type === "text")
-      return <input style={{'maxWidth': '80px'}} required onChange={this.handleInputChange} defaultValue={this.state.value} name={this.state.name} id={this.state.label} type="text" onChange={this.handleInputChange} required/>;
+      return <input style={{'maxWidth': '80px'}} required onFocus={this.handleInputChange} onChange={this.handleInputChange} defaultValue={this.state.value} name={this.state.name} id={this.state.label} type="text" onChange={this.handleInputChange} required/>;
     if(this.state.field_type === "select")
       return <SelectField onChange={this.handleInputChange} name={this.state.name} options={this.state.options} value={this.state.value}/>
   }
 
   prepareError() {
-    console.log(this.props.error_present)
     if(this.props.error_present)
       return <MDBRow><ValidationMessage message={this.props.error_message}/></MDBRow>
     else
