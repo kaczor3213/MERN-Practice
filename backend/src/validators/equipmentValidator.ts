@@ -155,7 +155,7 @@ export function validateHarvesterCreate(params: Dictionary<string>) {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.max_speed=true;
     }
-    if(parseInt(params.crop_cpacity) < 0 || params.crop_cpacity === undefined || params.crop_cpacity == "") {
+    if(parseInt(params.crop_capacity) < 0 || params.crop_capacity === undefined || params.crop_capacity == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.crop_capacity=true;
     }

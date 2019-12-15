@@ -81,9 +81,9 @@ class EquipmentEditPage extends Component {
     event.preventDefault()
     axios.post('http://localhost:4000/panel/equipment/edit/'+this.props.match.params.id, this.state.equipment_m,  {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' })
     .then(response => {
+        console.log(response.data)
         if(response.data.equipmentErrors.total_warnings === 0) {
             this.setState({success: true})
-            console.log('adsad')
         } else {
             delete response.data.equipmentErrors.total_warnings;
             this.setState({

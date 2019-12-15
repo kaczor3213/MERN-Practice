@@ -70,7 +70,6 @@ class EquipmentDetailsPage extends Component {
                 <MDBCol md="8" className="mx-auto text-center">
                     <MDBBtn href="/admin/panel/equipment" color="success" className="mx-1"><MDBIcon icon="chevron-left" className="mr-1"/>cofnij</MDBBtn>
                     <MDBBtn href={"/admin/panel/equipment/edit/"+this.props.match.params.id} color="warning" className="mx-1"><MDBIcon icon="cogs" className="mr-1"/>edytuj</MDBBtn>
-                    <MDBBtn onClick={this.onDelete} color="danger" className="mx-1"><MDBIcon icon="trash-alt" className="mr-1"/>usuń</MDBBtn>
                 </MDBCol>
             </MDBRow>
             </div>

@@ -13,7 +13,7 @@ class EntityDeleteModal extends Component {
 
     render() {
     return (
-      <MDBContainer>
+        <>
         <MDBBtn onClick={this.toggle} color="danger" className="mx-1">
             <MDBIcon icon="trash-alt" className="mr-1"/>
             usuń
@@ -31,7 +31,7 @@ class EntityDeleteModal extends Component {
             </MDBBtn>
           </MDBModalFooter>
         </MDBModal>
-      </MDBContainer>
+        </>
     );
   }
 }

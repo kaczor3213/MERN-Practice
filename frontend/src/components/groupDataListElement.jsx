@@ -6,6 +6,7 @@ import {
   MDBBtnGroup,
   MDBIcon
 } from 'mdbreact';
+
     
 class GDLElement extends React.Component {
     constructor(props) {
@@ -14,8 +15,8 @@ class GDLElement extends React.Component {
             id: this.props.element_id,
             content_type: this.props.content_type,
             params: this.props.params,
+            showModal: false
         };
-       // this.onDelete = this.props.onDelete.bind(this);
     }
 
     renderParams() {
@@ -33,13 +34,17 @@ class GDLElement extends React.Component {
                             <MDBBtnGroup className="">
                                 <MDBBtn className="px-3" href={detail_href} color="info"><MDBIcon icon="info-circle"/></MDBBtn>
                                 <MDBBtn className="px-3" href={edit_href} color="warning"><MDBIcon icon="cogs"/></MDBBtn>
-                                <MDBBtn className="px-3" value={this.state.id}  color="danger"><MDBIcon icon="trash-alt"/></MDBBtn>
                             </MDBBtnGroup>
                         </div>
                     </MDBRow>
                 </div>
             </>
-            );
+        );
+    }
+    
+    toggleModal(event) {
+        event.preventDefault();
+        this.setState({showModal: !this.state.showModal})
     }
 
     render() {
