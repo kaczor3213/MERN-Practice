@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import EditableElement from './EditableElement';
 import {MDBBtn,MDBIcon, MDBRow, MDBCol} from 'mdbreact';
+import EntityDeleteModal from "./entityDeleteModal";
+
 import EQUIPMENT_TRANS_PL from "../translation/equipmentParametersTranslation";
 import EQUIPMENT_UNITS_PL from "./equipmentUnits";
 import EQUIPMENT_VALIDATE_MESSAGES_PL from "./equipmentValidateMessages";
@@ -13,10 +15,13 @@ class EditForm extends Component {
       data: this.props.data,
       options: this.props.options,
       selectable: this.props.selectable,
+      showModal: false
     }
     this.handleInputChange = this.props.onChange.bind();
     this.resetHandler = this.props.onReset.bind();
     this.submitHandler = this.props.onSubmit.bind();
+    this.deleteHandler = this.props.onDelete.bind();
+    this.toggleModal = this.toggleModal.bind(this)
   }
 
   preparedField() {
@@ -56,6 +61,12 @@ class EditForm extends Component {
     return tmp;
   }
 
+  toggleModal(event) {
+    event.preventDefault();
+    this.setState({showModal: !this.state.showModal})
+  }
+
+
   render() {
     return(
       <form className="needs-validation" onSubmit={this.submitHandler} noValidate>
@@ -74,10 +85,9 @@ class EditForm extends Component {
               <MDBIcon icon="check" className="mr-1"/>
                 zmień
             </MDBBtn>
-            <MDBBtn onClick={this.onDelete} color="danger" className="mx-1">
-                <MDBIcon icon="trash-alt" className="mr-1"/>
-                usuń
-            </MDBBtn>
+            
+            <EntityDeleteModal message={this.props.deleteMessage} onClick={this.toggleModal} isOpen={this.state.showModal} onDelete={this.deleteHandler} />
+
           </MDBCol>
         </MDBRow>
       </form>

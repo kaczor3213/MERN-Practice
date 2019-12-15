@@ -86,6 +86,11 @@ createConnection().then(async connection => {
         return AdminControl.EquipmentAdd(req, res);
     });
 
+    // admin equipment add handle
+    app.post("/panel/equipment/delete/:id", async function(req: Request, res: Response) {
+        return AdminControl.EquipmentDelete(req, res);
+    });
+
     //==================================USER API SECTION==================================
     // user login handle
     app.post("/login", async function(req: Request, res: Response) {

@@ -9,7 +9,6 @@ import {
 } from "mdbreact";
 import {Redirect} from "react-router-dom";
 import EditForm from "../../components/EditForm";
-import ValidationMessage from "../../components/validationMessage";
 
 class EquipmentEditPage extends Component {
   constructor(props) {
@@ -23,9 +22,9 @@ class EquipmentEditPage extends Component {
         redirectToLogin: false,
         errors: {},
         success: false,
-
         sideDataFetchSuccess: false,
-        equipmentFetchSuccess: false
+        equipmentFetchSuccess: false,
+        redirectToEquipmentList: false
     }
   }
 
@@ -82,19 +81,26 @@ class EquipmentEditPage extends Component {
     event.preventDefault()
     axios.post('http://localhost:4000/panel/equipment/edit/'+this.props.match.params.id, this.state.equipment_m,  {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' })
     .then(response => {
-
         if(response.data.equipmentErrors.total_warnings === 0) {
             this.setState({success: true})
             console.log('adsad')
         } else {
-            delete response.data.equipmentErrors.TOTAL_WARNINGS;
+            delete response.data.equipmentErrors.total_warnings;
             this.setState({
                 success: false,
                 errors: response.data.equipmentErrors
             });
         }
-
     });
+  }
+
+  handleDelete(event) {
+    event.preventDefault();
+    axios.post('http://localhost:4000/panel/equipment/delete/' +this.props.match.params.id, null,  {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' })
+    .then(response => {
+        this.setState({redirectToEquipmentList: true})
+    });
+
   }
 
   renderNavLinks() {
@@ -125,6 +131,8 @@ class EquipmentEditPage extends Component {
   }
 
   render() {
+    if(this.state.redirectToEquipmentList)
+        return <Redirect to="/admin/panel/equipment"/>;
     if(!this.state.redirectToLogin && this.state.sideDataFetchSuccess && this.state.equipmentFetchSuccess) {
         return (
         <div style={{'backgroundColor': '#37474F', "paddingTop": "100px", "paddingBottom": "100px"}} className="">
@@ -138,12 +146,14 @@ class EquipmentEditPage extends Component {
                         onSubmit={this.handleSumbit.bind(this)} 
                         onChange={this.handleInputChange.bind(this)} 
                         onReset={this.handleReset.bind(this)}
+                        onDelete={this.handleDelete.bind(this)}
+                        deleteMessage={"Czy jesteś pewien, że chcesz usunąć ten sprzęt:"+this.state.equipment.model+'. Po usunięciu zostaniesz przekierowany na stronę sprzętu.'}
                         content_type='equipment'
-                        data={this.state.equipment_m} 
+                        data={this.state.equipment_m}
                         selectable={{tyre_type: 'tyre_type', brand: 'brand'}}
                         options={{equipment_type: this.state.equipment_type, tyre_type: this.state.tyre_type, brand: this.state.brand}}
                         errors={this.state.errors}
-                        />
+                    />
                 </MDBCol>
             </MDBRow>
             {this.renderSuccess()}

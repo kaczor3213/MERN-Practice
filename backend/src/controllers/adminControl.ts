@@ -181,3 +181,13 @@ export const EquipmentAdd = async (req: Request, res: Response) => {
     }
     return res.json(results);
 }
+
+// Equipments controller (takes request, response from route call)
+export const EquipmentDelete = async (req: Request, res: Response) => {
+    const equipmentRepository = getConnection().getRepository(Equipment);     
+    const results = await validateAdminLoginToken(req.cookies);
+    if(results["IS_VALID"] == true) {
+        await equipmentRepository.delete(req.params.id);
+    }
+    return res.json(results);
+}
