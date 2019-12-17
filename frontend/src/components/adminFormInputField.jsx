@@ -24,7 +24,7 @@ class EditableElement extends Component {
 
   prepareField() {
     if(this.state.field_type === "text")
-      return <input style={{'maxWidth': '80px'}} required onFocus={this.handleInputChange} onChange={this.handleInputChange} defaultValue={this.state.value} name={this.state.name} id={this.state.label} type="text" onChange={this.handleInputChange} required/>;
+      return <input style={{'maxWidth': '80px'}} required onFocus={this.handleInputChange} onChange={this.handleInputChange} defaultValue={this.state.value} name={this.state.name} id={this.state.label} type="text"/>;
     if(this.state.field_type === "select")
       return <SelectField onChange={this.handleInputChange} name={this.state.name} options={this.state.options} value={this.state.value}/>
   }

@@ -1,13 +1,11 @@
 import React, { Component } from "react";
-import EditableElement from './EditableElement';
+import EditableElement from './adminFormInputField';
 import {MDBBtn,MDBIcon, MDBRow, MDBCol} from 'mdbreact';
-import EntityDeleteModal from "./entityDeleteModal";
-
 import EQUIPMENT_TRANS_PL from "../translation/equipmentParametersTranslation";
 import EQUIPMENT_UNITS_PL from "./equipmentUnits";
 import EQUIPMENT_VALIDATE_MESSAGES_PL from "./equipmentValidateMessages";
 
-class EditForm extends Component {
+class CreateForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,10 +15,10 @@ class EditForm extends Component {
       selectable: this.props.selectable,
       showModal: false
     }
+
     this.handleInputChange = this.props.onChange.bind();
     this.resetHandler = this.props.onReset.bind();
     this.submitHandler = this.props.onSubmit.bind();
-    this.deleteHandler = this.props.onDelete.bind();
     this.toggleModal = this.toggleModal.bind(this)
   }
 
@@ -66,14 +64,13 @@ class EditForm extends Component {
     this.setState({showModal: !this.state.showModal})
   }
 
-
   render() {
     return(
       <form className="needs-validation" onSubmit={this.submitHandler} noValidate>
         {this.preparedField()}
         <MDBRow className="pt-3">
-          <MDBCol md="8" className="mx-auto text-center">
-            <MDBBtn href={this.props.quitLink} color="success">
+          <MDBCol md="12" className="mx-auto text-center">
+            <MDBBtn href={this.props.quitLink} color="blue-grey">
             <MDBIcon icon="chevron-left" className="mr-1"/>
               cofnij
             </MDBBtn>
@@ -81,13 +78,10 @@ class EditForm extends Component {
             <MDBIcon icon="undo" className="mr-1"/>
               anuluj
             </MDBBtn>
-            <MDBBtn color="warning" type="submit">
+            <MDBBtn color="success" type="submit">
               <MDBIcon icon="check" className="mr-1"/>
-                zmień
+                dodaj
             </MDBBtn>
-            
-            <EntityDeleteModal message={this.props.deleteMessage} onClick={this.toggleModal} isOpen={this.state.showModal} onDelete={this.deleteHandler} />
-
           </MDBCol>
         </MDBRow>
       </form>
@@ -95,4 +89,4 @@ class EditForm extends Component {
   }
 }
 
-  export default EditForm;
+  export default CreateForm;

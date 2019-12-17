@@ -109,21 +109,20 @@ export const validateEquipment = async (params: Dictionary<string>) => {
     return EQUIPMENT_ERROR_CODE;
 }
 
-
 export function validateTractorCreate(params: Dictionary<string>) {
     if(!(Object.values(TyreType).includes(params.tyre_type) )) {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.tyre_type=true;
     }
-    if(parseInt(params.fuel_capacity) < 0 || params.fuel_capacity === undefined || params.fuel_capacity == "") {
+    if(parseInt(params.fuel_capacity) < 0 || params.fuel_capacity === undefined || params.fuel_capacity === null || params.fuel_capacity == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.fuel_capacity=true;
     }
-    if(parseInt(params.horsepower) < 0 || params.horsepower === undefined || params.horsepower == "") {
+    if(parseInt(params.horsepower) < 0 || params.horsepower === undefined || params.horsepower === null || params.horsepower == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.horsepower=true;
     } 
-    if(parseInt(params.max_speed) < 0 || params.max_speed === undefined || params.max_speed == "") {
+    if(parseInt(params.max_speed) < 0 || params.max_speed === undefined || params.max_speed === null || params.max_speed == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.max_speed=true;
     }
@@ -133,29 +132,28 @@ export function validateTractorCreate(params: Dictionary<string>) {
     EQUIPMENT_ERROR_CODE.capacity = null;
 }
 
-
 export function validateHarvesterCreate(params: Dictionary<string>) {
     if(!(Object.values(TyreType).includes(params.tyre_type) )) {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.tyre_type=true;
     }
-    if(parseInt(params.working_width) < 0 || params.working_width === undefined || params.working_width == "") {
+    if(parseInt(params.working_width) < 0 || params.working_width === undefined || params.working_width === null || params.working_width == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
-        EQUIPMENT_ERROR_CODE.fuel_capacity=true;    
+        EQUIPMENT_ERROR_CODE.working_width=true;    
     }
-    if(parseInt(params.fuel_capacity) < 0 || params.fuel_capacity === undefined || params.fuel_capacity == "") {
+    if(parseInt(params.fuel_capacity) < 0 || params.fuel_capacity === undefined || params.fuel_capacity === null || params.fuel_capacity == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.fuel_capacity=true;
     }
-    if(parseInt(params.horsepower) < 0 || params.horsepower === undefined || params.horsepower == "") {
+    if(parseInt(params.horsepower) < 0 || params.horsepower === undefined || params.horsepower === null || params.horsepower == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.horsepower=true;
     } 
-    if(parseInt(params.max_speed) < 0 || params.max_speed === undefined || params.max_speed == "") {
+    if(parseInt(params.max_speed) < 0 || params.max_speed === undefined || params.max_speed === null || params.max_speed == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.max_speed=true;
     }
-    if(parseInt(params.crop_capacity) < 0 || params.crop_capacity === undefined || params.crop_capacity == "") {
+    if(parseInt(params.crop_capacity) < 0 || params.crop_capacity === undefined || params.crop_capacity === null || params.crop_capacity == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.crop_capacity=true;
     }
@@ -163,13 +161,12 @@ export function validateHarvesterCreate(params: Dictionary<string>) {
     EQUIPMENT_ERROR_CODE.capacity= null;
 }
 
-
 export function validateCultivatorCreate(params: Dictionary<string>) {
-    if(parseInt(params.working_width) < 0 || params.working_width === undefined || params.working_width == "") {
+    if(parseInt(params.working_width) < 0 || params.working_width === undefined || params.working_width === null || params.working_width == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.fuel_capacity=true;    
     }
-    if(parseInt(params.power_required) < 0 || params.power_required === undefined || params.power_required == "") {
+    if(parseInt(params.power_required) < 0 || params.power_required === undefined || params.power_required === null || params.power_required == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.power_required=true;     
     }
@@ -182,15 +179,15 @@ export function validateCultivatorCreate(params: Dictionary<string>) {
 }
 
 export function validateSowingMachineCreate(params: Dictionary<string>) {
-    if(parseInt(params.working_width) < 0 || params.working_width === undefined || params.working_width == "") {
+    if(parseInt(params.working_width) < 0 || params.working_width === undefined || params.working_width === undefined || params.working_width == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.fuel_capacity=true;    
     }
-    if(parseInt(params.capacity) < 0 || params.capacity === undefined || params.capacity == "") {     
+    if(parseInt(params.capacity) < 0 || params.capacity === undefined || params.capacity === null || params.capacity == "") {     
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.capacity=true;
     }
-    if(parseInt(params.power_required) < 0 || params.power_required === undefined || params.power_required == "") {
+    if(parseInt(params.power_required) < 0 || params.power_required === undefined || params.power_required === null || params.power_required == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.power_required=true;     
     }
@@ -206,7 +203,7 @@ export function validateTipperCreate(params: Dictionary<string>) {
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.tyre_type=true;
     }
-    if(parseInt(params.capacity) < 0 || params.capacity === undefined || params.capacity == "") {     
+    if(parseInt(params.capacity) < 0 || params.capacity === undefined || params.capacity === null || params.capacity == "") {     
         EQUIPMENT_ERROR_CODE.total_warnings++;
         EQUIPMENT_ERROR_CODE.capacity=true;
     }

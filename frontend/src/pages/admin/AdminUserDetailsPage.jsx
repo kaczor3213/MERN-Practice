@@ -11,26 +11,27 @@ import {
 import {Redirect} from "react-router-dom";
 import SDLContainer from "../../components/singleDataListContainer";
 
-class EquipmentDetailsPage extends Component {
+class UserDetailsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-        equipment: undefined,
+        user: undefined,
         readyToRender: false,
         redirectToLogin: false
     }
   }
 
   componentDidMount() {
-    axios.post("http://localhost:4000/panel/equipment/"+this.props.match.params.id, null ,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" })
+    axios.post("http://localhost:4000/panel/users/"+this.props.match.params.id, null ,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" })
     .then(response => {
+        console.log(response.data)
         if(response.data.IS_VALID === false) {
             this.setState({
                 redirectToLogin: true,
             });
         } else {
             this.setState({
-                equipment: response.data.equipment,
+                user: response.data.user,
                 readyToRender: true
               });
         }
@@ -49,7 +50,7 @@ class EquipmentDetailsPage extends Component {
             <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
             <MDBNavLink className="my-auto indigo-text" style={{"fontSize": "120%"}} to="/admin/panel/equipment">Sprzęt</MDBNavLink>                
             <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
-            <MDBNavLink className="my-auto indigo-text" style={{"fontSize": "120%"}} active to={"/admin/panel/equipment/details/"+this.props.match.params.id}>{this.state.equipment.model+"_id["+this.props.match.params.id+"]"}</MDBNavLink>
+            <MDBNavLink className="my-auto indigo-text" style={{"fontSize": "120%"}} active to={"/admin/panel/users/"+this.props.match.params.id}>{this.state.user.email+"_id["+this.props.match.params.id+"]"}</MDBNavLink>
         </MDBNav>
     );
   }
@@ -60,16 +61,16 @@ class EquipmentDetailsPage extends Component {
         <div style={{"backgroundColor": "#37474F", "paddingTop": "100px", "paddingBottom": "100px"}} className="">
             <div className="bg-white py-5">
             {this.renderNavLinks()}
-            <p className="h2 pb-3 text-center">Sprzęt</p>
+            <p className="h2 pb-3 text-center">Użytkownik</p>
             <MDBRow className="pb-5">   
                 <MDBCol md="8" lg="8" className="mx-auto">
-                    <SDLContainer content_type="equipment" elements={this.state.equipment}/>
+                    <SDLContainer content_type="user" elements={this.state.user}/>
                 </MDBCol>
             </MDBRow>
             <MDBRow>
                 <MDBCol md="8" className="mx-auto text-center">
-                    <MDBBtn href="/admin/panel/equipment" color="blue-grey" className="mx-1"><MDBIcon icon="chevron-left" className="mr-1"/>cofnij</MDBBtn>
-                    <MDBBtn href={"/admin/panel/equipment/edit/"+this.props.match.params.id} color="warning" className="mx-1"><MDBIcon icon="cogs" className="mr-1"/>edytuj</MDBBtn>
+                    <MDBBtn href="/admin/panel/users" color="blue-grey" className="mx-1"><MDBIcon icon="chevron-left" className="mr-1"/>cofnij</MDBBtn>
+                    <MDBBtn href={"/admin/panel/user/edit/"+this.props.match.params.id} color="warning" className="mx-1"><MDBIcon icon="cogs" className="mr-1"/>edytuj</MDBBtn>
                 </MDBCol>
             </MDBRow>
             </div>
@@ -84,5 +85,5 @@ class EquipmentDetailsPage extends Component {
   }
 }
 
-export default EquipmentDetailsPage;
+export default UserDetailsPage;
 

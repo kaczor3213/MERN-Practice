@@ -33,7 +33,7 @@ export const Panel = async (req: Request, res: Response) => {
 }
 
 // Users controller (takes request, response from route call)
-export const Users = async (req: Request, res: Response) => {
+export const UsersList = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);     
     const results = await validateAdminLoginToken(req.cookies);
     if(results["IS_VALID"] == true) {
@@ -56,19 +56,31 @@ export const Users = async (req: Request, res: Response) => {
 }
 
 // Specific user controller (takes request, response from route call)
-export const UserV = async (req: Request, res: Response) => {
+export const UserDetails = async (req: Request, res: Response) => {
     const userRepository = getConnection().getRepository(User);     
     const results = await validateAdminLoginToken(req.cookies);
 
-    console.log(results);
-    console.log(req.params.id);
-
     if(results["IS_VALID"] == true ) {
-        console.log(req.params.id)
-        let user = await userRepository.findOne({id: parseInt(req.params.id)});
-        if (user == undefined)
-            return res.json({"USER": null})
-        return res.json(user);
+        let user = await userRepository.findOne(req.params.id);
+        let tmp = {}
+        for(var key in user) 
+            if(user[key] !== null)
+                tmp[key] = user[key]
+        results['user'] = tmp;
+    }
+    return res.json(results);
+}
+
+// Equipments controller (takes request, response from route call)
+export const UserUpdate = async (req: Request, res: Response) => {
+    const equipmentRepository = getConnection().getRepository(User);     
+    const results = await validateAdminLoginToken(req.cookies);
+    if(results["IS_VALID"] == true) {
+        const userErrors = await validateEquipment(req.body);
+        if(userErrors.total_warnings == 0) {
+            await equipmentRepository.update(req.params.id, req.body);
+        }
+        results['userErrors'] = userErrors;
     }
     return res.json(results);
 }
@@ -142,10 +154,13 @@ export const EquipmentDetails = async (req: Request, res: Response) => {
 export const EquipmentSideData = async (req: Request, res: Response) => {
     const results = await validateAdminLoginToken(req.cookies);
     if(results["IS_VALID"] == true) {
+        let equipment = new Equipment();
+        delete equipment.id;
         return res.json({
             "equipment_type": EquipmentType,
             "tyre_type": TyreType,
-            "brand": Brand
+            "brand": Brand,
+            'equipment_template': equipment
         });
     }
     return res.json(results);
@@ -155,12 +170,10 @@ export const EquipmentSideData = async (req: Request, res: Response) => {
 export const EquipmentUpdate = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
     const results = await validateAdminLoginToken(req.cookies);
-    
     if(results["IS_VALID"] == true) {
         const equipmentErrors = await validateEquipment(req.body);
         if(equipmentErrors.total_warnings == 0) {
-            let equipment = await equipmentRepository.update(req.params.id, req.body);
-            console.log(equipment);
+            await equipmentRepository.update(req.params.id, req.body);
         }
         results['equipmentErrors'] = equipmentErrors;
     }
@@ -171,12 +184,14 @@ export const EquipmentUpdate = async (req: Request, res: Response) => {
 export const EquipmentAdd = async (req: Request, res: Response) => {
     const equipmentRepository = getConnection().getRepository(Equipment);     
     const results = await validateAdminLoginToken(req.cookies);
-
     if(results["IS_VALID"] == true ) {
         const equipmentErrors = await validateEquipment(req.body);
-        console.log(equipmentErrors);
-        if(equipmentErrors.total_warnings == 0)
-            await equipmentRepository.create(req.body);
+        console.log(equipmentErrors)
+        if(equipmentErrors.total_warnings == 0) {
+            let equipment = await equipmentRepository.create(req.body);
+            let info = await equipmentRepository.save(equipment);
+            console.log(info);
+        }
         results['equipmentErrors'] = equipmentErrors;
     }
     return res.json(results);

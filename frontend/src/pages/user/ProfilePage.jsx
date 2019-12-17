@@ -1,12 +1,11 @@
 import React from "react";
-import axios from 'axios';
+import axios from "axios";
 import { 
     MDBRow,
     MDBCol,
-    MDBBtn} from 'mdbreact';
+    MDBBtn} from "mdbreact";
 import {Redirect} from "react-router-dom";
-import "./ProfilePage.css";
-
+import "./css/ProfilePage.css";
     
 class ProfilePage extends React.Component {
     constructor(props) {
@@ -19,19 +18,12 @@ class ProfilePage extends React.Component {
     }
 
     componentDidMount() {
-        axios.post('http://localhost:4000/myprofile', null ,  {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' }).then(response => {
-            if(response.data.IS_VALID === false) {
-                this.setState({
-                    redirectToLogin: true,
-                });
-            } else {
-                this.setState({
-                    user: response.data,
-                    readyToRender: true
-                });
-            }
+        axios.post("http://localhost:4000/myprofile", null ,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" }).then(response => {
+            if(response.data.IS_VALID === false)
+                this.setState({redirectToLogin: true});
+            else
+                this.setState({user: response.data, readyToRender: true});
         });
-        console.log(this.state.redirectToLogin, !this.state.redirectToLogin)
     }
     
     render() {
@@ -43,16 +35,16 @@ class ProfilePage extends React.Component {
                             <MDBRow>
                                 <MDBCol md="6">
                                 <div className="profile"></div>
-                                    <span style={{"font-size": '250%'}}>Witaj {this.state.user.firstName}!</span>
+                                    <span style={{"font-size": "250%"}}>Witaj {this.state.user.firstName}!</span>
                                         <p className="lead grey-text">
                                         Już dawno Cię u nas nie było...
                                         </p>
                                         <hr className="my-2" />
-                                        <span style={{"font-size": '175%'}}>Moje dane</span>
+                                        <span style={{"font-size": "175%"}}>Moje dane</span>
                                         {console.log(this.state.user)}
                                         <p>{this.state.user.firstName} {this.state.user.lastName}<br/>
                                         {this.state.user.address}, {this.state.user.place}</p>
-                                        <span style={{"font-size": '150%'}}>Dane kontaktowe</span>
+                                        <span style={{"font-size": "150%"}}>Dane kontaktowe</span>
                                         <p>{this.state.user.email}, <br/> +48 {this.state.user.phoneNumber}</p>
                                         
                                         <p className="lead text-center">
@@ -63,7 +55,7 @@ class ProfilePage extends React.Component {
                                         </p>
                                 </MDBCol>
                                 <MDBCol md="6">
-                                    <span style={{"font-size": '200%'}}>Moje zamówienia</span>
+                                    <span style={{"font-size": "200%"}}>Moje zamówienia</span>
                                     <p className="grey-text">Nie wiele tego : ( ...</p>
                                     <hr/>
                                 </MDBCol>
@@ -71,7 +63,7 @@ class ProfilePage extends React.Component {
                             <hr/>
                             <MDBRow>
                                 <MDBCol>
-                                <span style={{"font-size": '200%'}}>Bieżący wypożyczony sprzęt</span>
+                                <span style={{"font-size": "200%"}}>Bieżący wypożyczony sprzęt</span>
                                 <MDBRow>
                                     <MDBCol>
                                         Sprzęt                        
@@ -94,12 +86,10 @@ class ProfilePage extends React.Component {
                 </div>
             );
         } else {
-            if(this.state.redirectToLogin) {
+            if(this.state.redirectToLogin)
                 return <Redirect to="/login"/>;
-            }
             return "";
-        }
-            
+        }        
     }
 };
 

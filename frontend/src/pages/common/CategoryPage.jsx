@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 import {
   MDBCol,
   MDBRow,
@@ -7,8 +7,7 @@ import {
   MDBCardTitle,
   MDBNavLink
 } from "mdbreact";
-import "./CategoryPage.css";
-
+import "./css/CategoryPage.css";
 
 class CategoryPage extends Component {
   constructor(props) {
@@ -17,14 +16,10 @@ class CategoryPage extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/equipment_types')
-        .then(response => {
-            this.setState({ category_arr: response.data });
-            console.log(this.state.category_arr);
-        })
-        .catch(function (error){
-            console.log(error);
-        })
+    axios.get("http://localhost:4000/equipment_types")
+    .then(response => {
+      this.setState({ category_arr: response.data });
+    }).catch(function (error){console.log(error);})
   }
 
   makeCategoryJumbos() {
@@ -44,31 +39,25 @@ class CategoryPage extends Component {
 
   makeCategoryJumbo(category, index) {
     return (           
-        <MDBCol md="12" className="category-card p-0 w-100" id={index} style={{'backgroundImage': 'url(' + require("../../assets/category/" + category.toLowerCase()+".jpg") + ')' }}>
-              <div className="masker-categories">
-                <div className="text-white vertical-center text-center py-5 px-4" >
-                    <MDBCol className="py-5">
-                    <MDBCardTitle className="display-4  pt-3 m-5 font-bold">{category[0].toUpperCase()+category.slice(1)}</MDBCardTitle>
-                    <MDBNavLink 
-                        to={"/equipment/category/"+category}
-                        className="btn btn-light-green mb-5 text-center mx-auto" style={{'maxWidth': '300px'}}>
-                        <MDBIcon icon="clone" className="mr-2"></MDBIcon> Obejrz kategorię
-                    </MDBNavLink>
-                    </MDBCol>
-                </div>
-                </div>
-        </MDBCol>
+      <MDBCol md="12" className="category-card p-0 w-100" id={index} style={{"backgroundImage": "url(" + require("../../assets/category/" + category.toLowerCase()+".jpg") + ")" }}>
+        <div className="masker-categories">
+          <div className="text-white vertical-center text-center py-5 px-4" >
+              <MDBCol className="py-5">
+              <MDBCardTitle className="display-4  pt-3 m-5 font-bold">{category[0].toUpperCase()+category.slice(1)}</MDBCardTitle>
+              <MDBNavLink 
+                  to={"/equipment/category/"+category}
+                  className="btn btn-light-green mb-5 text-center mx-auto" style={{"maxWidth": "300px"}}>
+                  <MDBIcon icon="clone" className="mr-2"></MDBIcon> Obejrz kategorię
+              </MDBNavLink>
+              </MDBCol>
+          </div>
+        </div>
+      </MDBCol>
     );
   }
 
-  scrollToTop = () => window.scrollTo(0, 0);
-
   render() {
-    return (
-      <>
-        {this.makeCategoryJumbos()}
-      </>
-    );
+    return this.makeCategoryJumbos();
   }
 }
 

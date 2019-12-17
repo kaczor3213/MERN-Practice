@@ -20,6 +20,7 @@ class SelectField extends Component {
 
   renderOptions = () => {
     let tmp = [];
+    tmp.push(<option value={null}>Wybierz</option>)
     this.state.options.forEach((o) => {
         tmp.push(<option value={o.value}>{o.label}</option>);
     })

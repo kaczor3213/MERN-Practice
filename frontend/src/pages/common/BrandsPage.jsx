@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 import {
   MDBContainer,
   MDBCol,
@@ -15,7 +15,7 @@ import {
   MDBCarouselItem,
   MDBBtn
 } from "mdbreact";
-import "./BrandPage.css";
+import "./css/BrandPage.css";
 
 class CustomCard extends Component {
   
@@ -28,8 +28,8 @@ class CustomCard extends Component {
               >
                 <MDBCardBody className="text-center">
                 <img
-                        style={{ height: '9rem', width: '9rem' }}
-                        src={require('../../assets/logo.png')}
+                        style={{ height: "9rem", width: "9rem" }}
+                        src={require("../../assets/logo.png")}
                         alt="rol-pol-logo"
                         className="pr-2 d-inline"
                       />
@@ -38,8 +38,8 @@ class CustomCard extends Component {
                       Nasze Marki
                     </strong>
                   </h1>
-                  <p className="pb-4" style={{'font-size': '140%'}}>W naszej ofercie mamy szeroki zakres zarówno marek jak i sprzętu.</p>
-                  <p className="pb-4" style={{'font-size': '120%'}}>Znajdziesz u nas <strong>15+</strong> kultowych marek!</p>
+                  <p className="pb-4" style={{"font-size": "140%"}}>W naszej ofercie mamy szeroki zakres zarówno marek jak i sprzętu.</p>
+                  <p className="pb-4" style={{"font-size": "120%"}}>Znajdziesz u nas <strong>15+</strong> kultowych marek!</p>
                   <MDBRow className="d-flex flex-row justify-content-center row">
                     <MDBBtn href="/equipment" color="success">
                       <MDBIcon icon="fas fa-download" className="mr-2" />
@@ -104,7 +104,7 @@ class BrandsPage extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/brands')
+    axios.get("http://localhost:4000/brands")
         .then(response => {
             this.setState({ brands_arr: response.data });
             console.log(this.state.brands_arr);
@@ -159,16 +159,18 @@ class BrandsPage extends Component {
   scrollToTop = () => window.scrollTo(0, 0);
 
   render() {
+
+
     return (
       <>
         <CustomCarousel /> 
         <div className="mt-3 mb-5">    
             <MDBRow className="w-100 m-0">
-              <MDBCol md="0" lg="1" className="p-0" style={{"max-width": "90%"}}/>
+              <MDBCol md="0" lg="1" className="p-0" style={{"maxWidth": "90%"}}/>
               <MDBCol className="mt-4" md="12" lg="10">
                 {this.makeBrandsRow()}
               </MDBCol>
-              <MDBCol md="0" lg="1" className="p-0" style={{"max-width": "90%"}}/>
+              <MDBCol md="0" lg="1" className="p-0" style={{"maxWidth": "90%"}}/>
             </MDBRow>
         </div>
       </>

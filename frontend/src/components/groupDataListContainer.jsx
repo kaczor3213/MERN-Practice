@@ -8,11 +8,9 @@ class GDLContainer extends React.Component {
         this.state = {
             array_of_elements: this.props.elements
         };
-        this.handleDelete = this.props.onDelete.bind();
     }
     renderElements() {
         let tmp = [];
-        console.log(this.onDelete)
         if(this.props.elements !== undefined) {
             this.state.array_of_elements.forEach( function(e) {
                 tmp.push(<GDLElement

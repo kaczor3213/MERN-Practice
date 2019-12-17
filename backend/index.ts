@@ -44,23 +44,25 @@ createConnection().then(async connection => {
 
     // admin users view
     app.post("/panel/users", async function(req: Request, res: Response) {
-        return AdminControl.Users(req, res);
+        return AdminControl.UsersList(req, res);
     });
 
     // admin specific user view
-    app.get("/panel/users/:id", async function(req: Request, res: Response) {
-        return AdminControl.UserV(req, res);
+    app.post("/panel/users/:id", async function(req: Request, res: Response) {
+        return AdminControl.UserDetails(req, res);
     });
+    
 
-    // admin orders view
-    app.get("/panel/orders", async function(req: Request, res: Response) {
-        return AdminControl.Orders(req, res);
-    });
 
-    // admin specific order view
-    app.get("/panel/orders/:id", async function(req: Request, res: Response) {
-        return AdminControl.OrderV(req, res);
-    });
+    // // admin orders view
+    // app.get("/panel/orders", async function(req: Request, res: Response) {
+    //     return AdminControl.Orders(req, res);
+    // });
+
+    // // admin specific order view
+    // app.get("/panel/orders/:id", async function(req: Request, res: Response) {
+    //     return AdminControl.OrderV(req, res);
+    // });
 
     // admin equipments view
     app.post("/panel/equipment", async function(req: Request, res: Response) {
@@ -70,6 +72,11 @@ createConnection().then(async connection => {
      // admin equipment add (provide brands, different parameters) view
      app.post("/panel/equipment/side/data", async function(req: Request, res: Response) {
         return AdminControl.EquipmentSideData(req, res);
+    });
+    
+     // admin equipment add handle
+     app.post("/panel/equipment/add", async function(req: Request, res: Response) {
+        return AdminControl.EquipmentAdd(req, res);
     });
 
     // admin specific equipment view
@@ -81,10 +88,7 @@ createConnection().then(async connection => {
         return AdminControl.EquipmentUpdate(req, res);
     });
 
-    // admin equipment add handle
-    app.post("/panel/equipment/add", async function(req: Request, res: Response) {
-        return AdminControl.EquipmentAdd(req, res);
-    });
+
 
     // admin equipment add handle
     app.post("/panel/equipment/delete/:id", async function(req: Request, res: Response) {
@@ -107,15 +111,15 @@ createConnection().then(async connection => {
         return UserControl.Profile(req, res);
     });
 
-    // user orders view
-    app.get("/myprofile/orders", async function(req: Request, res: Response) {
-        return UserControl.Orders(req, res);
-    });
+    // // user orders view
+    // app.get("/myprofile/orders", async function(req: Request, res: Response) {
+    //     return UserControl.Orders(req, res);
+    // });
     
-    // user specific order view
-    app.get("/myprofile/orders/:id", async function(req: Request, res: Response) {
-        return UserControl.Order(req, res);
-    });
+    // // user specific order view
+    // app.get("/myprofile/orders/:id", async function(req: Request, res: Response) {
+    //     return UserControl.Order(req, res);
+    // });
 
     // user settings view
     app.get("/myprofile/settings", async function(req: Request, res: Response) {

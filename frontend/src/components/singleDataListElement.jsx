@@ -19,7 +19,10 @@ class SDLElement extends Component {
         <hr className='mb-2'/>
         <MDBRow>
           <MDBCol className="mx-auto"><strong>{this.state.label[0].toUpperCase()+this.state.label.slice(1)} </strong></MDBCol>
-          <MDBCol>{this.state.data} {this.state.unit}</MDBCol>
+          <MDBCol>
+            <span style={{'display': 'inline-block', 'maxWidth': '200px', 'whiteSpace': 'nowrap','overflow': 'hidden','textOverflow': 'ellipsis'}} >{this.state.data}</span>{' '}
+            <span style={{'display': 'inline-block', 'whiteSpace': 'nowrap','overflow': 'hidden',}}>{this.state.unit}</span>
+          </MDBCol>
         </MDBRow>
         </>
       )

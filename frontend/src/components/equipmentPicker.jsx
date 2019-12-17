@@ -3,7 +3,6 @@ import {
     MDBIcon,
     MDBNavLink,
     MDBCardImage,
-    MDBCardText,
     MDBCardTitle,
     MDBCard,
     MDBAnimation,
@@ -72,10 +71,8 @@ class EquipmentPicker extends React.Component {
                 <span className="text-capitalize">{equipment.equipment_type}</span><br/>
                 <strong>{equipment.model}</strong>
               </MDBCardTitle>
-              <MDBCardText>
-                <strong>Producent: </strong>{equipment.brand[0].toUpperCase()+equipment.brand.slice(1)}<br/>
+                <p><strong>Producent: </strong>{equipment.brand[0].toUpperCase()+equipment.brand.slice(1)}</p>
                 <p className="success">{equipment.cost_per_day} zł</p>
-              </MDBCardText>
               <MDBNavLink 
                   tag="button"
                   to={"/equipment/"+equipment.id}

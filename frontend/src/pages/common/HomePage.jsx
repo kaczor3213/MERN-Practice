@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import axios from 'axios';
+import axios from "axios";
 import {
   MDBCol,
   MDBRow,
@@ -14,29 +14,24 @@ import {
   MDBBtn,
   MDBNavLink
 } from "mdbreact";
-import "./HomePage.css";
+import "./css/HomePage.css";
 
 class HomePage extends Component {
+
   constructor(props) {
     super(props);
     this.state = {equipment_arr: []};
   }
 
   componentDidMount() {
-    axios.get('http://localhost:4000/')
-        .then(response => {
-            this.setState({ equipment_arr: response.data });
-            console.log(this.state.equipment_arr);
-        })
-        .catch(function (error){
-            console.log(error);
-        })
+    axios.get("http://localhost:4000/")
+    .then(response => {
+        this.setState({ equipment_arr: response.data });
+    }).catch(function (error){console.log(error);});
   }
 
   makeEquipmentsRow() {
-    return <MDBRow id="brands">
-        {this.gatherAllEquipmentsCols()}
-        </MDBRow>;
+    return <MDBRow id="brands">{this.gatherAllEquipmentsCols()}</MDBRow>;
   }
 
   gatherAllEquipmentsCols() {
@@ -81,20 +76,18 @@ class HomePage extends Component {
     );
   }
 
-  scrollToTop = () => window.scrollTo(0, 0);
-
   render() {
     return (
-      <>  
+      <>
         <MDBView className="landing-page">
-          <div className="masker-home " style={{'paddingTop': '4rem', 'paddingBottom': '1rem'}}>
+          <div className="masker-home " style={{"paddingTop": "4rem", "paddingBottom": "1rem"}}>
             <MDBRow className="fadeIn vertical-center w-100">
               <MDBCol md="5" lg="4" className="mx-auto headline white p-2 bg-transparent">
                 <div className="text-center white-text">
                   <h1 className="display-3 mb-4">
                   <img
-                        style={{'height':'9rem', 'width': '9rem' }}
-                        src={require('../../assets/logo.png')}
+                        style={{"height":"9rem", "width": "9rem" }}
+                        src={require("../../assets/logo.png")}
                         alt="mdbreact-logo"
                         className="pr-2 d-inline"
                       />
@@ -121,7 +114,7 @@ class HomePage extends Component {
               <MDBCol md="5" lg="4" className="mx-auto white-text p-2">
                 <div className="px-3">
                 <h3 className="h2 mb-3">Dlaczego my?</h3>
-                <p style={{'fontSize': '125%'}}>
+                <p style={{"fontSize": "125%"}}>
                   Jesteśmy fimą z wieloletnim doświadczeniem w obsłudze i konserwacji maszyn rolniczych.
                   Wierzymy, że pod dobrą ręką każdy osprzęt może długo i wiernie służyć.
                   Rynek dynamicznie się zmienia, a nie każdy rolnik jest w stanie pozwolić sobie na zakup nowego ciągnika.
@@ -194,7 +187,7 @@ class HomePage extends Component {
               <MDBCol lg="6" md="12">
                 <p className="h5 text-center mb-4">Zobacz nasz sprzęt w akcji!</p>
                 <div className="embed-responsive embed-responsive-16by9">
-                  <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/mu_SnrMacwA" allowFullScreen></iframe>
+                  <iframe title="LukaVideo" className="embed-responsive-item" src="https://www.youtube.com/embed/mu_SnrMacwA" allowFullScreen></iframe>
                 </div>
               </MDBCol>
             </MDBRow>

@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';
+import axios from "axios";
 import { 
   MDBRow,
   MDBCol,
@@ -12,7 +12,7 @@ import {
   MDBNav,
   MDBNavLink,
   MDBIcon
-} from 'mdbreact';
+} from "mdbreact";
 import {Redirect} from "react-router-dom";
 
     
@@ -29,7 +29,7 @@ class ProfilePage extends React.Component {
     }
 
     componentDidMount() {
-        axios.post('http://localhost:4000/panel', null ,  {withCredentials: true, crossDomain: true, 'Content-Type': 'application/json' }).then(response => {
+        axios.post("http://localhost:4000/panel", null ,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" }).then(response => {
             if(response.data.IS_VALID === false) {
                 this.setState({
                     redirectToLogin: true,
@@ -43,17 +43,16 @@ class ProfilePage extends React.Component {
                 });
             }
         });
-        console.log(this.state.redirectToLogin, !this.state.redirectToLogin)
     }
     
     render() {
         if(!this.state.redirectToLogin && this.state.readyToRender) {
             return (
-              <div style={{'backgroundColor': '#37474F'}} className="pt-5">
+              <div style={{"backgroundColor": "#37474F"}} className="pt-5">
                 <div className="my-5 py-5 bg-white">
                 <MDBNav className="ml-5">
                   <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
-                  <MDBNavLink className="my-auto indigo-text" style={{'fontSize': '120%'}} to="/admin/panel">Panel</MDBNavLink>
+                  <MDBNavLink className="my-auto indigo-text" style={{"fontSize": "120%"}} to="/admin/panel">Panel</MDBNavLink>
                 </MDBNav>
                 <p className="h2 pb-3 text-center">Panel</p>
                     <MDBRow >

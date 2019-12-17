@@ -38,6 +38,23 @@ export const Brand = {
 
 @Entity()
 export class Equipment {
+    constructor() { 
+          this.id=null;
+          this.equipment_type=null;
+          this.brand=null;
+          this.model=null;
+          this.capacity=null;
+          this.crop_capacity=null;
+          this.fuel_capacity=null;
+          this.working_width=null;
+          this.horsepower=null;
+          this.power_required=null;
+          this.mass=null;
+          this.max_speed=null;
+          this.tyre_type=null;
+          this.cost_per_day=null;
+    }  
+
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -111,5 +128,4 @@ export class Equipment {
 
     @ManyToMany(type => Order, order => order.equipments)
     orders: Order[];
-
 }

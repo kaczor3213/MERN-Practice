@@ -18,8 +18,8 @@ class EquipmentEditPage extends Component {
         equipment_type: undefined,
         tyre_type: undefined,
         brand: undefined,
-        equipment: undefined,
-        equipment_m: undefined,
+        user: undefined,
+        user_m: undefined,
         redirectToLogin: false,
         errors: {},
         success: false,
@@ -30,33 +30,18 @@ class EquipmentEditPage extends Component {
   }
 
   componentDidMount() {
-    axios.post("http://localhost:4000/panel/equipment/side/data", null ,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" })
+    axios.post("http://localhost:4000/panel/users/"+this.props.match.params.id, null ,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" })
     .then(response => {
+        console.log(response.data)
         if(response.data.IS_VALID === false) {
             this.setState({
                 redirectToLogin: true,
             });
         } else {
+            delete response.data.user.id;
             this.setState({
-                equipment_type: response.data.equipment_type,
-                tyre_type: response.data.tyre_type,
-                brand: response.data.brand
-            });
-            this.setState({sideDataFetchSuccess: true});
-        }
-    }).catch(function(error){console.log(error);});
-
-    axios.post("http://localhost:4000/panel/equipment/"+this.props.match.params.id, null ,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" })
-    .then(response => {
-        if(response.data.IS_VALID === false) {
-            this.setState({
-                redirectToLogin: true,
-            });
-        } else {
-            delete response.data.equipment.id;
-            this.setState({
-                equipment: response.data.equipment,
-                equipment_m: Object.assign({}, response.data.equipment)
+                user: response.data.user,
+                user_m: Object.assign({}, response.data.user)
             });
             this.setState({equipmentFetchSuccess: true});
         }
@@ -65,14 +50,14 @@ class EquipmentEditPage extends Component {
 
   handleInputChange(event) {
     event.preventDefault();
-    let tmp = this.state.equipment_m;
+    let tmp = this.state.user_m;
     tmp[event.target.name] = event.target.value;
-    this.setState({equipment_m: tmp});
+    this.setState({user_m: tmp});
   }
 
   handleReset() {
     this.setState({
-        equipment_m: Object.assign({}, this.state.equipment),
+        user_m: Object.assign({}, this.state.user),
         errors: {},
         success: false,
     });
@@ -80,16 +65,15 @@ class EquipmentEditPage extends Component {
   
   handleSumbit(event) {
     event.preventDefault()
-    axios.post("http://localhost:4000/panel/equipment/edit/"+this.props.match.params.id, this.state.equipment_m,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" })
+    axios.post("http://localhost:4000/panel/user/edit/"+this.props.match.params.id, this.state.user_m,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" })
     .then(response => {
-        console.log(response.data)
-        if(response.data.equipmentErrors.total_warnings === 0) {
+        if(response.data.userErrors.total_warnings === 0) {
             this.setState({success: true})
         } else {
-            delete response.data.equipmentErrors.total_warnings;
+            delete response.data.userErrors.total_warnings;
             this.setState({
                 success: false,
-                errors: response.data.equipmentErrors
+                errors: response.data.userErrors
             });
         }
     });
@@ -97,9 +81,9 @@ class EquipmentEditPage extends Component {
 
   handleDelete(event) {
     event.preventDefault();
-    axios.post("http://localhost:4000/panel/equipment/delete/" +this.props.match.params.id, null,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" })
+    axios.post("http://localhost:4000/panel/user/delete/" +this.props.match.params.id, null,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" })
     .then(response => {
-        this.setState({redirectToEquipmentList: true})
+        this.setState({redirectToUserList: true})
     });
 
   }
@@ -112,7 +96,7 @@ class EquipmentEditPage extends Component {
             <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
             <MDBNavLink className="my-auto indigo-text" style={{"fontSize": "120%"}} to="/admin/panel/equipment">Sprzęt</MDBNavLink>                
             <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
-            <MDBNavLink className="my-auto indigo-text" style={{"fontSize": "120%"}} active to={"/admin/panel/equipment/details/"+this.props.match.params.id}>{this.state.equipment.model+"_id["+this.props.match.params.id+"]"}</MDBNavLink>
+            <MDBNavLink className="my-auto indigo-text" style={{"fontSize": "120%"}} active to={"/admin/panel/user/edit/"+this.props.match.params.id}>{this.state.user.email+"_id["+this.props.match.params.id+"]"}</MDBNavLink>
         </MDBNav>
     );
   }
@@ -123,7 +107,7 @@ class EquipmentEditPage extends Component {
             <MDBRow>
                 <MDBCol md="6" className="mx-auto text-center" style={{"fontSize": "120%"}}>
                 <MDBIcon icon="check" className="green-text mr-1"/>
-                <strong>Pomyślnie zmieniono sprzęt</strong>
+                <strong>Pomyślnie zmieniono użytkownika</strong>
                 </MDBCol>
             </MDBRow>
         );
@@ -132,27 +116,27 @@ class EquipmentEditPage extends Component {
   }
 
   render() {
-    if(this.state.redirectToEquipmentList)
-        return <Redirect to="/admin/panel/equipment"/>;
-    if(!this.state.redirectToLogin && this.state.sideDataFetchSuccess && this.state.equipmentFetchSuccess) {
+    if(this.state.redirectToUserList)
+        return <Redirect to="/admin/panel/user"/>;
+    if(!this.state.redirectToLogin && this.state.userFetchSuccess) {
         return (
         <div style={{"backgroundColor": "#37474F", "paddingTop": "100px", "paddingBottom": "100px"}} className="">
             <div className="bg-white py-5">
             {this.renderNavLinks()}
-            <p className="h2 pb-3 text-center">Edycja {this.state.equipment.equipment_type} {this.state.equipment.model}</p>
+            <p className="h2 pb-3 text-center">Edycja {this.state.user.email}</p>
             <MDBRow className="pb-5">   
                 <MDBCol md="8" lg="8" className="mx-auto">
                     <EditForm 
-                        quitLink="/admin/panel/equipment"
+                        quitLink="/admin/panel/users"
                         onSubmit={this.handleSumbit.bind(this)} 
                         onChange={this.handleInputChange.bind(this)} 
                         onReset={this.handleReset.bind(this)}
                         onDelete={this.handleDelete.bind(this)}
-                        deleteMessage={"Czy jesteś pewien, że chcesz usunąć ten sprzęt:"+this.state.equipment.model+". Po usunięciu zostaniesz przekierowany na stronę sprzętu."}
-                        content_type="equipment"
-                        data={this.state.equipment_m}
-                        selectable={{tyre_type: "tyre_type", brand: "brand"}}
-                        options={{equipment_type: this.state.equipment_type, tyre_type: this.state.tyre_type, brand: this.state.brand}}
+                        deleteMessage={"Czy jesteś pewien, że chcesz usunąć tego użytkownika:"+this.state.user.email+". Po usunięciu zostaniesz przekierowany na stronę użytkowników."}
+                        content_type="user"
+                        data={this.state.user_m}
+                        selectable={{role: "role"}}
+                        options={{role: this.state.role}}
                         errors={this.state.errors}
                     />
                 </MDBCol>

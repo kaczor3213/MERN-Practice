@@ -1,6 +1,5 @@
 require('dotenv').config({ path: '../../.env' })
 import * as Crypto from 'crypto-ts';
-import { stringify } from 'querystring';
 
 export function generateHashedToken(user_email: string, user_agent: string, token: string, timestamp: string = Date.now().toString()): string {
     let Token = {

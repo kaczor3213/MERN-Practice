@@ -1,14 +1,14 @@
 import React from "react";
-import axios from 'axios';
+import axios from "axios";
 import { 
     MDBContainer,
     MDBRow,
     MDBCol,
     MDBBtn,
     MDBInput
-    } from 'mdbreact';
+    } from "mdbreact";
 import ValidationMessage from "../../components/validationMessage";
-import "./LoginPage.css";
+import "./css/LoginPage.css";
 import { Redirect } from "react-router-dom";
 
 class RegisterPage extends React.Component {
@@ -38,7 +38,7 @@ class RegisterPage extends React.Component {
       };
       this.handleInputChange = this.handleInputChange.bind(this);
     }
-        
+
     submitHandler = event => {
       event.preventDefault();
       event.persist();
@@ -56,7 +56,7 @@ class RegisterPage extends React.Component {
           rules: this.state.rules,
       };
       
-      axios.post('http://localhost:4000/register', newUser)
+      axios.post("http://localhost:4000/register", newUser)
         .then(response => {
             console.log(response.data);
             if(response.data["TOTAL_WARNINGS"] === 0)
@@ -72,13 +72,12 @@ class RegisterPage extends React.Component {
                     postCode_error: response.data["WRONG_POST_CODE"]?<ValidationMessage message="Podaj poprawny kod pocztowy. "/>:null,
                     password_error: response.data["WRONG_PASSWORD"]?<ValidationMessage message="Złe hasło. "/>:null,
                     rules_error: response.data["RULES_ERROR"]?<ValidationMessage message="Należy wyrazić zgodę na regulamin serwisu. "/>:null
-                })
+                });
                 this.setState({
                     email_error: response.data["OCCUPIED_EMAIL"]?<ValidationMessage message="Zajęty adres email. "/>:this.state.email_error,
                     phoneNumber_error: response.data["OCCUPIED_PHONE_NUMBER"]?<ValidationMessage message="Zajęty numer telefonu. "/>:this.state.phoneNumber_error,
                     password_error: response.data["PASSWORDS_DONT_MATCH"]?<ValidationMessage message="Podane hasła się nie pokrywają. "/>:this.state.password_error,
-                })
-
+                });
             }
         });
     };
@@ -91,8 +90,11 @@ class RegisterPage extends React.Component {
     }
         
     render() {
+
+
         if(!this.state.success) 
             return (
+                <>
         <div className="login-page">
         <div className="masker">
         <MDBContainer className="py-5">
@@ -268,7 +270,8 @@ class RegisterPage extends React.Component {
             </MDBRow>
         </MDBContainer>
         </div>
-        </div>);
+        </div>
+        </>);
         else
             return <Redirect to="/"/>;
 }

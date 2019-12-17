@@ -14,11 +14,17 @@ import UserProfilePage from "./pages/user/ProfilePage";
 
 import AdminLoginPage from "./pages/admin/AdminLoginPage";
 import AdminPanelPage from "./pages/admin/AdminPanelPage";
-import AdminUsersPage from "./pages/admin/AdminUsersPage"
+
 import AdminEquipmentPage from "./pages/admin/AdminEquipmentPage";
 import AdminEquipmentAddPage from "./pages/admin/AdminEquipmentAddPage";
 import AdminEquipmentDetailsPage from "./pages/admin/AdminEquipmentDetailsPage";
 import AdminEquipmentEditPage from "./pages/admin/AdminEquipmentEditPage";
+
+import AdminUsersPage from "./pages/admin/AdminUsersPage";
+import AdminUserAddPage from "./pages/admin/AdminUserAddPage";
+import AdminUserDetailsPage from "./pages/admin/AdminUserDetailsPage";
+import AdminUserEditPage from "./pages/admin/AdminUserEditPage";
+
 
 class Routes extends React.Component {
   constructor(props) {
@@ -50,13 +56,15 @@ class Routes extends React.Component {
         <Route exact path="/admin" component={AdminLoginPage} />
         <Route exact path="/admin/panel" component={AdminPanelPage} />
         <Route exact path="/admin/panel/equipment" component={AdminEquipmentPage} />
+        <Route exact path="/admin/panel/equipment/add" component={AdminEquipmentAddPage} />
         <Route path="/admin/panel/equipment/details/:id" component={AdminEquipmentDetailsPage} />
         <Route path="/admin/panel/equipment/edit/:id" component={AdminEquipmentEditPage} />
 
         <Route exact path="/admin/panel/users" component={AdminUsersPage} />
+        <Route path="/admin/panel/user/details/:id" component={AdminUserDetailsPage} />
+        <Route path="/admin/panel/user/edit/:id" component={AdminUserEditPage} />
 
         {/* 
-        <Route path="/admin/panel/equipment/add" component={AdminEquipmentAddPage} />
         <Route path="/myprofile/settings" component={UserOrdersPage} />
         <Route path="/admin/orders" component={AdminOrdersPage} />
         <Route path="/myprofile/orders" component={UserOrdersPage} />
