@@ -29,7 +29,7 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
 
 .login-page {
   min-height: 100vh;
-  background-image: url("../../assets/login_page.jpg");
+  background-image: url("../../../assets/login_page.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

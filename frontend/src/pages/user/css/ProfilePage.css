@@ -1,6 +1,6 @@
 .profile-page {
     min-height: 100vh;
-    background-image: url("../../assets/profile_page.jpg");
+    background-image: url("../../../assets/profile_page.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -13,6 +13,6 @@
     width: 120px;
     background-size: cover;
     background-repeat: no-repeat;
-    background-image: url("../../assets/farmer.png"); 
+    background-image: url("../../../assets/farmer.png"); 
     border-radius: 50%;
   }

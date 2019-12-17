@@ -60,7 +60,7 @@ class AdminLoginPage extends React.Component {
             return <Redirect to="/admin/panel"/>;
         if(!this.state.success && this.state.readyToRender) {
             return (
-                <div style={{"backgroundColor": "#37474F", "height": "100vh"}} className="pt-5">
+                <div style={{"backgroundColor": "#37474F", "height": "100vh", "minHeight": "100vh"}} className="pt-5">
                     <MDBRow className="pt-5">
                         <MDBCol md="10" lg="8" xl="6" className="px-4 mx-auto">
                             <MDBJumbotron className="vertical-center" fluid>

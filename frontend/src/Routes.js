@@ -25,6 +25,7 @@ import AdminUserAddPage from "./pages/admin/AdminUserAddPage";
 import AdminUserDetailsPage from "./pages/admin/AdminUserDetailsPage";
 import AdminUserEditPage from "./pages/admin/AdminUserEditPage";
 
+import NotFoundPage from "./pages/common/NotFoundPage";
 
 class Routes extends React.Component {
   constructor(props) {
@@ -72,7 +73,7 @@ class Routes extends React.Component {
 
         <Route
           render={function () {
-            return <h1>Not Found</h1>;
+            return <NotFoundPage/>;
           }}
         />
       </Switch>

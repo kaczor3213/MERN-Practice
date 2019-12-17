@@ -39,7 +39,7 @@ class ProfilePage extends React.Component {
     render() {
         if(!this.state.redirectToLogin && this.state.readyToRender) {
             return (
-            <div style={{"backgroundColor": "#37474F", "paddingTop": "100px", "paddingBottom": "100px"}} className="">
+            <div style={{"backgroundColor": "#37474F", "paddingTop": "100px", "paddingBottom": "100px", "minHeight": "100vh"}} className="">
                 <div className="bg-white pt-5">
                 <MDBNav className="ml-5">
                     <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>

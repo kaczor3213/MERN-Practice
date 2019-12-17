@@ -40,7 +40,7 @@ a.border.nav-link.border-light.rounded.mr-1:hover {
 
 .landing-page {
   min-height: 100vh;
-  background-image: url("../../assets/landing_page.jpg");
+  background-image: url("../../../assets/landing_page.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

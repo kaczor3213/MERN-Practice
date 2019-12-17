@@ -1,4 +1,4 @@
-import {validateUserCreate, validateUserLogin, validateLoginToken} from "../validators/userValidator";
+import {validateUserCreate, validateUserLogin, validateLoginToken} from "../validators/userCreateValidator";
 import {generateHashedToken} from "../bin/loginToken";
 import {Request, Response} from "express";
 import {getConnection} from "typeorm";

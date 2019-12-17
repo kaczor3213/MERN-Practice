@@ -156,11 +156,8 @@ class BrandsPage extends Component {
     );
   }
 
-  scrollToTop = () => window.scrollTo(0, 0);
 
   render() {
-
-
     return (
       <>
         <CustomCarousel /> 

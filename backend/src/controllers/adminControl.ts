@@ -5,7 +5,8 @@ import {getConnection} from "typeorm";
 import {User, UserRole} from "../entity/User";
 import {Order} from "../entity/Order";
 import {Equipment, EquipmentType, TyreType, Brand} from "../entity/Equipment";
-import { validateEquipment } from "../validators/equipmentValidator";
+import { validateEquipment } from "../validators/equipmentEditCreateValidator";
+
 export const LOGIN_TIMEOUT = 60 * 60 * 1000;
 
 // Login controller (takes request, response from route call)

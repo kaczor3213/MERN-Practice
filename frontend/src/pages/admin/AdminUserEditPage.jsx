@@ -120,7 +120,7 @@ class EquipmentEditPage extends Component {
         return <Redirect to="/admin/panel/user"/>;
     if(!this.state.redirectToLogin && this.state.userFetchSuccess) {
         return (
-        <div style={{"backgroundColor": "#37474F", "paddingTop": "100px", "paddingBottom": "100px"}} className="">
+        <div style={{"backgroundColor": "#37474F", "paddingTop": "100px", "paddingBottom": "100px", "minHeight": "100vh"}} className="">
             <div className="bg-white py-5">
             {this.renderNavLinks()}
             <p className="h2 pb-3 text-center">Edycja {this.state.user.email}</p>

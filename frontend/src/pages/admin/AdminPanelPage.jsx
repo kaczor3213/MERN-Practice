@@ -14,7 +14,8 @@ import {
   MDBIcon
 } from "mdbreact";
 import {Redirect} from "react-router-dom";
-
+import equipment_baner from "../../assets/equipment_list.jpg";
+import users_baner from "../../assets/users_list.jpg";
     
 class ProfilePage extends React.Component {
     constructor(props) {
@@ -48,7 +49,7 @@ class ProfilePage extends React.Component {
     render() {
         if(!this.state.redirectToLogin && this.state.readyToRender) {
             return (
-              <div style={{"backgroundColor": "#37474F"}} className="pt-5">
+              <div style={{"backgroundColor": "#37474F", "minHeight": "100vh"}}>
                 <div className="my-5 py-5 bg-white">
                 <MDBNav className="ml-5">
                   <MDBIcon className="my-auto indigo-text " icon="chevron-right"></MDBIcon>
@@ -58,7 +59,7 @@ class ProfilePage extends React.Component {
                     <MDBRow >
                         <MDBCol md="4" className="p-3 mx-auto bg-white">
                           <MDBCard>
-                            <MDBCardImage className="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" waves />
+                            <MDBCardImage className="img-fluid" src={equipment_baner} waves />
                             <MDBCardBody>
                               <MDBCardTitle>Sprzęt</MDBCardTitle>
                               <MDBCardText>
@@ -70,7 +71,7 @@ class ProfilePage extends React.Component {
                         </MDBCol>
                         <MDBCol md="4" className="p-3 mx-auto bg-white">
                           <MDBCard>
-                            <MDBCardImage className="img-fluid" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" waves />
+                            <MDBCardImage className="img-fluid" src={users_baner} waves />
                             <MDBCardBody>
                               <MDBCardTitle>Użytkownicy</MDBCardTitle>
                               <MDBCardText>
