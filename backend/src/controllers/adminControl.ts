@@ -187,11 +187,9 @@ export const EquipmentAdd = async (req: Request, res: Response) => {
     const results = await validateAdminLoginToken(req.cookies);
     if(results["IS_VALID"] == true ) {
         const equipmentErrors = await validateEquipment(req.body);
-        console.log(equipmentErrors)
         if(equipmentErrors.total_warnings == 0) {
             let equipment = await equipmentRepository.create(req.body);
             let info = await equipmentRepository.save(equipment);
-            console.log(info);
         }
         results['equipmentErrors'] = equipmentErrors;
     }

@@ -32,6 +32,7 @@ class EquipmentAddPage extends Component {
   componentDidMount() {
     axios.post("http://localhost:4000/panel/equipment/side/data", null ,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" })
     .then(response => {
+
         console.log(response.data)
         if(response.data.IS_VALID === false) {
             this.setState({
@@ -74,6 +75,7 @@ class EquipmentAddPage extends Component {
     event.preventDefault()
     axios.post("http://localhost:4000/panel/equipment/add", this.state.equipment,  {withCredentials: true, crossDomain: true, "Content-Type": "application/json" })
     .then(response => {
+        console.log(response.data)
         if(response.data.equipmentErrors.total_warnings === 0) {
             this.handleReset();
             this.setState({success: true});

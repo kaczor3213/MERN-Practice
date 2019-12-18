@@ -164,7 +164,7 @@ export function validateHarvesterCreate(params: Dictionary<string>) {
 export function validateCultivatorCreate(params: Dictionary<string>) {
     if(parseInt(params.working_width) < 0 || params.working_width === undefined || params.working_width === null || params.working_width == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
-        EQUIPMENT_ERROR_CODE.fuel_capacity=true;    
+        EQUIPMENT_ERROR_CODE.working_width=true;    
     }
     if(parseInt(params.power_required) < 0 || params.power_required === undefined || params.power_required === null || params.power_required == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
@@ -181,7 +181,7 @@ export function validateCultivatorCreate(params: Dictionary<string>) {
 export function validateSowingMachineCreate(params: Dictionary<string>) {
     if(parseInt(params.working_width) < 0 || params.working_width === undefined || params.working_width === undefined || params.working_width == "") {
         EQUIPMENT_ERROR_CODE.total_warnings++;
-        EQUIPMENT_ERROR_CODE.fuel_capacity=true;    
+        EQUIPMENT_ERROR_CODE.working_width=true;    
     }
     if(parseInt(params.capacity) < 0 || params.capacity === undefined || params.capacity === null || params.capacity == "") {     
         EQUIPMENT_ERROR_CODE.total_warnings++;
